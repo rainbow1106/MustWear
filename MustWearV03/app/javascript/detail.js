@@ -84,6 +84,8 @@ Main.enableKeys = function() {
 };
 
 Main.keyDown = function() {
+	var snd = new Audio("app/sound/click.wav"); // buffers automatically when created
+	snd.play();
 	var keyCode = event.keyCode;
 	alert("Key pressed: " + keyCode);
 
