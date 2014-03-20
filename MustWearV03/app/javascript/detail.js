@@ -11,7 +11,9 @@ Main.onLoad = function() {
 	this.enableKeys();
 	widgetAPI.sendReadyEvent();
 	var type = sessionStorage.getItem('flag');
-	;
+	alert("play");
+	$("#player").Play("app/sound/click.wav");
+	alert("play");
 	var url = "http://finfra.com/~tv11/detail.php";
 	$("#popup").hide();
 	$("#window").hide();
@@ -84,8 +86,6 @@ Main.enableKeys = function() {
 };
 
 Main.keyDown = function() {
-	var snd = new Audio("app/sound/click.wav"); // buffers automatically when created
-	snd.play();
 	var keyCode = event.keyCode;
 	alert("Key pressed: " + keyCode);
 
@@ -180,3 +180,43 @@ Main.keyDown = function() {
 		break;
 	}
 };
+getAbsPath = function(linkString)
+{
+	alert("**************linkString 2012**********"  + linkString );
+	var Abs_path = "";
+	var rootPath = window.location.href.substring(0, location.href.lastIndexOf("/")+1);
+	alert("**************rootPath* 2012**********"  + rootPath );
+	// For 2012 platform
+	if (unescape(window.location.toString()).indexOf("localhost") == -1)
+	{	
+	alert("test 1");
+		if (unescape(window.location.toString()).indexOf("file://C") != -1)
+		{ // For PC-SDK
+		alert("test 12");
+		Abs_path = unescape(rootPath).split("file://")[1].replace("C/","C:/")+linkString;
+		alert("**************Abs_path* 2012**********"  + Abs_path );
+		}
+		else
+		{ // For Real-Device
+		alert("test 13");
+		Abs_path = unescape(rootPath).split("file://")[1]+linkString;
+		}
+	}
+	else // For 2010, 2011 platform
+	{
+		if (unescape(window.location.toString()).indexOf("C:") != -1)
+		{ 
+		// For PC-SDK
+		alert("test 14");
+		Abs_path = "/" + unescape(rootPath).split("file://localhost/C:\\")[1].replace(/\\/g,"/")+linkString;
+		alert("**************Abs_path 2011***********"  + Abs_path );
+		}
+		else 
+		{ 
+		// For Real-Device
+		alert("test 15");
+		Abs_path = "/" + unescape(rootPath).split("file://localhost/")[1]+linkString;
+		}
+	}
+	return Abs_path;
+}
