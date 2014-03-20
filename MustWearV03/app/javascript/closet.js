@@ -32,7 +32,11 @@ function setDefault(){
 	
 	alert('setDefault() start');
 	// 기본 옷장리스트 구현
+	
 
+	alert("////////////////////////////////////////////");
+	alert(localStorage.getItem('topArr'));
+	alert("////////////////////////////////////////////");
 	
 	var cid = sessionStorage.getItem('cid');
 	var csid = sessionStorage.getItem('csid');
@@ -257,36 +261,9 @@ function movePosition(direction){
 			var arr = $('#codiView div');
 			arr.css('background-color', 'rgba(255, 255, 255, 0.1)');
 			
-			$('#topName').html("");
-			$('#topView').remove();
-			$('#topDetail').html("");
 			
-			
-			var newEle = $('<img class="clothView" id="topView">');
-			$('#topName').after(newEle);
-			$('#topView').css({
-				'float': 'left',
-				'width':'40%',
-				'height': 'width',
-				'margin': '2% 2% 0 2%',
-				'border-radius': '30px'
-			});
-			
-			$('#botName').html("");
-			$('#botView').remove();
-			$('#botDetail').html("");
-			
-			
-			var newEle = $('<img class="clothView" id="botView">');
-			$('#botName').after(newEle);
-			$('#botView').css({
-				'float': 'right',
-				'width':'40%',
-				'height': 'width',
-				'margin': '2% 2% 0 2%',
-				'border-radius': '30px'
-			});
-			
+			initItemView();
+				
 			sessionStorage.removeItem('csid');
 			
 			setHelpbar();
@@ -380,7 +357,8 @@ function getCodiView(csid){
 			$('#topName').html(data.detail.tname);
 			var str = data.detail.tcomments+"(가격 : "+data.detail.price+")";
 			$('#topDetail').html(str);
-			},
+			sessionStorage.setItem('tid',tid);
+		},
 		error:function(){
 			alert("ajax error(tid)");
 		}
@@ -398,6 +376,7 @@ function getCodiView(csid){
 			
 			var str = data.detail.bcomments+"(가격 : "+data.detail.price+")";
 			$('#botDetail').html(str);
+			sessionStorage.setItem('bid',bid);
 		},
 		error:function(){
 			alert("ajax error(bid)");
@@ -685,6 +664,74 @@ function setHelpbar(){ //position.x 값을 참조하여 맞는 헬프바 아이�
 	
 	alert("setHelpBar() end");
 }
+
+function del_codiset(){
+	
+	alert('del_codiset() start');
+	
+	var arr = $('#codiView div');
+	var csid = $(arr[position.y]).attr('id');
+
+	var url = "http://finfra.com/~tv11/del_cody.php";
+	
+	$.ajax({
+		url:url,
+		dataType:'json',
+		type:'get',
+		data:{
+			csId:csid
+		},
+		success:function(data){
+			if(data){
+				alert(data);
+				alert('del_codiset() success');
+				
+				initItemView();
+				sessionStorage.removeItem('csid');
+				
+				setDefault();
+				
+			}else{
+				alert('del_codiset() fail');
+			}
+		}
+	});
+	alert('del_codiset() end');
+}
+
+function initItemView(){
+
+	$('#topName').html("");
+	$('#topView').remove();
+	$('#topDetail').html("");
+	
+	
+	var newEle = $('<img class="clothView" id="topView">');
+	$('#topName').after(newEle);
+	$('#topView').css({
+		'float': 'left',
+		'width':'40%',
+		'height': 'width',
+		'margin': '2% 2% 0 2%',
+		'border-radius': '30px'
+	});
+	
+	$('#botName').html("");
+	$('#botView').remove();
+	$('#botDetail').html("");
+	
+	
+	var newEle = $('<img class="clothView" id="botView">');
+	$('#botName').after(newEle);
+	$('#botView').css({
+		'float': 'right',
+		'width':'40%',
+		'height': 'width',
+		'margin': '2% 2% 0 2%',
+		'border-radius': '30px'
+	});
+
+}
 Main.keyDown = function()
 {
 	var keyCode = event.keyCode;
@@ -728,12 +775,16 @@ Main.keyDown = function()
 			alert("YELLOW");
 			if(position.x == 0){
 				mod_closet();
+			}else if(position.x == 1){
+				mod_codiset();
 			}
 			break;
 		case 22: //blue
 			alert('BLUE');
 			if(position.x == 0){
 				del_closet();
+			}else if(position.x == 1){
+				del_codiset();
 			}
 			break;
 		default:
