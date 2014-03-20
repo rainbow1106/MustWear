@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>MustWearV01</title>
+
+		<!-- TODO : Common API -->
+		<script type="text/javascript" language="javascript" src="$MANAGER_WIDGET/Common/API/Widget.js"></script>
+		<script type="text/javascript" language="javascript" src="$MANAGER_WIDGET/Common/API/TVKeyValue.js"></script>
+
+		<!-- TODO : Javascript code -->
+		
+		<script src="app/javascript/jquery-1.11.0.js"></script>
+		<script src="app/javascript/Chart.js"></script>
+		<script src="app/javascript/weather.js"></script>
+		
+		<!-- TODO : Style sheets code -->
+		<link rel="stylesheet" href="app/stylesheets/all.css" type="text/css">
+		<link rel="stylesheet" href="app/stylesheets/weather.css" type="text/css">
+	
+		<!-- TODO: Plugins -->
+		
+		
+		
+
+	</head>
+
+	<body onload="Main.onLoad();" onunload="Main.onUnload();">
+
+		<!-- Dummy anchor as focus for key events -->
+		<a href="javascript:void(0);" id="anchor" onkeydown="Main.keyDown();"></a>
+
+		<!-- TODO: your code here -->
+		<div id="titleBar">weather</div>
+		<div id="contents">
+			<div id="weatherImage" class="container">
+				<img id="image"/>
+				<div id="condition"></div>
+			</div>
+			<div id="forecast" class="container">
+				<div id="temp"></div>
+				<div id="detail">
+					<div id="location"></div>
+					<div id="time"></div>
+					<div id="feelsLikeTemp"></div>
+					<div id="wind"></div>
+				</div>
+				
+			</div>
+			<div id="chart" class="container">
+                <p>기온 그래프</p>		
+				<canvas id="canvas" width="1200" height="250"></canvas>
+			</div>
+		</div>
+		<div id="helpBar">
+			<img id="enter" class = "helpBarIcon" src="app/image/enter.png"/>다음
+			<font id='blue'><img class = "helpBarIcon" src="app/image/blue.png">다음  </font>
+		</div>
+	
+	</body>
+</html>

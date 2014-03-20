@@ -1,0 +1,36 @@
+#titleBar {
+	font-size: 36pt;
+	color: white;
+}
+
+#contents {
+	font-size: 36pt;
+	color: white;
+}
+
+#helpBar {
+	font-size: 24pt;
+	color: white;
+}
+
+tr {
+	height: 100px;
+
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+td {
+	width: 200px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-left: 30px;
+}
+input{
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-left: 30px;
+}
+.focus {
+	border: solid;
+}

@@ -1,0 +1,59 @@
+
+
+#weatherImage{
+	width: 30%;
+	height: 40%;
+	text-align: center;
+}
+
+#forecast{
+	width: 64%;
+	height: 40%;
+}
+
+
+
+#chart{
+	width: 96%;
+	height: 48%;
+	
+}
+
+#image{
+	width: 200px;
+	height: 200px;	
+}
+
+
+
+#detail{
+	margin:6% 0 0 2%;
+	text-align: right;
+}
+
+#temp{
+	margin: 6% 0 0 2%;
+	text-align: center;
+	width:  47%;
+	height: 94%;
+	float: left;
+	font-size: 140px;
+}
+
+#detail div{
+	float:left;
+	margin-top: 2%;
+	height: 22%;
+	width: 47%;
+	font-size: 21px; 
+}
+
+
+#chart{
+	
+	text-align: center;
+}
+
+p{
+	font-size: 24px;
+}

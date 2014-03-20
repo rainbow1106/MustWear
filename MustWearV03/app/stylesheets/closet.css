@@ -1,0 +1,86 @@
+#closetView{
+	width:23%;
+	height:92%;
+	
+}
+
+#codiView{
+	width: 23%;
+	height: 92%;
+}
+
+#itemView{
+	width: 46%;
+	height: 92%;
+}
+
+
+
+.clothView{
+	width:40%;
+	height: width;
+	margin: 2% 2% 0 2%;
+	border-radius: 30px;
+	
+}
+
+
+#topDetail{
+	margin: 10% 0 0 0;
+	float:left;
+	width: 54%;
+	
+
+}
+
+
+#botDetail{
+	margin: 10% 0 0 0;
+	float:right;
+	width: 54%;
+
+
+
+}
+
+#topView{
+	float: left;
+	
+}
+#botView{
+	float:right;
+}
+
+
+
+#topContainer{
+	width: 84%;
+	height: 44%;
+	margin: 4% 8% 0 8%;
+	background-color: rgba(255, 255, 255, 0.1);
+	border-radius: 30px;
+	font-size: 25px;
+
+}
+
+#botContainer{
+	width: 84%;
+	height: 44%;
+	margin: 4% 8% 0 8%;
+	background-color: rgba(255, 255, 255, 0.1);
+	border-radius: 30px;
+	font-size: 25px;
+}
+
+#itemView div p{
+	text-align: center;
+}
+.listItem{
+	width: 80%;
+	margin:10% 0 0 10%;
+	text-align: center;
+	background-color: rgba(255, 255, 255, 0.1);
+	border-radius: 30px;
+	font-size: 30px;
+}
+

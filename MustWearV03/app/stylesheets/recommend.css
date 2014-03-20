@@ -1,0 +1,50 @@
+#selector{
+	width: 40%;
+	height: 52.5%;
+	float: left;
+	text-align: center;
+	padding-top: 9%;
+	padding-bottom: 10%;
+}
+
+#view{
+	
+	width: 54%;
+	height: 92%;
+	float: left;
+	text-align: center;
+	
+}
+
+
+#selector div{
+	
+	font-size:33px;
+	margin:4% 10% 0% 10%;
+	width: 80%;
+	height: 20%;
+	line-height:60px;
+	background-color: rgba(255, 255, 255, 0.1);
+	border-radius: 30px;
+	
+}
+
+
+
+#view div{
+	margin:2% 10% 0% 10%;
+	
+	width: 80%;
+	background-color: rgba(255, 255, 255, 0.1);
+	border-radius: 30px;
+	font-size: 25px;
+}
+
+.clothView{
+	
+	height:40%;
+	width:height;
+	
+	
+}
+

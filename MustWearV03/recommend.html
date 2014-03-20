@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>MustWearV01</title>
+
+		<!-- TODO : Common API -->
+		<script type="text/javascript" language="javascript" src="$MANAGER_WIDGET/Common/API/Widget.js"></script>
+		<script type="text/javascript" language="javascript" src="$MANAGER_WIDGET/Common/API/TVKeyValue.js"></script>
+
+		<!-- TODO : Javascript code -->
+		<script src="app/javascript/jquery-1.11.0.js"></script>
+		<script language="javascript" type="text/javascript" src="app/javascript/recommend.js"></script>
+
+		<!-- TODO : Style sheets code -->
+		<link rel="stylesheet" href="app/stylesheets/all.css" type="text/css">
+		<link rel="stylesheet" href="app/stylesheets/recommend.css" type="text/css">
+
+		<!-- TODO: Plugins -->
+
+	</head>
+
+	<body onload="Main.onLoad();" onunload="Main.onUnload();">
+
+		<!-- Dummy anchor as focus for key events -->
+		<a href="javascript:void(0);" id="anchor" onkeydown="Main.keyDown();"></a>
+
+		<!-- TODO: your code here -->
+		<div id="titleBar">recommend</div>
+		<div id="contents">
+			<div id="selector" class="container">
+				<div id="weatherInfo">날씨정보 뿌리고</div>
+				<div id="sexSelector"  class="movingDiv">남성</div>
+				<div id="styleSelector"  class="movingDiv">포멀</div>
+			</div>
+			<div id="view" class="container">
+				<div id="topContainer" class="movingDiv">
+					<p id="topName">상의이름</p>
+					<img class="clothView" id="topView" src="app/image/cloudy.png"><br>
+				</div>
+				<div id="botContainer" class="movingDiv">
+					<p id="botName">하의 이름</p>
+					<img class="clothView" id="botView" src="app/image/cloudy.png">
+				</div>
+			</div>
+		</div>
+		<div id="helpBar">
+			<font><img class = "helpBarIcon" src="app/image/4_direction.png">이동  </font>
+			<font><img class = "helpBarIcon" src="app/image/enter.png">선택  </font>
+			<font><img class = "helpBarIcon" src="app/image/undo.png">취소  </font>
+		
+			<font id='red'><img class = "helpBarIcon" src="app/image/red.png">이전  </font>
+			<font id='yellow'><img class = "helpBarIcon" src="app/image/yellow.png">코디저장  </font>
+			<font id='blue'><img class = "helpBarIcon" src="app/image/blue.png">옷장  </font>
+		
+			
+		</div>
+	</body>
+</html>

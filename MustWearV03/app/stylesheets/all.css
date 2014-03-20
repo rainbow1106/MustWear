@@ -1,0 +1,64 @@
+*
+{
+	padding: 0;
+	margin: 0;
+	border: 0;
+}
+
+/* Layout */
+body
+{
+	width: 1280px;
+	height: 720px;
+	background-image: url('..\\image\\closet.jpg');
+	
+}
+#helpBar{
+	position : absolute;
+	left : 0px;
+	top : 675px;
+	width : 1280px;
+	height : 45px;
+	background-image: url('..\\image\\helpbar.png');
+	font-size: 20px;	
+	color: white;
+
+}
+#contents{
+	position: absolute;
+	left:  0px;
+	top: 60px;
+	width: 1280px;
+	height: 615px;
+	
+}
+#titleBar{
+	position : absolute;
+	left : 0px;
+	top : 0px;
+	width : 1280px;
+	height : 60px;
+	font-size: 36pt;
+	color: white;	
+	text-align: center;
+	background-image: url('..\\image\\titlebar.png');
+}
+.focus {
+	border-color: rgba(255,255,0,0.2);
+	border: solid;
+}
+
+
+.helpBarIcon{
+	width: 40px;
+	height: 40px;		
+}
+
+
+.container{
+	margin: 2% 0 0 2%;
+	background-color: rgba(255,255,255,0.2);
+	border-radius: 10px;
+	float:left;
+}
+

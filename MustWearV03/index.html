@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>MustWearV01</title>
+
+<!-- TODO : Common API -->
+<script type="text/javascript" language="javascript"
+	src="$MANAGER_WIDGET/Common/API/Widget.js"></script>
+<script type="text/javascript" language="javascript"
+	src="$MANAGER_WIDGET/Common/API/TVKeyValue.js"></script>
+
+<script src="app/javascript/jquery-1.11.0.js"></script>
+<!-- TODO : Javascript code -->
+<script language="javascript" type="text/javascript"
+	src="app/javascript/index.js"></script>
+<!-- TODO : Style sheets code -->
+<link rel="stylesheet" href="app/stylesheets/all.css" type="text/css">
+<link rel="stylesheet" href="app/stylesheets/index.css" type="text/css">
+
+<!-- TODO: Plugins -->
+</head>
+
+<body onLoad="Main.onLoad();" onUnload="Main.onUnload();">
+	<script type="text/javascript"
+		src="$MANAGER_WIDGET/Common/IME_XT9/ime.js"></script>
+	<script type="text/javascript"
+		src="$MANAGER_WIDGET/Common/IME_XT9/inputCommon/ime_input.js"></script>
+	<!-- Dummy anchor as focus for key events -->
+	<a href="javascript:void(0);" id="anchor" onKeyDown="Main.keyDown();"></a>
+	<div id="titleBar" align="center">welcome to Mustwear!!</div>
+	<div id="contents" align="center">
+		<br>
+		<table>
+			<tr>
+			</tr>
+			<tr>
+				<td>아 이 디</td>
+				<td><input type="text" name="id" id="getId"
+					style="width: 400px; height: 55px;"></td>
+			</tr>
+			<tr>
+				<td>비밀번호</td>
+				<td><input type="password" name="pw" id="getPassword"
+					style="width: 400px; height: 55px;"></td>
+			</tr>
+		</table>
+	</div>
+	<div id="helpBar">
+		<font><img class = "helpBarIcon" src="app/image/4_direction.png">이동  </font>
+			<font><img class = "helpBarIcon" src="app/image/enter.png">선택  </font>
+			<font><img class = "helpBarIcon" src="app/image/undo.png">취소  </font>
+		
+			<font id='red'><img class = "helpBarIcon" src="app/image/red.png">이전  </font>
+			<font id='yellow'><img class = "helpBarIcon" src="app/image/yellow.png">코디저장  </font>
+			<font id='blue'><img class = "helpBarIcon" src="app/image/blue.png">옷장  </font>
+	</div>
+	<!-- TODO: your code here -->
+</body>
+</html>
