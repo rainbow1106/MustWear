@@ -106,9 +106,16 @@ function getCodi(){
 				localStorage.setItem('topArr', JSON.stringify(topArr));
 				
 				$('#topName').html(topArr[0].tname);
+				
 				$('#topView').attr('src',topArr[0].t_url_1);
+			
+				sessionStorage.setItem('tid',topArr[0].tid);
+				
 			}else{
+				
 				localStorage.removeItem('topArr');
+				
+				sessionStorage.removeItem('tid');
 				
 				$('#topName').html("해당 의류가 없습니다.");
 				$('#topView').attr('src','image/apple.jpg');
@@ -121,8 +128,12 @@ function getCodi(){
 				
 				$('#botName').html(botArr[0].bname);
 				$('#botView').attr('src', botArr[0].b_url_1);
+				
+				sessionStorage.setItem('bid',botArr[0].bid);
+				
 			}else{
 				localStorage.removeItem('botArr');
+				sessionStorage.removeItem('bid');
 				$('#botName').html("해당 의류가 없습니다.");
 				$('#botView').attr('src', 'image/apple.jpg');
 			}
@@ -392,12 +403,22 @@ Main.keyDown = function()
 			if(position.x == 1){
 				if(position.y==0){
 					//top detail
-					sessionStorage.setItem('flag','top');
+					if(sessionStorage.getItem('tid') != null){
+
+						sessionStorage.setItem('flag','top');
+						document.location.href="detail.html";
+						
+					}
+				
 				}else if(position.y==1){
 					//bot detail
-					sessionStorage.setItem('flag','bot');
+					
+					if(sessionStorage.getItem('bid') != null){
+						sessionStorage.setItem('flag','bot');
+						document.location.href="detail.html";
+						
+					}
 				}
-				document.location.href="detail.html";
 			}
 			break;
 		default:
