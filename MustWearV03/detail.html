@@ -1,30 +1,80 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<title>MustWearV01</title>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>MustWearV01</title>
 
-		<!-- TODO : Common API -->
-		<script type="text/javascript" language="javascript" src="$MANAGER_WIDGET/Common/API/Widget.js"></script>
-		<script type="text/javascript" language="javascript" src="$MANAGER_WIDGET/Common/API/TVKeyValue.js"></script>
+<!-- TODO : Common API -->
+<script type="text/javascript" language="javascript"
+	src="$MANAGER_WIDGET/Common/API/Widget.js"></script>
+<script type="text/javascript" language="javascript"
+	src="$MANAGER_WIDGET/Common/API/TVKeyValue.js"></script>
 
-		<!-- TODO : Javascript code -->
-		<script language="javascript" type="text/javascript" src="app/javascript/Main.js"></script>
+<!-- TODO : Javascript code -->
+<script src="app/javascript/jquery-1.11.0.js"></script>
+<script language="javascript" type="text/javascript"
+	src="app/javascript/detail.js"></script>
+<script language="javascript" type="text/javascript"
+	src="app/javascript/detail.js"></script>
+<!-- TODO : Style sheets code -->
+<link rel="stylesheet" href="app/stylesheets/detail.css" type="text/css">
+<link rel="stylesheet" href="app/stylesheets/all.css" type="text/css">
+<!-- TODO: Plugins -->
 
-		<!-- TODO : Style sheets code -->
-		<link rel="stylesheet" href="app/stylesheets/Main.css" type="text/css">
+</head>
 
-		<!-- TODO: Plugins -->
+<body onload="Main.onLoad();" onunload="Main.onUnload();">
 
-	</head>
+	<!-- Dummy anchor as focus for key events -->
+	<a href="javascript:void(0);" id="anchor" onkeydown="Main.keyDown();"></a>
 
-	<body onload="Main.onLoad();" onunload="Main.onUnload();">
-
-		<!-- Dummy anchor as focus for key events -->
-		<a href="javascript:void(0);" id="anchor" onkeydown="Main.keyDown();"></a>
-
-		<!-- TODO: your code here -->
-		<div id="titleBar">welcome</div>
-		<div id="helpBar"></div>
-	</body>
+	<!-- TODO: your code here -->
+	<div id="titleBar"></div>
+	<div id="contents">
+		<div id="pic">
+			<img id="firstImg" width="275px" height="275px"> <img
+				id="secondImg" width="275px" height="275px">
+		</div>
+		<div id="con">
+			<table>
+				<tr>
+					<td style="text-align: center;">이 &nbsp; 름</td>
+					<td id="name"></td>
+				</tr>
+				<tr>
+					<td style="text-align: center;">성 &nbsp; 별</td>
+					<td id="sex"></td>
+				</tr>
+				<tr>
+					<td style="text-align: center;">스타일</td>
+					<td id="style"></td>
+				</tr>
+				<tr>
+					<td style="text-align: center;">가 &nbsp; 격</td>
+					<td id="price"></td>
+				</tr>
+				<tr>
+					<td style="text-align: center;">사이즈</td>
+					<td id="size"></td>
+				</tr>
+				<tr>
+					<td style="text-align: center;" width="111px">상세설명</td>
+					<td id="comments"></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div id="popup">
+		<div id="window">
+			<div style="margin: 80px;">구매 하시겠습니까?</div>
+			<a href='#' class='button' id="buy">구매하기</a><a href='#'
+				class='button' id="cancle">취 &nbsp; &nbsp; &nbsp;소</a>
+		</div>
+		<div id="payment">
+			<div style="margin: 80px;">구매 완료</div>
+			<a href='#' class='button' id="ok">확인</a>
+		</div>
+	</div>
+	<div id="helpBar">A 추천페이지 &nbsp; &nbsp; &nbsp; &nbsp;D 구매하기</div>
+</body>
 </html>

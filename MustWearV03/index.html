@@ -28,9 +28,13 @@
 		src="$MANAGER_WIDGET/Common/IME_XT9/inputCommon/ime_input.js"></script>
 	<!-- Dummy anchor as focus for key events -->
 	<a href="javascript:void(0);" id="anchor" onKeyDown="Main.keyDown();"></a>
+		<div id="helpBar">
+		<font><img class="helpBarIcon" src="app/image/4_direction.png">이동
+		</font> <font><img class="helpBarIcon" src="app/image/enter.png">선택
+		</font>
+	</div>
 	<div id="titleBar" align="center">welcome to Mustwear!!</div>
 	<div id="contents" align="center">
-		<br>
 		<table>
 			<tr>
 			</tr>
@@ -46,15 +50,8 @@
 			</tr>
 		</table>
 	</div>
-	<div id="helpBar">
-		<font><img class = "helpBarIcon" src="app/image/4_direction.png">이동  </font>
-			<font><img class = "helpBarIcon" src="app/image/enter.png">선택  </font>
-			<font><img class = "helpBarIcon" src="app/image/undo.png">취소  </font>
-		
-			<font id='red'><img class = "helpBarIcon" src="app/image/red.png">이전  </font>
-			<font id='yellow'><img class = "helpBarIcon" src="app/image/yellow.png">코디저장  </font>
-			<font id='blue'><img class = "helpBarIcon" src="app/image/blue.png">옷장  </font>
-	</div>
+		<div id="helpBar">
+		</div>
 	<!-- TODO: your code here -->
 </body>
 </html>
