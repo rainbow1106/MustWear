@@ -286,15 +286,16 @@ function setDefault() {
 			topArr = JSON.parse(topArr);
 
 			localStorage.setItem('topArr', JSON.stringify(topArr));
-
+			
 			$('#topName').html(topArr[0].tname);
 			$('#topView').attr('src', topArr[0].t_url_1);
+			sessionStorage.setItem('tid',topArr[0].tid);
 		} else {
 			localStorage.removeItem('topArr');
 
 			$('#topName').html("해당 의류가 없습니다.");
 			$('#topView').attr('src', 'image/apple.jpg');
-
+			sessionStorage.removeItem('tid');
 		}
 
 		if (botArr) {
@@ -304,16 +305,18 @@ function setDefault() {
 
 			$('#botName').html(botArr[0].bname);
 			$('#botView').attr('src', botArr[0].b_url_1);
+			sessionStorage.setItem('bid',botArr[0].bid);
 		} else {
 			localStorage.removeItem('botArr');
 			$('#botName').html("해당 의류가 없습니다.");
 			$('#botView').attr('src', 'image/apple.jpg');
+			sessionStorage.removeItem('bid');
 		}
 	}
 }
 Main.keyDown = function() {
 	
-	$("#sound").html("<audio src='app/sound/click.wav' autoplay></audio>");
+	//$("#sound").html("<audio src='app/sound/click.wav' autoplay></audio>");
 	
 	var keyCode = event.keyCode;
 	alert("Key pressed: " + keyCode);
@@ -400,6 +403,9 @@ Main.keyDown = function() {
 	case tvKey.KEY_GREEN:
 		alert("GREEN");
 		if (position.x == 1) {
+
+			alert(sessionStorage.getItem('tid')+" tid!!!!!");
+			alert(sessionStorage.getItem('bid')+" bid!!!!!");
 			if (position.y == 0) {
 				// top detail
 				if (sessionStorage.getItem('tid') != null) {

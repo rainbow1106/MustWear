@@ -725,7 +725,7 @@ function initItemView() {
 }
 Main.keyDown = function() {
 	
-	$("#sound").html("<audio src='app/sound/click.wav' autoplay></audio>");
+
 	
 	var keyCode = event.keyCode;
 	alert("Key pressed: " + keyCode);
@@ -792,4 +792,6 @@ Main.keyDown = function() {
 		alert("Unhandled key");
 		break;
 	}
+	
+//	$("#sound").html("<audio src='app/sound/click.wav' autoplay></audio>");
 };
