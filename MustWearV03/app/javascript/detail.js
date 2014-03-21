@@ -11,9 +11,6 @@ Main.onLoad = function() {
 	this.enableKeys();
 	widgetAPI.sendReadyEvent();
 	var type = sessionStorage.getItem('flag');
-	alert("play");
-	$("#player").Play("app/sound/click.wav");
-	alert("play");
 	var url = "http://finfra.com/~tv11/detail.php";
 	$("#popup").hide();
 	$("#window").hide();
@@ -86,9 +83,9 @@ Main.enableKeys = function() {
 };
 
 Main.keyDown = function() {
+	$("#sound").html("<audio src='app/sound/click.wav' autoplay></audio>");
 	var keyCode = event.keyCode;
 	alert("Key pressed: " + keyCode);
-
 	switch (keyCode) {
 	case tvKey.KEY_RETURN:
 	case tvKey.KEY_PANEL_RETURN:
@@ -159,7 +156,7 @@ Main.keyDown = function() {
 			alert("cancle :" + pop + row);
 		}
 		break;
-	case 108:
+	case tvKey.KEY_RED:
 		alert("RED");
 		document.location.href = "recommend.html";
 		break;

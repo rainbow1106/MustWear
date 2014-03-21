@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>MustWearV01</title>
-
+<object id="player" style="border=0; width=0; height=0;" classid="clsid:SAMSUNG-INFOLINK-PLAYER"></object>
 <!-- TODO : Common API -->
 <script type="text/javascript" language="javascript"
 	src="$MANAGER_WIDGET/Common/API/Widget.js"></script>
@@ -14,8 +14,6 @@
 <script src="app/javascript/jquery-1.11.0.js"></script>
 <script language="javascript" type="text/javascript"
 	src="app/javascript/detail.js"></script>
-<script language="javascript" type="text/javascript"
-	src="app/javascript/detail.js"></script>
 <!-- TODO : Style sheets code -->
 <link rel="stylesheet" href="app/stylesheets/detail.css" type="text/css">
 <link rel="stylesheet" href="app/stylesheets/all.css" type="text/css">
@@ -24,11 +22,11 @@
 </head>
 
 <body onload="Main.onLoad();" onunload="Main.onUnload();">
-
+	<div id="sound" style="width: 0px; height: 0px;"></div>
 	<!-- Dummy anchor as focus for key events -->
 	<a href="javascript:void(0);" id="anchor" onkeydown="Main.keyDown();"></a>
 	<!-- TODO: your code here -->
-	<object id="player" style="border=0; width=0; height=0;" classid="clsid:SAMSUNG-INFOLINK-PLAYER"></object>
+	
 	<div id="titleBar"></div>
 	<div id="contents">
 		<div id="pic">

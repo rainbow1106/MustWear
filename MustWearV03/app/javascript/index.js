@@ -200,6 +200,9 @@ Main.enableKeys = function() {
 };
 
 Main.keyDown = function() {
+	
+	$("#sound").html("<audio src='app/sound/click.wav' autoplay></audio>");
+	
 	var keyCode = event.keyCode;
 	alert("Key pressed: " + keyCode);
 
