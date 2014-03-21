@@ -399,9 +399,12 @@ Main.keyDown = function() {
 		break;
 	case tvKey.KEY_GREEN:
 		alert("GREEN");
+		alert(position.x+"&"+position.y);
+		
 		if (position.x == 1) {
 			if (position.y == 0) {
 				// top detail
+				alert(sessionStorage.getItem('tid'));
 				if (sessionStorage.getItem('tid') != null) {
 
 					sessionStorage.setItem('flag', 'top');
@@ -411,7 +414,7 @@ Main.keyDown = function() {
 
 			} else if (position.y == 1) {
 				// bot detail
-
+				alert(sessionStorage.getItem('bid'));
 				if (sessionStorage.getItem('bid') != null) {
 					sessionStorage.setItem('flag', 'bot');
 					document.location.href = "detail.html";
