@@ -725,7 +725,7 @@ function initItemView() {
 }
 Main.keyDown = function() {
 	
-	$("#sound").html("<audio src='app/sound/click.wav' autoplay></audio>");
+
 	
 	var keyCode = event.keyCode;
 	alert("Key pressed: " + keyCode);
@@ -761,6 +761,15 @@ Main.keyDown = function() {
 
 		if (position.x == 0) {
 			add_closet();
+		}else if(position.x == 2){
+			if(position.y == 0){
+				//top Item
+				sessionStorage.setItem('flag','top');
+			}else if(position.y == 1){
+				//bot Item
+				sessionStorage.setItem('flag','bot');
+			}
+			document.location.href = 'detail.html';
 		}
 		break;
 	case tvKey.KEY_YELLOW: // yellow
@@ -783,4 +792,6 @@ Main.keyDown = function() {
 		alert("Unhandled key");
 		break;
 	}
+	
+//	$("#sound").html("<audio src='app/sound/click.wav' autoplay></audio>");
 };
