@@ -7,7 +7,10 @@ var position = {
 };
 var closetY;
 var codisetY;
-
+var pop = 0;
+var loc = 0;
+var imeInsertCloset,imeModifyCloset,imeModifyCodyset;
+var arr;
 var Main = {
 
 };
@@ -24,9 +27,66 @@ Main.onLoad = function() {
 	widgetAPI.sendReadyEvent();
 
 	setDefault();
-
+	$("#popup").hide();
+	$("#insertCloset").hide();
+	$("#modifyCloset").hide();
+	$("#modifyCodyset").hide();
+	imeInsertCloset = new IMEShell("insCloset", ime_ins_closet, this);
+	if (!imeInsertCloset) {
+		alert("object for IMEShell create failed", 3);
+	} else {
+		alert("imeInsertCloset ok", 3);
+	}
+	imeModifyCloset = new IMEShell("insCloset", ime_mod_closet, this);
+	if (!imeModifyCloset) {
+		alert("object for IMEShell create failed", 3);
+	} else {
+		alert("imeModifyCloset ok", 3);
+	}
 };
+function ime_ins_closet(imeobj) {
+	var inputobj = imeobj.getInputObj();
+	alert("start initializing: " + inputobj.id);
+	imeobj.setQWERTYPos(550, 230); // IME XT9, new function
+	imeobj.setKeyFunc(tvKey.KEY_RETURN, function(){
+		alert("IME RETURN");
+		imeInsertCloset._blur();
+		$("#insCloset").blur();
+		document.getElementById("anchor").focus();	
+	});
+	imeobj.setEnterFunc(function() {
+		imeInsertCloset._blur();
+		$("#insCloset").blur();
+		$("#insClosetBtn").addClass("focus");
+		loc = 1;
+		document.getElementById("anchor").focus();
+	});
+	imeobj.setKeySetFunc('qwerty');
+	_g_ime.init("ko", "1_35_259_11", "KOR", "", "kr");
+	alert("ime_ins_closet end...");
+};
+function ime_mod_closet(imeobj) {
+	var inputobj = imeobj.getInputObj();
+	alert("start initializing: " + inputobj.id);
+	imeobj.setQWERTYPos(550, 230); // IME XT9, new function
 
+	imeobj.setKeyFunc(tvKey.KEY_RETURN, function(){
+		alert("IME RETURN");
+		imeModifyCloset._blur();
+		$("#insCloset").blur();
+		document.getElementById("anchor").focus();	
+	});
+	imeobj.setEnterFunc(function() {
+		imeModifyCloset._blur();
+		$("#insCloset").blur();
+		$("#insClosetBtn").addClass("focus");
+		loc = 1;
+		document.getElementById("anchor").focus();
+	});
+	imeobj.setKeySetFunc('qwerty');
+	_g_ime.init("ko", "1_35_259_11", "KOR", "", "kr");
+	alert("ime_mod_closet end...");
+};
 function setDefault() {
 
 	alert('setDefault() start');
@@ -109,7 +169,9 @@ function setDefault() {
 	alert('setDefault() end');
 }
 function movePosition(direction) {
-
+	// move focus
+	// x 0,1,2
+	// y:var
 	alert("movePostion()");
 	switch (position.x) {
 	case 0: {
@@ -454,43 +516,46 @@ function getClosetList() {
 	});
 
 }
-
 function add_closet() {
 
 	alert('add_closet() start');
-	var cName = "new closet";
+	var cName = document.getElementById('insCloset').value;
+	if (cName == null) {
+		var url = 'http://finfra.com/~tv11/ins_closet.php';
 
-	var url = 'http://finfra.com/~tv11/ins_closet.php';
+		$.ajax({
+			url : url,
+			dataType : 'json',
+			type : 'get',
+			data : {
+				mId : localStorage.getItem('user'),
+				cName : cName
+			},
+			success : function(data) {
 
-	$.ajax({
-		url : url,
-		dataType : 'json',
-		type : 'get',
-		data : {
-			mId : localStorage.getItem('user'),
-			cName : cName
-		},
-		success : function(data) {
+				alert(data);
 
-			alert(data);
+				sessionStorage.removeItem('cid');
 
-			sessionStorage.removeItem('cid');
+				setDefault();
+			},
+			error : function() {
+				alert('add_closet ajax error');
+			}
 
-			setDefault();
-		},
-		error : function() {
-			alert('add_closet ajax error');
-		}
+		});
 
-	});
+		alert('add_closet() end');
+	} else {
+		alert('closet name = NULL');
+	}
 
-	alert('add_closet() end');
 }
 function mod_closet() {
 
 	alert('modi_closet() start()');
 
-	var cname = "modified name";
+	var cname = document.getElementById('modCloset').value;;
 	var cid;
 	// //////////////////////////
 
@@ -525,7 +590,6 @@ function mod_closet() {
 
 	alert('mod_closet() end');
 }
-
 function del_closet() {
 
 	alert('del_closet() start');
@@ -724,9 +788,7 @@ function initItemView() {
 
 }
 Main.keyDown = function() {
-	
 
-	
 	var keyCode = event.keyCode;
 	alert("Key pressed: " + keyCode);
 
@@ -735,39 +797,117 @@ Main.keyDown = function() {
 	case tvKey.KEY_PANEL_RETURN:
 		alert("RETURN");
 		widgetAPI.sendReturnEvent();
+		alert("pop :" + pop + "|loc :" + loc);
 		break;
 	case tvKey.KEY_LEFT:
 		alert("LEFT");
-		movePosition(4);
+		if (pop == 0) {
+			movePosition(4);
+		} else if (pop == 1) {
+			if (loc == 1) {
+				loc = 2;
+				$("#insClosetCancle").addClass("focus");
+				$("#insClosetBtn").removeClass("focus");
+
+			} else if (loc == 2) {
+				loc = 1;
+				$("#insClosetBtn").addClass("focus");
+				$("#insClosetCancle").removeClass("focus");
+			}
+		}
+		alert("pop :" + pop + "|loc :" + loc);
 		break;
 	case tvKey.KEY_RIGHT:
 		alert("RIGHT");
-		movePosition(2);
+		if (pop == 0) {
+			movePosition(2);
+		} else if (pop == 1) {
+			if (loc == 1) {
+				loc = 2;
+				$("#insClosetCancle").addClass("focus");
+				$("#insClosetBtn").removeClass("focus");
+			} else if (loc == 2) {
+				loc = 1;
+				$("#insClosetBtn").addClass("focus");
+				$("#insClosetCancle").removeClass("focus");
+			}
+		}
+		alert("pop :" + pop + "|loc :" + loc);
 		break;
 	case tvKey.KEY_UP:
 		alert("UP");
-		movePosition(1);
+		if (pop == 0) {
+			movePosition(1);
+		} else if (pop == 1) {
+			if (loc != 0) {
+				loc = 0;
+				$("#insClosetBtn").removeClass("focus");
+				$("#insClosetCancle").removeClass("focus");
+				$("#insCloset").addClass("inputfocus");
+			}
+		}
+		alert("pop :" + pop + "|loc :" + loc);
 		break;
 	case tvKey.KEY_DOWN:
 		alert("DOWN");
-		movePosition(3);
+		if (pop == 0) {
+			movePosition(3);
+		} else if (pop == 1) {
+			if (loc == 0) {
+				loc = 1;
+				$("#insCloset").removeClass("inputfocus");
+				$("#insClosetBtn").addClass("focus");
+			}
+		}
+		alert("pop :" + pop + "|loc :" + loc);
 		break;
 	case tvKey.KEY_ENTER:
 	case tvKey.KEY_PANEL_ENTER:
 		alert("ENTER");
+		if (pop == 1) {
+			if (loc == 0) {
+				alert("Ins :popup div->input focus");
+				imeInsertCloset._focus();
+				$("#insCloset").focus();
+				$("insCloset").removeClass("inputfocus");
+			} else if (loc == 1) {
+				add_closet();
+				hidePop('#insertCloset');
+			} else if (loc == 2) {
+				hidePop('#insertCloset');
+			}
+		}else if (pop == 2) {
+			if (loc == 0) {
+				alert("Mod C:popup div->input focus");
+				imeInsertCloset._focus();
+				$("#modClosetBtn").focus();
+				$("modCloset").removeClass("inputfocus");
+			} else if (loc == 1) {
+				mod_closet();
+				hidePop('#modCloset');
+			} else if (loc == 2) {
+				hidePop('#modCloset');
+			}
+		}
+		alert("pop :" + pop + "|loc :" + loc);
 		break;
 	case tvKey.KEY_GREEN: // green
 		alert("GREEN");
 
 		if (position.x == 0) {
-			add_closet();
-		}else if(position.x == 2){
-			if(position.y == 0){
-				//top Item
-				sessionStorage.setItem('flag','top');
-			}else if(position.y == 1){
-				//bot Item
-				sessionStorage.setItem('flag','bot');
+			$("#popup").show();
+			$("#insertCloset").show();
+			pop = 1;
+			$("#insCloset").addClass("inputfocus");
+			document.getElementById('insCloset').value = "";
+			// 
+		} else if (position.x == 2) {
+			if (position.y == 0) {
+				// top Item
+				sessionStorage.setItem('flag', 'top');
+			} else if (position.y == 1) {
+				// bot Item
+				sessionStorage.setItem('flag', 'bot');
 			}
 			document.location.href = 'detail.html';
 		}
@@ -775,7 +915,12 @@ Main.keyDown = function() {
 	case tvKey.KEY_YELLOW: // yellow
 		alert("YELLOW");
 		if (position.x == 0) {
-			mod_closet();
+			$("#popup").show();
+			$("#modifyCloset").show();
+			pop = 1;
+			$("#modCloset").addClass("inputfocus");
+			var cname=$($('#closetView div')[position.y]).html();
+			document.getElementById('modCloset').value = cname;
 		} else if (position.x == 1) {
 			mod_codiset();
 		}
@@ -788,10 +933,20 @@ Main.keyDown = function() {
 			del_codiset();
 		}
 		break;
+	case tvKey.KEY_RED:
+		alert("RED");
+		if (position.x == 0) {
+			document.location.href = 'recommend.html';
+		}
 	default:
 		alert("Unhandled key");
 		break;
 	}
-	
-//	$("#sound").html("<audio src='app/sound/click.wav' autoplay></audio>");
 };
+function hidePop(id) {
+	alert("[" + id + "] hide");
+	$("#popup").hide();
+	$(id).hide();
+	pop = 0;
+	loc = 0;
+}
