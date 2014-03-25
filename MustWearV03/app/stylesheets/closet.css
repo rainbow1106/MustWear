@@ -1,4 +1,4 @@
-#closetView{
+﻿#closetView{
 	width:23%;
 	height:92%;
 	
@@ -95,7 +95,7 @@
 	position: absolute;
 	left: 10px;
 	top: 20px;
-	width: 700px;
+	width: 730px;
 	height: 310px;
 	background-color: rgba(242, 227, 210, 1);
 	border-radius: 20px;

@@ -4,8 +4,12 @@ var position = {
 	x : 0,
 	y : 0
 };
-var closetList=[];
-var popupPosition={x:1,y:2};
+var closetList = [];
+var popupPosition = {
+	x : 1,
+	y : 2
+};
+var insPosition = 0;// 0:input 1:confirm 2:cancel
 var sexSet = [ '남성', '여성', '공용' ];
 var styleSet = [ '포멀', '캐주얼', '스포츠' ];
 var topArr;
@@ -13,7 +17,7 @@ var botArr;
 
 var preX;
 
-var imeCsName;
+var imeCsName, imeInsertCloset;
 
 var Main = {
 
@@ -26,7 +30,6 @@ Main.onLoad = function() {
 	getWeather();
 	setDefault();
 
-
 };
 
 function ime_init_csName(imeobj) {
@@ -34,21 +37,21 @@ function ime_init_csName(imeobj) {
 	alert("start initializing: " + inputobj.id);
 	imeobj.setQWERTYPos(290, 230); // IME XT9, new function
 	alert("ID: setQWERTYPos!");
-	
-	////////////////
-	
 
-//	
-//	imeobj.setKeyFunc(tvKey.KEY_YELLOW, function(){
-//		alert("ID :YELLOW");
-//		location.replace("register.html");
-//	});
-	
-	////////////
-	
+	// //////////////
+
+	//	
+	imeobj.setKeyFunc(tvKey.KEY_RETURN, function() {
+		alert("IME RETURN");
+		imeCsName._blur();
+		$("#popupCodiName").blur();
+		document.getElementById("anchor").focus();
+	});
+	// //////////
+
 	imeobj.setKeySetFunc('qwerty');
-	
-	imeobj.setEnterFunc(function(){
+
+	imeobj.setEnterFunc(function() {
 		imeCsName._blur();
 		$('#popupCodiName').blur();
 		document.getElementById('anchor').focus();
@@ -57,7 +60,29 @@ function ime_init_csName(imeobj) {
 
 	alert("ime_init_id end...");
 };
-
+function ime_ins_closet(imeobj) {
+	var inputobj = imeobj.getInputObj();
+	alert("start initializing: " + inputobj.id);
+	imeobj.setQWERTYPos(570, 230); // IME XT9, new function
+	imeobj.setKeyFunc(tvKey.KEY_RETURN, function() {
+		alert("IME RETURN");
+		imeInsertCloset._blur();
+		$("#insCloset").blur();
+		$("#insCloset").addClass("inputfocus");
+		document.getElementById("anchor").focus();
+	});
+	imeobj.setEnterFunc(function() {
+		imeInsertCloset._blur();
+		$("#insCloset").blur();
+		$("#insClosetBtn").addClass("focus");
+		$("#insCloset").removeClass("inputfocus");
+		insPosition=1;
+		document.getElementById("anchor").focus();
+	});
+	imeobj.setKeySetFunc('qwerty');
+	_g_ime.init("ko", "1_35_259_11", "KOR", "", "kr");
+	alert("ime_ins_closet end...");
+};
 
 function getWeather() {
 
@@ -95,10 +120,8 @@ function getWeather() {
 	}
 }
 
-
 function idObjKeyFunc(keyCode) {
 	alert("idObjKeyFunc() start()");
-	
 
 	switch (keyCode) {
 	case tvKey.KEY_UP: // Up Key
@@ -132,9 +155,9 @@ function idObjKeyFunc(keyCode) {
 		alert("Unhandled key");
 		break;
 	}
-	
+
 	alert("idObjKeyFunc() end");
-	
+
 	return false;
 };
 
@@ -256,87 +279,90 @@ function nextItem(arr) {
 	return arr;
 }
 
-function movePopup(direction){
+function movePopup(direction) {
 
 	alert('movePopup() start');
-	alert('position is ('+popupPosition.x +", "+popupPosition.y+")");
-	$('#input div').css('background-color','rgba(255,255,255,0.2)');
-	
-	
-	switch(direction){
-	
-	case 1:{
+	alert('position is (' + popupPosition.x + ", " + popupPosition.y + ")");
+	$('#input div').css('background-color', 'rgba(255,255,255,0.2)');
+
+	switch (direction) {
+
+	case 1: {
 		popupPosition.y--;
-		if(popupPosition.y==-1){
+		if (popupPosition.y == -1) {
 			popupPosition.y = 2;
 		}
 		break;
 	}
-	case 2:{
+	case 2: {
 		popupPosition.x++;
-		if(popupPosition.x == 2){
+		if (popupPosition.x == 2) {
 			popupPosition.x = 0;
 		}
 		break;
 	}
-	case 3:{
+	case 3: {
 		popupPosition.y++;
-		if(popupPosition.y==3){
-			popupPosition.y=0;
+		if (popupPosition.y == 3) {
+			popupPosition.y = 0;
 		}
 		break;
 	}
-	case 4:{
+	case 4: {
 		popupPosition.x--;
-		if(popupPosition.x==-1){
-			popupPosition.x=1;
+		if (popupPosition.x == -1) {
+			popupPosition.x = 1;
 		}
 		break;
 	}
 	}
-	
-	switch(popupPosition.x){
-	case 0:{
-		switch(popupPosition.y){
-		case 0:{
-			$('#popupClosetName').css('background-color','rgba(100,100,100,0.5)');
+
+	switch (popupPosition.x) {
+	case 0: {
+		switch (popupPosition.y) {
+		case 0: {
+			$('#popupClosetName').css('background-color',
+					'rgba(100,100,100,0.5)');
 			break;
 		}
-		case 1:{
-			$('#popupCodiNameDiv').css('background-color','rgba(100,100,100,0.5)');
+		case 1: {
+			$('#popupCodiNameDiv').css('background-color',
+					'rgba(100,100,100,0.5)');
 			break;
 		}
-		case 2:{
-			$('#cancel').css('background-color','rgba(100,100,100,0.5)');
-			break;
-		}
-		}
-		break;
-	}
-	case 1:{
-		switch(popupPosition.y){
-		case 0:{
-			$('#addClosetButton').css('background-color','rgba(100,100,100,0.5)');
-			break;
-		}
-		case 1:{
-			$('#popupCodiNameDiv').css('background-color','rgba(100,100,100,0.5)');
-			break;
-		}
-		case 2:{
-			$('#saveCodi').css('background-color','rgba(100,100,100,0.5)');
-			
+		case 2: {
+			$('#cancel').css('background-color', 'rgba(100,100,100,0.5)');
 			break;
 		}
 		}
 		break;
 	}
-	
+	case 1: {
+		switch (popupPosition.y) {
+		case 0: {
+			$('#addClosetButton').css('background-color',
+					'rgba(100,100,100,0.5)');
+			break;
+		}
+		case 1: {
+			$('#popupCodiNameDiv').css('background-color',
+					'rgba(100,100,100,0.5)');
+			break;
+		}
+		case 2: {
+			$('#saveCodi').css('background-color', 'rgba(100,100,100,0.5)');
+
+			break;
+		}
+		}
+		break;
 	}
-	
+
+	}
+
 }
 function moveDiv(direction) {
-	$(".movingDiv").css('background-color', 'rgba(255, 255, 255, 0.1)');
+	$(".movingDiv").css('background-color', 'rgba(255, 255, 255, 0.2)');
 	if (direction == 1) {
 		if (position.x == 1) {
 			position.x = 0;
@@ -392,19 +418,19 @@ function setDefault() {
 
 	alert('setDefault()');
 
-	//// hide other windows
-	
+	// // hide other windows
+
 	$('#popup').hide();
-	////////////////////////////////////
-	imeCsName = new IMEShell('popupCodiName', ime_init_csName,this);
-	if(imeCsName==null){
+	// //////////////////////////////////
+	imeCsName = new IMEShell('popupCodiName', ime_init_csName, this);
+	if (imeCsName == null) {
 		alert("IME fail");
 	}
-	
+
+	imeInsertCloset = new IMEShell("insCloset", ime_ins_closet, this);
 	_g_ime.init("en", "2_35_259_12", "USA", "", "us");
-	
-	
-	///////////////////////////////////
+
+	// /////////////////////////////////
 	var sexSet = localStorage.getItem('sexSet');
 	var styleSet = localStorage.getItem('styleSet');
 	var topArr = localStorage.getItem('topArr');
@@ -452,7 +478,7 @@ function setDefault() {
 	alert(sex + "   " + style);
 
 	var tid = sessionStorage.getItem('tid');
-	var bid = sessionStorage.getItem('bid');	
+	var bid = sessionStorage.getItem('bid');
 
 	if (!tid && !bid) {
 		alert("첫 로그인시");
@@ -463,10 +489,10 @@ function setDefault() {
 			topArr = JSON.parse(topArr);
 
 			localStorage.setItem('topArr', JSON.stringify(topArr));
-			
+
 			$('#topName').html(topArr[0].tname);
 			$('#topView').attr('src', topArr[0].t_url_1);
-			sessionStorage.setItem('tid',topArr[0].tid);
+			sessionStorage.setItem('tid', topArr[0].tid);
 		} else {
 			localStorage.removeItem('topArr');
 
@@ -482,7 +508,7 @@ function setDefault() {
 
 			$('#botName').html(botArr[0].bname);
 			$('#botView').attr('src', botArr[0].b_url_1);
-			sessionStorage.setItem('bid',botArr[0].bid);
+			sessionStorage.setItem('bid', botArr[0].bid);
 		} else {
 			localStorage.removeItem('botArr');
 			$('#botName').html("해당 의류가 없습니다.");
@@ -490,21 +516,19 @@ function setDefault() {
 			sessionStorage.removeItem('bid');
 		}
 	}
-	
+
 	var arr = $('#selector div');
 	$(arr[1]).css('background-color', 'rgba(255,255,255,0.5)');
-	
+
 }
 Main.keyDown = function() {
-	
-	//$("#sound").html("<audio src='app/sound/click.wav' autoplay></audio>");
-	
+
 	var keyCode = event.keyCode;
 	alert("Key pressed: " + keyCode);
 
 	switch (keyCode) {
 	case tvKey.KEY_RETURN:
-		logOut();
+
 		break;
 	case tvKey.KEY_PANEL_RETURN:
 		alert("RETURN");
@@ -512,35 +536,69 @@ Main.keyDown = function() {
 		break;
 	case tvKey.KEY_LEFT:
 		alert("LEFT");
-			if(position.x ==3){
+		if (position.x == 3) {
 			movePopup(4);
-		}else{
+		} else if (position.x == 5) {
+			if (insPosition == 1) {
+				$("#insClosetBtn").removeClass("focus");
+				$("#insClosetCancle").addClass("focus");
+				insPosition = 2;
+			} else if (insPosition == 2) {
+				$("#insClosetBtn").addClass("focus");
+				$("#insClosetCancle").removeClass("focus");
+				insPosition = 1;
+			}
+		} else {
 			moveDiv(1);
-		}	
+		}
 		break;
 	case tvKey.KEY_RIGHT:
 		alert("RIGHT");
-			if(position.x ==3){
+		if (position.x == 3) {
 			movePopup(2);
-		}else{
+		} else if (position.x == 5) {
+			if (insPosition == 1) {
+				$("#insClosetBtn").removeClass("focus");
+				$("#insClosetCancle").addClass("focus");
+				insPosition = 2;
+			} else if (insPosition == 2) {
+				$("#insClosetBtn").addClass("focus");
+				$("#insClosetCancle").removeClass("focus");
+				insPosition = 1;
+			}
+		} else {
 			moveDiv(1);
-		}	
+		}
 		break;
 	case tvKey.KEY_UP:
 		alert("UP");
-			if(position.x ==3){
+		if (position.x == 3) {
 			movePopup(1);
-		}else{
+		} else if (position.x == 5) {
+			if (insPosition > 0) {
+				$("#insClosetBtn").removeClass("focus");
+				$("#insClosetCancle").removeClass("focus");
+				$("#insCloset").addClass("inputfocus");
+				insPosition=0;
+			}
+		} else {
 			moveDiv(2);
-		}	
+		}
 		break;
 	case tvKey.KEY_DOWN:
 		alert("DOWN");
-		if(position.x ==3){
+		if (position.x == 3) {
 			movePopup(3);
-		}else{
+		} else if (position.x == 5) {
+			if (insPosition == 0) {
+				$("#insClosetBtn").addClass("focus");
+				$("#insClosetCancle").removeClass("focus");
+				$("#insCloset").removeClass("inputfocus");
+				insPosition=1;
+			}
+		} else {
 			moveDiv(2);
-		}	
+		}
 		break;
 	case tvKey.KEY_ENTER:
 	case tvKey.KEY_PANEL_ENTER:
@@ -559,7 +617,7 @@ Main.keyDown = function() {
 				localStorage.setItem('styleSet', JSON.stringify(styleSet));
 				getCodi();
 			}
-		} else if(position.x == 1){
+		} else if (position.x == 1) {
 			if (position.y == 0) {
 				topArr = localStorage.getItem('topArr');
 				if (topArr) {
@@ -570,9 +628,9 @@ Main.keyDown = function() {
 
 					$('#topName').html(topArr[0].tname);
 					$('#topView').attr('src', topArr[0].t_url_1);
-					///////////////
-					sessionStorage.setItem('tid',topArr[0].tid);
-					////////////////
+					// /////////////
+					sessionStorage.setItem('tid', topArr[0].tid);
+					// //////////////
 				}
 			} else {
 				botArr = localStorage.getItem('botArr');
@@ -584,17 +642,43 @@ Main.keyDown = function() {
 
 					$('#botName').html(botArr[0].bname);
 					$('#botView').attr('src', botArr[0].b_url_1);
-					
 
-					sessionStorage.setItem('bid',botArr[0].bid);
+					sessionStorage.setItem('bid', botArr[0].bid);
 				}
 			}
-			}else if(position.x==3){
+		} else if (position.x == 3) {
 			// refer popupPosition
 			excutePopup();
-		}else if(position.x == 4){
+		} else if (position.x == 4) {
 			$('#popup').hide();
-			position.x=preX;
+			position.x = preX;
+		} else if (position.x == 5) {
+			if (insPosition == 0) {
+				// focus input & IME
+				$("#insCloset").focus();
+				imeInsertCloset._focus();
+			} else if (insPosition == 1) {
+				// add closet 
+				position.x =3;
+				
+				var csName = $('#insCloset').html();
+				
+				add_closet();
+				refreshClosetList(csName);
+				
+				$("#insertCloset").hide();//hide insCloset
+				$("#window").show();// show window
+				$("#insClosetBtn").removeClass("focus");
+				$("#insClosetCancle").removeClass("focus");//reset insertCloset
+				
+			} else if (insPosition == 2) {
+				position.x =3;
+				$("#insertCloset").hide();//hide insCloset
+				$("#window").show();// show window
+				$("#insClosetBtn").removeClass("focus");
+				$("#insClosetCancle").removeClass("focus");//reset insertCloset
+			}
+			insPosition=0;
 		}
 		break;
 	case tvKey.KEY_BLUE:
@@ -604,7 +688,8 @@ Main.keyDown = function() {
 	case tvKey.KEY_YELLOW:
 		alert("YELLOW");
 
-		if((sessionStorage.getItem('tid') != null) && (sessionStorage.getItem('bid') != null)){
+		if ((sessionStorage.getItem('tid') != null)
+				&& (sessionStorage.getItem('bid') != null)) {
 			saveCodi();
 		}
 		break;
@@ -614,12 +699,19 @@ Main.keyDown = function() {
 		break;
 	case tvKey.KEY_GREEN:
 		alert("GREEN");
-		alert(position.x+"&"+position.y);
-		
-		if (position.x == 1) {
+		alert(position.x + "&" + position.y);
+		if (position.x == 0) {
 
-			alert(sessionStorage.getItem('tid')+" tid!!!!!");
-			alert(sessionStorage.getItem('bid')+" bid!!!!!");
+			$("#popup").show();
+			$("#insertCloset").show();
+			pop = 1;
+			$("#insCloset").addClass("inputfocus");
+			document.getElementById('insCloset').value = "";
+
+		} else if (position.x == 1) {
+
+			alert(sessionStorage.getItem('tid') + " tid!!!!!");
+			alert(sessionStorage.getItem('bid') + " bid!!!!!");
 			if (position.y == 0) {
 				// top detail
 				alert(sessionStorage.getItem('tid'));
@@ -647,34 +739,32 @@ Main.keyDown = function() {
 	}
 };
 
+function saveCodi() {
 
-function saveCodi(){
-	
 	alert('saveCodi() start');
-	
+
 	preX = position.x;
 	position.x = 3;
-	
+
 	$('#popup').show();
 	$('#window').show();
 	$('#confirm').hide();
-	
+	$('#insertCloset').hide();
+
 	topArr = localStorage.getItem('topArr');
 	topArr = JSON.parse(topArr);
 	$('#popupTopName').html(topArr[0].tname);
-	$('#popupTopView').attr('src',topArr[0].t_url_1);
+	$('#popupTopView').attr('src', topArr[0].t_url_1);
 
 	botArr = localStorage.getItem('botArr');
 	botArr = JSON.parse(botArr);
 	$('#popupBotName').html(botArr[0].bname);
-	$('#popupBotView').attr('src',botArr[0].b_url_1);
+	$('#popupBotView').attr('src', botArr[0].b_url_1);
 
+	// find user and find user's closetList
 
-	
-	//find user and find user's closetList
-	
 	var userId = localStorage.getItem('user');
-	
+
 	var url = 'http://finfra.com/~tv11/closet.php';
 
 	$.ajax({
@@ -699,79 +789,88 @@ function saveCodi(){
 		}
 
 	});
-	
-	 var d = new Date();
-     var str = (d.getMonth()+1)+"월"+d.getDate()+"일"+(d.getHours()+9)+"시"+d.getMinutes()+"분의 코디";
-	
-     $('#popupCodiName').val(str);
-    
-     
-     
-     popupPosition.x=0;
-     popupPosition.y=2;
-     
-     $('#cancel').css('background-color','rgba(100,100,100,0.5)');
-     alert('saveCodi() end');
 
-     
+	var d = new Date();
+	var str = (d.getMonth() + 1) + "월" + d.getDate() + "일" + (d.getHours() + 9)
+			+ "시" + d.getMinutes() + "분의 코디";
+
+	$('#popupCodiName').val(str);
+
+	popupPosition.x = 0;
+	popupPosition.y = 2;
+
+	$('#cancel').css('background-color', 'rgba(100,100,100,0.5)');
+	alert('saveCodi() end');
+
 }
 
-function excutePopup(){
-	if(popupPosition.x==0){
-		if(popupPosition.y==0){
+function excutePopup() {
+	if (popupPosition.x == 0) {
+		if (popupPosition.y == 0) {
 			// closetName
 			closetList = nextItem(closetList);
 			$('#popupClosetName').html(closetList[0].cname);
-			sessionStorage.setItem('cid',closetList[0].cid);
-			
-		}else if(popupPosition.y==1){
-			//codi Name
+			sessionStorage.setItem('cid', closetList[0].cid);
+
+		} else if (popupPosition.y == 1) {
+			// codi Name
 			alert("focus!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 			imeCsName._focus();
 			$('#popupCodiName').focus();
-			
-		}else{
-			//cancel
+
+		} else {
+			// cancel
 			$('#popup').hide();
 			position.x = preX;
 		}
-	}else{
-		if(popupPosition.y==0){
-			//addCloset
-		}else if(popupPosition.y==1){
-			//codi Name
-		}else{
-			//saVe
-			
-			var url="http://finfra.com/~tv11/ins_cody.php";
-			
+	} else if (popupPosition.x == 1) {
+		if (popupPosition.y == 0) {
+			// addCloset
+
+			$("#insertCloset").show();
+			$('#window').hide();
+			$("#insCloset").addClass("inputfocus");
+			document.getElementById('insCloset').value = "";
+			$("#insCloset").focus();
+			imeInsertCloset._focus();
+			position.x = 5;
+		} else if (popupPosition.y == 1) {
+			// codi Name
+			imeCsName._focus();
+			$('#popupCodiName').focus();
+
+		} else {
+			// saVe
+
+			var url = "http://finfra.com/~tv11/ins_cody.php";
+
 			var cid = sessionStorage.getItem('cid');
 			var tid = topArr[0].tid;
 			var bid = botArr[0].bid;
 			var csName = $("#popupCodiName").val();
-			
+
 			$.ajax({
-				url:url,
-				dataType:'json',
-				type:'get',
-				data:{
-					cId:cid,
-					tId:tid,
-					bId:bid,
-					csName:csName
+				url : url,
+				dataType : 'json',
+				type : 'get',
+				data : {
+					cId : cid,
+					tId : tid,
+					bId : bid,
+					csName : csName
 				},
-				success:function(data){
-					if(data){
+				success : function(data) {
+					if (data) {
 						// when return value is true
 						alert('codiSave success');
-						//////////////
+						// ////////////
 						$('#window').hide();
 						$('#confirm').show();
 						position.x = 4;
-						/////////////
-						var str = $('#popupClosetName').html()+"에 저장되었습니다.";
+						// ///////////
+						var str = $('#popupClosetName').html() + "에 저장되었습니다.";
 						$('#confirm').html(str);
-					}else{
+					} else {
 						alert("saveCodi failed");
 						$('#popup').hide();
 					}
@@ -780,5 +879,78 @@ function excutePopup(){
 		}
 	}
 }
+function refreshClosetList(csName){
+	alert('refreshClosetList() start');
+	
+	var url = 'http://finfra.com/~tv11/closet.php';
 
+	$.ajax({
+		async : false,
+		url : url,
+		dataType : 'json',
+		type : 'get',
+		data : {
+			id : localStorage.getItem('user')
+		},
+		success : function(data) {
+			closetList = data.closet;
 
+			if (closetList.length > 0) {
+				
+				len = closetList.length;
+				
+				alert("length is ----------------"+len);
+				
+				for(var i=0;i<(len-1);i++){
+					closetList = nextItem(closetList);
+				}
+				
+				$('#popupClosetName').html(closetList[0].cname);
+				sessionStorage.setItem('cid',closetList[0].cid);
+			}
+		},
+		error : function() {
+			alert('ajax error');
+		}
+
+	});
+	
+
+	alert('refreshClosetList() end');
+}
+function add_closet() {
+
+	alert('add_closet() start');
+	
+	var cName = document.getElementById('insCloset').value;
+	if (cName != null) {
+		var url = 'http://finfra.com/~tv11/ins_closet.php';
+
+		$.ajax({
+			url : url,
+			dataType : 'json',
+			type : 'get',
+			data : {
+				mId : localStorage.getItem('user'),
+				cName : cName
+			},
+			success : function(data) {
+
+				alert(data);
+
+				sessionStorage.removeItem('cid');
+
+			},
+			error : function() {
+				alert('add_closet ajax error');
+			}
+
+		});
+
+		
+	} else {
+		alert('closet name = NULL');
+	}
+	
+	alert('add_closet() end');
+}

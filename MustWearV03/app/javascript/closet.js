@@ -1,4 +1,4 @@
-var widgetAPI = new Common.API.Widget();
+﻿var widgetAPI = new Common.API.Widget();
 var tvKey = new Common.API.TVKeyValue();
 
 var position = {
@@ -9,7 +9,7 @@ var closetY;
 var codisetY;
 var pop = 0;
 var loc = 0;
-var imeInsertCloset, imeModifyCloset, imeModifyCodyset;
+var imeInsertCloset, imeModifyCloset, imeModifyCodiset;
 var arr;
 var Main = {
 
@@ -30,9 +30,9 @@ Main.onLoad = function() {
 	$("#popup").hide();
 	$("#insertCloset").hide();
 	$("#modifyCloset").hide();
-	$("#modifyCodyset").hide();
+	$("#modifyCodiset").hide();
 	$("#deleteCloset").hide();
-	$("#deleteCodyset").hide();
+	$("#deleteCodiset").hide();
 	imeInsertCloset = new IMEShell("insCloset", ime_ins_closet, this);
 	if (!imeInsertCloset) {
 		alert("object for IMEShell create failed", 3);
@@ -45,11 +45,11 @@ Main.onLoad = function() {
 	} else {
 		alert("imeModifyCloset ok", 3);
 	}
-	imeModifyCodyset = new IMEShell("modCodyset", ime_mod_codyset, this);
-	if (!imeModifyCodyset) {
+	imeModifyCodiset = new IMEShell("modCodiset", ime_mod_codyset, this);
+	if (!imeModifyCodiset) {
 		alert("object for IMEShell create failed", 3);
 	} else {
-		alert("imeModifyCodyset ok", 3);
+		alert("imeModifyCodiset ok", 3);
 	}
 };
 function ime_ins_closet(imeobj) {
@@ -86,6 +86,7 @@ function ime_mod_closet(imeobj) {
 		document.getElementById("anchor").focus();
 		$("#modCloset").addClass("inputfocus");
 	});
+	
 	imeobj.setEnterFunc(function() {
 		imeModifyCloset._blur();
 		$("#modCloset").blur();
@@ -104,15 +105,15 @@ function ime_mod_codyset(imeobj) {
 
 	imeobj.setKeyFunc(tvKey.KEY_RETURN, function() {
 		alert("IME RETURN");
-		imeModifyCodyset._blur();
-		$("#modCodyset").blur();
+		imeModifyCodiset._blur();
+		$("#modCodiset").blur();
 		document.getElementById("anchor").focus();
-		$("#modCodyset").addClass("inputfocus");
+		$("#modCodiset").addClass("inputfocus");
 	});
 	imeobj.setEnterFunc(function() {
 		imeModifyCloset._blur();
-		$("#modCodyset").blur();
-		$("#modCodysetBtn").addClass("focus");
+		$("#modCodiset").blur();
+		$("#modCodisetBtn").addClass("focus");
 		loc = 1;
 		document.getElementById("anchor").focus();
 	});
@@ -680,7 +681,7 @@ Main.enableKeys = function() {
 function mod_codiset() {
 
 	var url = 'http://finfra.com/~tv11/mod_cody.php';
-	var csName = document.getElementById('modCodyset').value;
+	var csName = document.getElementById('modCodiset').value;
 	if (csName != null) {
 		$.ajax({
 			async : false,
@@ -707,7 +708,7 @@ function mod_codiset() {
 		});
 		alert('mod_codiset() end');
 	} else {
-		alert('modCodyset is null');
+		alert('modCodiset is null');
 	}
 
 }
@@ -835,12 +836,7 @@ Main.keyDown = function() {
 	case tvKey.KEY_PANEL_RETURN:
 		alert("RETURN");
 		if (pop > 0) {
-			$("#popup").hide();
-			$("#insertCloset").hide();
-			$("#modifyCloset").hide();
-			$("#modifyCodyset").hide();
-			pop = 0;
-			loc = 0;
+			hidePop();
 		}
 		widgetAPI.sendReturnEvent();
 		alert("pop :" + pop + "|loc :" + loc);
@@ -874,13 +870,35 @@ Main.keyDown = function() {
 		} else if (pop == 3) {
 			if (loc == 1) {
 				loc = 2;
-				$("#modCodysetCancle").addClass("focus");
-				$("#modCodysetBtn").removeClass("focus");
+				$("#modCodisetCancle").addClass("focus");
+				$("#modCodisetBtn").removeClass("focus");
 
 			} else if (loc == 2) {
 				loc = 1;
-				$("#modCodysetBtn").addClass("focus");
-				$("#modCodysetCancle").removeClass("focus");
+				$("#modCodisetBtn").addClass("focus");
+				$("#modCodisetCancle").removeClass("focus");
+			}
+		} else if (pop == 4) {
+			if (loc == 1) {
+				loc = 2;
+				$("#delClosetCancle").addClass("focus");
+				$("#delClosetBtn").removeClass("focus");
+
+			} else if (loc == 2) {
+				loc = 1;
+				$("#delClosetBtn").addClass("focus");
+				$("#delClosetCancle").removeClass("focus");
+			}
+		} else if (pop == 5) {
+			if (loc == 1) {
+				loc = 2;
+				$("#delCodisetCancle").addClass("focus");
+				$("#delCodisetBtn").removeClass("focus");
+
+			} else if (loc == 2) {
+				loc = 1;
+				$("#delCodisetBtn").addClass("focus");
+				$("#delCodisetCancle").removeClass("focus");
 			}
 		}
 		alert("pop :" + pop + "|loc :" + loc);
@@ -913,13 +931,35 @@ Main.keyDown = function() {
 		} else if (pop == 3) {
 			if (loc == 1) {
 				loc = 2;
-				$("#modCodysetCancle").addClass("focus");
-				$("#modCodysetBtn").removeClass("focus");
+				$("#modCodisetCancle").addClass("focus");
+				$("#modCodisetBtn").removeClass("focus");
 
 			} else if (loc == 2) {
 				loc = 1;
-				$("#modCodysetBtn").addClass("focus");
-				$("#modCodysetCancle").removeClass("focus");
+				$("#modCodisetBtn").addClass("focus");
+				$("#modCodisetCancle").removeClass("focus");
+			}
+			} else if (pop == 4) {
+			if (loc == 1) {
+				loc = 2;
+				$("#delClosetCancle").addClass("focus");
+				$("#delClosetBtn").removeClass("focus");
+
+			} else if (loc == 2) {
+				loc = 1;
+				$("#delClosetBtn").addClass("focus");
+				$("#delClosetCancle").removeClass("focus");
+			}
+		} else if (pop == 5) {
+			if (loc == 1) {
+				loc = 2;
+				$("#delCodisetCancle").addClass("focus");
+				$("#delCodisetBtn").removeClass("focus");
+
+			} else if (loc == 2) {
+				loc = 1;
+				$("#delCodisetBtn").addClass("focus");
+				$("#delCodisetCancle").removeClass("focus");
 			}
 		}
 		alert("pop :" + pop + "|loc :" + loc);
@@ -945,9 +985,9 @@ Main.keyDown = function() {
 		} else if (pop == 3) {
 			if (loc != 0) {
 				loc = 0;
-				$("#modCodysetBtn").removeClass("focus");
-				$("#modCodysetCancle").removeClass("focus");
-				$("#modCodyset").addClass("inputfocus");
+				$("#modCodisetBtn").removeClass("focus");
+				$("#modCodisetCancle").removeClass("focus");
+				$("#modCodiset").addClass("inputfocus");
 			}
 		}
 		alert("pop :" + pop + "|loc :" + loc);
@@ -971,8 +1011,8 @@ Main.keyDown = function() {
 		} else if (pop == 3) {
 			if (loc == 0) {
 				loc = 1;
-				$("#modCodyset").removeClass("inputfocus");
-				$("#modCodysetBtn").addClass("focus");
+				$("#modCodiset").removeClass("inputfocus");
+				$("#modCodisetBtn").addClass("focus");
 			}
 		}
 		alert("pop :" + pop + "|loc :" + loc);
@@ -990,11 +1030,11 @@ Main.keyDown = function() {
 				add_closet();
 				$("#insClosetBtn").removeClass("focus");
 				$("#insClosetCancle").removeClass("focus");
-				hidePop('#insertCloset');
+				hidePop();
 			} else if (loc == 2) {
 				$("#insClosetBtn").removeClass("focus");
 				$("#insClosetCancle").removeClass("focus");
-				hidePop('#insertCloset');
+				hidePop();
 			}
 		} else if (pop == 2) {
 			if (loc == 0) {
@@ -1004,30 +1044,52 @@ Main.keyDown = function() {
 				$("#modCloset").removeClass("inputfocus");
 			} else if (loc == 1) {
 				mod_closet();
-				hidePop('#modifyCloset');
+				hidePop();
 				$("#modClosetBtn").removeClass("focus");
 				$("#modClosetCancle").removeClass("focus");
 			} else if (loc == 2) {
-				hidePop('#modifyCloset');
+				hidePop();
 				$("#modClosetBtn").removeClass("focus");
 				$("#modClosetCancle").removeClass("focus");
 			}
 		} else if (pop == 3) {
 			if (loc == 0) {
 				alert("Mod CS:popup div->input focus");
-				imeModifyCodyset._focus();
-				$("#modCodyset").focus();
-				$("#modCodyset").removeClass("inputfocus");
+				imeModifyCodiset._focus();
+				$("#modCodiset").focus();
+				$("#modCodiset").removeClass("inputfocus");
 			} else if (loc == 1) {
 				mod_codiset();
-				hidePop('#modifyCodyset');
-				$("#modCodysetBtn").removeClass("focus");
-				$("#modCodysetCancle").removeClass("focus");
+				hidePop();
+				$("#modCodisetBtn").removeClass("focus");
+				$("#modCodisetCancle").removeClass("focus");
 			} else if (loc == 2) {
-				hidePop('#modifyCodyset');
-				$("#modCodysetBtn").removeClass("focus");
-				$("#modCodysetCancle").removeClass("focus");
+				hidePop();
+				$("#modCodisetBtn").removeClass("focus");
+				$("#modCodisetCancle").removeClass("focus");
 			}
+		}else if (pop == 4) {
+			if (loc == 1) {
+				$("#delClosetBtn").removeClass("focus");
+				$("#delClosetCancle").removeClass("focus");
+				del_closet();
+				hidePop();			
+			} else if (loc == 2) {
+				$("#delClosetBtn").removeClass("focus");
+				$("#delClosetCancle").removeClass("focus");
+				hidePop();
+			}
+		}else if (pop == 5) {
+			if (loc == 1) {
+				$("#delCodisetBtn").removeClass("focus");
+				$("#delCodisetCancle").removeClass("focus");
+				del_codiset();
+				hidePop('#deleteCodiset');			
+			} else if (loc == 2) {
+				$("#delCodisetBtn").removeClass("focus");
+				$("#delCodisetCancle").removeClass("focus");
+				hidePop();
+		}
 		}
 		alert("pop :" + pop + "|loc :" + loc);
 		break;
@@ -1063,28 +1125,35 @@ Main.keyDown = function() {
 					$('#closetView div')[position.y]).html();
 		} else if (position.x == 1) {
 			$("#popup").show();
-			$("#modifyCodyset").show();
+				$("#modifyCodiset").show();
 			pop = 3;
-			$("#modCodyset").addClass("inputfocus");
-			document.getElementById('modCodyset').value = $(
+			$("#modCodiset").addClass("inputfocus");
+			document.getElementById('modCodiset').value = $(
 					$('#codiView div')[position.y]).html();
 		}
 		break;
 	case tvKey.KEY_BLUE: // blue
 		alert('BLUE');
-		if (position.x == 0) {
+			if (position.x == 0) {
 			$("#popup").show();
 			$("#deleteCloset").show();
 			pop = 4;
+			loc = 1;
 			$("#delClosetBtn").addClass("focus");
-
-			// del_closet();
+			$("#delCloset").html(
+					"[" + $($('#closetView div')[position.y]).html()
+							+ " ] 을 제거 하시겠습니까 ?");
 		} else if (position.x == 1) {
 			$("#popup").show();
-			$("#deleteCodyset").show();
+			$("#deleteCodiset").show();
 			pop = 5;
-			// del_codiset();
+			loc = 1;
+			$("#delCodisetBtn").addClass("focus");
+			$("#delCodiset").html(
+					"[" + $($('#codiView div')[position.y]).html()
+							+ " ] 을 제거 하시겠습니까 ?");
 		}
+		break;
 		break;
 	case tvKey.KEY_RED:
 		alert("RED");
@@ -1096,10 +1165,27 @@ Main.keyDown = function() {
 		break;
 	}
 };
-function hidePop(id) {
-	alert("[" + id + "] hide");
+function hidePop() {
 	$("#popup").hide();
-	$(id).hide();
+	$("#insertCloset").hide();
+	$("#modifyCloset").hide();
+	$("#modifyCodiset").hide();
+	$("#deleteCloset").hide();
+	$("#deleteCodiset").hide();
+	
+	$('#insClosetBtn').removeClass('focus');
+	$('#modClosetBtn').removeClass('focus');
+	$('#modCodisetBtn').removeClass('focus');
+	$('#delClosetBtn').removeClass('focus');
+	$('#delCodisetBtn').removeClass('focus');
+
+	$('#insClosetCancle').removeClass('focus');
+	$('#modClosetCancle').removeClass('focus');
+	$('#modCodisetCancle').removeClass('focus');
+	$('#delClosetCancle').removeClass('focus');
+	$('#delCodisetCancle').removeClass('focus');
+	
 	pop = 0;
 	loc = 0;
 }
+
