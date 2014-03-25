@@ -1,4 +1,4 @@
-
+﻿
 var widgetAPI = new Common.API.Widget();
 var tvKey = new Common.API.TVKeyValue();
 
@@ -32,7 +32,7 @@ function drawLineGraph() {
 					for ( var i = 0; i < 7; i++) {
 						var hour = data.hourly_forecast[i * 2].FCTTIME.hour;
 						var day = data.hourly_forecast[i * 2].FCTTIME.weekday_name;
-						var date = day + " " + hour + "시";
+						var date = day + " " + hour + "";
 
 						var temp = parseFloat(data.hourly_forecast[i * 2].temp.metric);
 						var ins = {
@@ -181,8 +181,8 @@ function getWeatherCode() {
 
 			var now = new Date();
 
-			var nowTime = now.getFullYear() + "년" + (now.getMonth() + 1) + "월"
-					+ now.getDate() + "일" + (now.getHours() + 9) + ":"
+			var nowTime = now.getFullYear()+"년"+(now.getMonth() + 1) + "월"
+					+ now.getDate() + "일" + (now.getHours() + 9) + "시"
 					+ now.getMinutes() + "분";
 			alert("time-" + nowTime);
 
@@ -196,10 +196,10 @@ function getWeatherCode() {
 			wind = parseFloat(wind);
 			wind = wind * 1000 / 3600;
 
-			$("#temp").html(temp + "℃");
+			$("#temp").html(temp + "°C");
 			$("#location").html(location);
 			$("#time").html(nowTime + "기준");
-			$("#feelsLikeTemp").html("체감온도" + feelsLikeTem + "℃");
+			$("#feelsLikeTemp").html("체감온도" + feelsLikeTem + "°C");
 			$("#wind").html("풍속" + wind.toFixed(2) + "m/s");
 			$("#condition").html(condtion);
 			$('#image').attr("src", iconUrl);
@@ -260,7 +260,7 @@ Main.enableKeys = function() {
 
 Main.keyDown = function() {
 	
-	$("#sound").html("<audio src='app/sound/click.wav' autoplay></audio>");
+	//$("#sound").html("<audio src='app/sound/click.wav' autoplay></audio>");
 	
 	var keyCode = event.keyCode;
 	alert("Key pressed: " + keyCode);

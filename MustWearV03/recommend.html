@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -17,11 +17,12 @@
 		<link rel="stylesheet" href="app/stylesheets/recommend.css" type="text/css">
 
 		<!-- TODO: Plugins -->
-
 	</head>
 
 	<body onload="Main.onLoad();" onunload="Main.onUnload();">
-<div id="sound" style="width: 0px; height: 0px;"></div>
+		<script type="text/javascript" src="$MANAGER_WIDGET/Common/IME_XT9/ime.js"></script>
+		<script type="text/javascript" src="$MANAGER_WIDGET/Common/IME_XT9/inputCommon/ime_input.js"></script>	
+		<div id="sound" style="width: 0px; height: 0px;"></div>
 		<!-- Dummy anchor as focus for key events -->
 		<a href="javascript:void(0);" id="anchor" onkeydown="Main.keyDown();"></a>
 
@@ -29,9 +30,9 @@
 		<div id="titleBar">recommend</div>
 		<div id="contents">
 			<div id="selector" class="container">
-				<div id="weatherInfo">날씨정보 뿌리고</div>
-				<div id="sexSelector"  class="movingDiv">남성</div>
-				<div id="styleSelector"  class="movingDiv">포멀</div>
+				<div id="weatherInfo">날씨정보</div>
+				<div id="sexSelector"  class="movingDiv">성별</div>
+				<div id="styleSelector"  class="movingDiv">스타일</div>
 			</div>
 			<div id="view" class="container">
 				<div id="topContainer" class="movingDiv">
@@ -39,7 +40,7 @@
 					<img class="clothView" id="topView" src="app/image/cloudy.png"><br>
 				</div>
 				<div id="botContainer" class="movingDiv">
-					<p id="botName">하의 이름</p>
+					<p id="botName">하의이름</p>
 					<img class="clothView" id="botView" src="app/image/cloudy.png">
 				</div>
 			</div>
@@ -50,9 +51,47 @@
 			<font><img class = "helpBarIcon" src="app/image/undo.png">취소  </font>
 		
 			<font id='red'><img class = "helpBarIcon" src="app/image/red.png">이전  </font>
-			<font id='yellow'><img class = "helpBarIcon" src="app/image/yellow.png">코디저장  </font>
+			<font id='yellow'><img class = "helpBarIcon" src="app/image/yellow.png">코디저장 </font>
 			<font id='blue'><img class = "helpBarIcon" src="app/image/blue.png">옷장  </font>
 		
+			
+		</div>
+		
+		<div id="popup">
+			<div id="window">
+				<p>코디셋 저장</p>
+				<div id="codisetView">
+					<p id="popupTopName">상의이름</p>
+					<img id="popupTopView">
+					<p id="popupBotName">하의이름</p>
+					<img id="popupBotView">
+				</div>
+				
+				<div id="input">
+			
+					<p>옷장</p>
+					<div id="popupClosetName"></div>
+					<div id="addClosetButton">옷장추가</div>
+					
+					<br><br>
+					
+					<p>코디이름</p>
+					<div id="popupCodiNameDiv">
+						<input type="text" id="popupCodiName"/>
+					</div>
+					
+					<br><br><br>
+			
+					<div id="saveCodi">코디셋저장</div>
+					<div id="cancel">취소</div>	
+					
+				</div>
+			</div>
+			
+			<div id="confirm"></div>
+		</div>
+			
+			
 			
 		</div>
 	</body>

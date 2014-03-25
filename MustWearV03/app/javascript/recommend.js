@@ -1,13 +1,19 @@
-var widgetAPI = new Common.API.Widget();
+﻿var widgetAPI = new Common.API.Widget();
 var tvKey = new Common.API.TVKeyValue();
 var position = {
 	x : 0,
 	y : 0
 };
+var closetList=[];
+var popupPosition={x:1,y:2};
 var sexSet = [ '남성', '여성', '공용' ];
 var styleSet = [ '포멀', '캐주얼', '스포츠' ];
 var topArr;
 var botArr;
+
+var preX;
+
+var imeCsName;
 
 var Main = {
 
@@ -19,7 +25,39 @@ Main.onLoad = function() {
 	widgetAPI.sendReadyEvent();
 	getWeather();
 	setDefault();
+
+
 };
+
+function ime_init_csName(imeobj) {
+	var inputobj = imeobj.getInputObj();
+	alert("start initializing: " + inputobj.id);
+	imeobj.setQWERTYPos(290, 230); // IME XT9, new function
+	alert("ID: setQWERTYPos!");
+	
+	////////////////
+	
+
+//	
+//	imeobj.setKeyFunc(tvKey.KEY_YELLOW, function(){
+//		alert("ID :YELLOW");
+//		location.replace("register.html");
+//	});
+	
+	////////////
+	
+	imeobj.setKeySetFunc('qwerty');
+	
+	imeobj.setEnterFunc(function(){
+		imeCsName._blur();
+		$('#popupCodiName').blur();
+		document.getElementById('anchor').focus();
+	});
+	imeobj.setBlockSpace(true);
+
+	alert("ime_init_id end...");
+};
+
 
 function getWeather() {
 
@@ -56,6 +94,50 @@ function getWeather() {
 	}
 	}
 }
+
+
+function idObjKeyFunc(keyCode) {
+	alert("idObjKeyFunc() start()");
+	
+
+	switch (keyCode) {
+	case tvKey.KEY_UP: // Up Key
+		alert("ID :UP KEY");
+		$(idList[position]).removeClass("focus");
+		position++;
+		alert(position);
+		$(idList[position]).addClass("focus");
+		$(idList[position]).focus();
+		break;
+
+	case tvKey.KEY_DOWN: // Down Key
+		alert("ID :DOWN KEY");
+		$(idList[position]).removeClass("focus");
+		position++;
+		alert(position);
+		$(idList[position]).addClass("focus");
+		$(idList[position]).focus();
+		break;
+
+	case tvKey.KEY_RETURN:
+	case tvKey.KEY_PANEL_RETURN: // return Key
+		alert("ID :Return KEY");
+		$(idList[position]).blur();
+		break;
+	case tvKey.KEY_YELLOW:
+		alert("ID :YELLOW");
+		location.replace("register.html");
+		break;
+	default:
+		alert("Unhandled key");
+		break;
+	}
+	
+	alert("idObjKeyFunc() end");
+	
+	return false;
+};
+
 function getCodi() {
 	alert("getCodi()");
 	var sexSet = localStorage.getItem("sexSet");
@@ -119,7 +201,7 @@ function getCodi() {
 				sessionStorage.removeItem('tid');
 
 				$('#topName').html("해당 의류가 없습니다.");
-				$('#topView').attr('src', 'image/apple.jpg');
+				$('#topView').attr('src', 'app/image/apple.jpg');
 
 			}
 
@@ -136,7 +218,7 @@ function getCodi() {
 				localStorage.removeItem('botArr');
 				sessionStorage.removeItem('bid');
 				$('#botName').html("해당 의류가 없습니다.");
-				$('#botView').attr('src', 'image/apple.jpg');
+				$('#botView').attr('src', 'app/image/apple.jpg');
 			}
 		},
 
@@ -174,6 +256,85 @@ function nextItem(arr) {
 	return arr;
 }
 
+function movePopup(direction){
+
+	alert('movePopup() start');
+	alert('position is ('+popupPosition.x +", "+popupPosition.y+")");
+	$('#input div').css('background-color','rgba(255,255,255,0.2)');
+	
+	
+	switch(direction){
+	
+	case 1:{
+		popupPosition.y--;
+		if(popupPosition.y==-1){
+			popupPosition.y = 2;
+		}
+		break;
+	}
+	case 2:{
+		popupPosition.x++;
+		if(popupPosition.x == 2){
+			popupPosition.x = 0;
+		}
+		break;
+	}
+	case 3:{
+		popupPosition.y++;
+		if(popupPosition.y==3){
+			popupPosition.y=0;
+		}
+		break;
+	}
+	case 4:{
+		popupPosition.x--;
+		if(popupPosition.x==-1){
+			popupPosition.x=1;
+		}
+		break;
+	}
+	}
+	
+	switch(popupPosition.x){
+	case 0:{
+		switch(popupPosition.y){
+		case 0:{
+			$('#popupClosetName').css('background-color','rgba(100,100,100,0.5)');
+			break;
+		}
+		case 1:{
+			$('#popupCodiNameDiv').css('background-color','rgba(100,100,100,0.5)');
+			break;
+		}
+		case 2:{
+			$('#cancel').css('background-color','rgba(100,100,100,0.5)');
+			break;
+		}
+		}
+		break;
+	}
+	case 1:{
+		switch(popupPosition.y){
+		case 0:{
+			$('#addClosetButton').css('background-color','rgba(100,100,100,0.5)');
+			break;
+		}
+		case 1:{
+			$('#popupCodiNameDiv').css('background-color','rgba(100,100,100,0.5)');
+			break;
+		}
+		case 2:{
+			$('#saveCodi').css('background-color','rgba(100,100,100,0.5)');
+			
+			break;
+		}
+		}
+		break;
+	}
+	
+	}
+	
+}
 function moveDiv(direction) {
 	$(".movingDiv").css('background-color', 'rgba(255, 255, 255, 0.1)');
 	if (direction == 1) {
@@ -231,6 +392,19 @@ function setDefault() {
 
 	alert('setDefault()');
 
+	//// hide other windows
+	
+	$('#popup').hide();
+	////////////////////////////////////
+	imeCsName = new IMEShell('popupCodiName', ime_init_csName,this);
+	if(imeCsName==null){
+		alert("IME fail");
+	}
+	
+	_g_ime.init("en", "2_35_259_12", "USA", "", "us");
+	
+	
+	///////////////////////////////////
 	var sexSet = localStorage.getItem('sexSet');
 	var styleSet = localStorage.getItem('styleSet');
 	var topArr = localStorage.getItem('topArr');
@@ -277,7 +451,10 @@ function setDefault() {
 
 	alert(sex + "   " + style);
 
-	if (!topArr && !botArr) {
+	var tid = sessionStorage.getItem('tid');
+	var bid = sessionStorage.getItem('bid');	
+
+	if (!tid && !bid) {
 		alert("첫 로그인시");
 		getCodi();
 	} else {
@@ -294,7 +471,7 @@ function setDefault() {
 			localStorage.removeItem('topArr');
 
 			$('#topName').html("해당 의류가 없습니다.");
-			$('#topView').attr('src', 'image/apple.jpg');
+			$('#topView').attr('src', 'app/image/apple.jpg');
 			sessionStorage.removeItem('tid');
 		}
 
@@ -309,10 +486,14 @@ function setDefault() {
 		} else {
 			localStorage.removeItem('botArr');
 			$('#botName').html("해당 의류가 없습니다.");
-			$('#botView').attr('src', 'image/apple.jpg');
+			$('#botView').attr('src', 'app/image/apple.jpg');
 			sessionStorage.removeItem('bid');
 		}
 	}
+	
+	var arr = $('#selector div');
+	$(arr[1]).css('background-color', 'rgba(255,255,255,0.5)');
+	
 }
 Main.keyDown = function() {
 	
@@ -331,19 +512,35 @@ Main.keyDown = function() {
 		break;
 	case tvKey.KEY_LEFT:
 		alert("LEFT");
-		moveDiv(1);
+			if(position.x ==3){
+			movePopup(4);
+		}else{
+			moveDiv(1);
+		}	
 		break;
 	case tvKey.KEY_RIGHT:
 		alert("RIGHT");
-		moveDiv(1);
+			if(position.x ==3){
+			movePopup(2);
+		}else{
+			moveDiv(1);
+		}	
 		break;
 	case tvKey.KEY_UP:
 		alert("UP");
-		moveDiv(2);
+			if(position.x ==3){
+			movePopup(1);
+		}else{
+			moveDiv(2);
+		}	
 		break;
 	case tvKey.KEY_DOWN:
 		alert("DOWN");
-		moveDiv(2);
+		if(position.x ==3){
+			movePopup(3);
+		}else{
+			moveDiv(2);
+		}	
 		break;
 	case tvKey.KEY_ENTER:
 	case tvKey.KEY_PANEL_ENTER:
@@ -362,7 +559,7 @@ Main.keyDown = function() {
 				localStorage.setItem('styleSet', JSON.stringify(styleSet));
 				getCodi();
 			}
-		} else {
+		} else if(position.x == 1){
 			if (position.y == 0) {
 				topArr = localStorage.getItem('topArr');
 				if (topArr) {
@@ -373,6 +570,9 @@ Main.keyDown = function() {
 
 					$('#topName').html(topArr[0].tname);
 					$('#topView').attr('src', topArr[0].t_url_1);
+					///////////////
+					sessionStorage.setItem('tid',topArr[0].tid);
+					////////////////
 				}
 			} else {
 				botArr = localStorage.getItem('botArr');
@@ -384,8 +584,17 @@ Main.keyDown = function() {
 
 					$('#botName').html(botArr[0].bname);
 					$('#botView').attr('src', botArr[0].b_url_1);
+					
+
+					sessionStorage.setItem('bid',botArr[0].bid);
 				}
 			}
+			}else if(position.x==3){
+			// refer popupPosition
+			excutePopup();
+		}else if(position.x == 4){
+			$('#popup').hide();
+			position.x=preX;
 		}
 		break;
 	case tvKey.KEY_BLUE:
@@ -395,6 +604,9 @@ Main.keyDown = function() {
 	case tvKey.KEY_YELLOW:
 		alert("YELLOW");
 
+		if((sessionStorage.getItem('tid') != null) && (sessionStorage.getItem('bid') != null)){
+			saveCodi();
+		}
 		break;
 	case tvKey.KEY_RED:
 		alert("RED");
@@ -434,3 +646,139 @@ Main.keyDown = function() {
 		break;
 	}
 };
+
+
+function saveCodi(){
+	
+	alert('saveCodi() start');
+	
+	preX = position.x;
+	position.x = 3;
+	
+	$('#popup').show();
+	$('#window').show();
+	$('#confirm').hide();
+	
+	topArr = localStorage.getItem('topArr');
+	topArr = JSON.parse(topArr);
+	$('#popupTopName').html(topArr[0].tname);
+	$('#popupTopView').attr('src',topArr[0].t_url_1);
+
+	botArr = localStorage.getItem('botArr');
+	botArr = JSON.parse(botArr);
+	$('#popupBotName').html(botArr[0].bname);
+	$('#popupBotView').attr('src',botArr[0].b_url_1);
+
+
+	
+	//find user and find user's closetList
+	
+	var userId = localStorage.getItem('user');
+	
+	var url = 'http://finfra.com/~tv11/closet.php';
+
+	$.ajax({
+		async : false,
+		url : url,
+		dataType : 'json',
+		type : 'get',
+		data : {
+			id : userId
+		},
+		success : function(data) {
+			closetList = data.closet;
+
+			if (closetList.length > 0) {
+
+				sessionStorage.setItem('cid', closetList[0].cid);
+				$('#popupClosetName').html(closetList[0].cname);
+			}
+		},
+		error : function() {
+			alert('ajax error');
+		}
+
+	});
+	
+	 var d = new Date();
+     var str = (d.getMonth()+1)+"월"+d.getDate()+"일"+(d.getHours()+9)+"시"+d.getMinutes()+"분의 코디";
+	
+     $('#popupCodiName').val(str);
+    
+     
+     
+     popupPosition.x=0;
+     popupPosition.y=2;
+     
+     $('#cancel').css('background-color','rgba(100,100,100,0.5)');
+     alert('saveCodi() end');
+
+     
+}
+
+function excutePopup(){
+	if(popupPosition.x==0){
+		if(popupPosition.y==0){
+			// closetName
+			closetList = nextItem(closetList);
+			$('#popupClosetName').html(closetList[0].cname);
+			sessionStorage.setItem('cid',closetList[0].cid);
+			
+		}else if(popupPosition.y==1){
+			//codi Name
+			alert("focus!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+			imeCsName._focus();
+			$('#popupCodiName').focus();
+			
+		}else{
+			//cancel
+			$('#popup').hide();
+			position.x = preX;
+		}
+	}else{
+		if(popupPosition.y==0){
+			//addCloset
+		}else if(popupPosition.y==1){
+			//codi Name
+		}else{
+			//saVe
+			
+			var url="http://finfra.com/~tv11/ins_cody.php";
+			
+			var cid = sessionStorage.getItem('cid');
+			var tid = topArr[0].tid;
+			var bid = botArr[0].bid;
+			var csName = $("#popupCodiName").val();
+			
+			$.ajax({
+				url:url,
+				dataType:'json',
+				type:'get',
+				data:{
+					cId:cid,
+					tId:tid,
+					bId:bid,
+					csName:csName
+				},
+				success:function(data){
+					if(data){
+						// when return value is true
+						alert('codiSave success');
+						//////////////
+						$('#window').hide();
+						$('#confirm').show();
+						position.x = 4;
+						/////////////
+						var str = $('#popupClosetName').html()+"에 저장되었습니다.";
+						$('#confirm').html(str);
+					}else{
+						alert("saveCodi failed");
+						$('#popup').hide();
+					}
+				}
+			});
+		}
+	}
+}
+
+

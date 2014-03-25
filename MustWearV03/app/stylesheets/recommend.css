@@ -29,13 +29,82 @@
 	
 }
 
+#contents{
+	z-index: 1;
+}
+
+#popup {
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,1);
+	z-index: 1;
+}
+
+#window {
+	z-index: 1;
+	position: absolute;
+	left: 190px;
+	top: 50px;
+	width: 900px;
+	height: 620px;
+	background-color: rgba(255, 255, 255, 0.8);
+	border-radius: 20px;
+	
+	text-align: center;
+	font-size: 36px;
+	font-style:oblique;
+	color: #725129;
+	
+}
+
+#confirm {
+	z-index: 1;
+	position: absolute;
+	left: 356px;
+	top: 220px;
+	width: 700px;
+	height: 310px;
+	background-color: rgba(242, 227, 210, 0.8);
+	border-radius: 20px;
+	
+	text-align: center;
+	font-size: 36px;
+	font-style:oblique;
+	color: #725129;
+	
+}
+
+.button {
+ border: 1px solid #447314;
+   background: #6aa436;
+   background: -webkit-gradient(linear, left top, left bottom, from(#8dc059), to(#6aa436));
+   background: -webkit-linear-gradient(top, #8dc059, #6aa436);
+   background: -moz-linear-gradient(top, #8dc059, #6aa436);
+   background: -ms-linear-gradient(top, #8dc059, #6aa436);
+   background: -o-linear-gradient(top, #8dc059, #6aa436);
+   background-image: -ms-linear-gradient(top, #8dc059 0%, #6aa436 100%);
+   -webkit-border-radius: 10px;
+   -moz-border-radius: 10px;
+   border-radius: 10px;
+   -webkit-box-shadow: rgba(255,255,255,0.4) 0 1px 0, inset rgba(255,255,255,0.4) 0 1px 0;
+   -moz-box-shadow: rgba(255,255,255,0.4) 0 1px 0, inset rgba(255,255,255,0.4) 0 1px 0;
+   box-shadow: rgba(255,255,255,0.4) 0 1px 0, inset rgba(255,255,255,0.4) 0 1px 0;
+   text-shadow: #addc7e 0 1px 0;
+   color: #31540c;
+   font-family: helvetica, serif;
+   padding: 8.5px 18px;
+   font-size: 24px;
+   text-decoration: none;
+   vertical-align: middle;
+   margin: 60px;
+}
 
 
 #view div{
 	margin:2% 10% 0% 10%;
 	
 	width: 80%;
-	background-color: rgba(255, 255, 255, 0.1);
+	background-color: rgba(255, 255, 255, 0.2);
 	border-radius: 30px;
 	font-size: 25px;
 }
@@ -46,5 +115,95 @@
 	width: 40%;
 	
 	
+}
+
+
+#window #codisetView{
+	margin:2% 0 0 5%;
+	float:left;
+	text-align: center;
+	
+	width: 30%;
+	height: 85%;
+	font-size: 25px;
+}
+
+#window #input{
+	margin:2% 0 0 5%;
+	float:left;
+	text-align: center;
+	
+	width: 55%;
+	height: 83%;
+	
+	font-size: 30px;
+}
+
+#window #codisetView img{
+	width: 90%;
+	height: 210px;
+	
+}
+
+
+#input input{
+	background-color: rgba(255,255,255,0.2);
+	font-style:oblique;
+	font-size: 30px;
+	color: #725129;
+}
+#input p{
+	margin:4% 0 0 2%;
+	border-radius: 10px;
+	background-color: rgba(255,255,255,0.2);
+	text-align: center;
+	width: 96%;
+	height: 10%;
+	color: black;
+}
+
+#input div{
+	margin: 4% 0 0 2%;
+	border-radius:10px;
+	background-color: rgba(255,255,255,0.2);
+	text-align: center;
+	width: 96%;
+}
+#input #popupClosetName{
+	float: left;
+	width: 60%;
+	height: 10%;
+	
+	
+}
+
+.focus {
+	border: solid;
+}
+
+#input #addClosetButton{
+	float: left;
+	width: 34%;
+	height: 10%;
+}
+
+#input #popupCodiNameDiv{
+	float: clear;
+	width: 96%;
+	height: 10%;
+}
+
+#input #saveCodi{
+	margin-right:2%;
+	float: right;
+	width: 40%;
+	height: 10%;
+}
+
+#input #cancel{
+	margin-right:2%;
+	float: right;
+	width: 30%;
+	height: 10%;
 }
 

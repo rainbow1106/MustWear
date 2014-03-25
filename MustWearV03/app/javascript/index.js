@@ -1,4 +1,4 @@
-var widgetAPI = new Common.API.Widget();
+﻿var widgetAPI = new Common.API.Widget();
 var tvKey = new Common.API.TVKeyValue();
 var idList = new Array('#getId', '#getPassword');
 var position = 0;
@@ -11,7 +11,7 @@ Main.onLoad = function() {
 	// Enable key event processing
 	this.enableKeys();
 	widgetAPI.sendReadyEvent();
-	location.href = 'recommend.html';
+	//location.href = 'recommend.html';
 	if (localStorage.getItem("user")) {
 		location.replace("weather.html");
 	} else {
@@ -202,7 +202,7 @@ Main.enableKeys = function() {
 
 Main.keyDown = function() {
 	
-	$("#sound").html("<audio src='app/sound/click.wav' autoplay></audio>");
+	//$("#sound").html("<audio src='app/sound/click.wav' autoplay></audio>");
 	
 	var keyCode = event.keyCode;
 	alert("Key pressed: " + keyCode);

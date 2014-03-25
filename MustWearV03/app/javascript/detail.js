@@ -16,8 +16,6 @@ Main.onLoad = function() {
 	$("#window").hide();
 	$("payment").hide();
 	if (type == "top") {
-		var topInfo = localStorage.getItem('topArr');
-		var topArr = JSON.parse(topInfo);
 		alert("top- ajax");
 		$
 				.ajax({
@@ -25,7 +23,7 @@ Main.onLoad = function() {
 					dataType : 'json',
 					type : 'get',
 					data : {
-						tId : topArr[0].tid
+						tId : sessionStorage.getItem('tid')
 					},
 					success : function(data) {
 						alert(JSON.stringify(data));
@@ -47,15 +45,13 @@ Main.onLoad = function() {
 					}
 				});
 	} else if (type == "bot") {
-		var botInfo = localStorage.getItem('botArr');
-		var botArr = JSON.parse(botInfo);
 		alert("bot - ajax");
 		$.ajax({
 			url : url,
 			dataType : 'json',
 			type : 'get',
 			data : {
-				bId : botArr[0].bid
+				bId : sessionStorage.getItem('bid')
 			},
 			success : function(data) {
 				$('#name').html(data.detail.bname);
@@ -83,6 +79,7 @@ Main.enableKeys = function() {
 };
 
 Main.keyDown = function() {
+
 	
 	var keyCode = event.keyCode;
 	alert("Key pressed: " + keyCode);
@@ -158,7 +155,7 @@ Main.keyDown = function() {
 		break;
 	case tvKey.KEY_RED:
 		alert("RED");
-		document.location.href = "recommend.html";
+		history.back();
 		break;
 	case tvKey.KEY_BLUE:
 		alert("BLUE");
@@ -176,7 +173,7 @@ Main.keyDown = function() {
 		alert("Unhandled key");
 		break;
 	}
-	$("#sound").Play();
+	//$("#sound").Play();
 };
 getAbsPath = function(linkString)
 {
