@@ -9,7 +9,7 @@ var closetY;
 var codisetY;
 var pop = 0;
 var loc = 0;
-var imeInsertCloset,imeModifyCloset,imeModifyCodyset;
+var imeInsertCloset, imeModifyCloset, imeModifyCodyset;
 var arr;
 var Main = {
 
@@ -31,28 +31,37 @@ Main.onLoad = function() {
 	$("#insertCloset").hide();
 	$("#modifyCloset").hide();
 	$("#modifyCodyset").hide();
+	$("#deleteCloset").hide();
+	$("#deleteCodyset").hide();
 	imeInsertCloset = new IMEShell("insCloset", ime_ins_closet, this);
 	if (!imeInsertCloset) {
 		alert("object for IMEShell create failed", 3);
 	} else {
 		alert("imeInsertCloset ok", 3);
 	}
-	imeModifyCloset = new IMEShell("insCloset", ime_mod_closet, this);
+	imeModifyCloset = new IMEShell("modCloset", ime_mod_closet, this);
 	if (!imeModifyCloset) {
 		alert("object for IMEShell create failed", 3);
 	} else {
 		alert("imeModifyCloset ok", 3);
+	}
+	imeModifyCodyset = new IMEShell("modCodyset", ime_mod_codyset, this);
+	if (!imeModifyCodyset) {
+		alert("object for IMEShell create failed", 3);
+	} else {
+		alert("imeModifyCodyset ok", 3);
 	}
 };
 function ime_ins_closet(imeobj) {
 	var inputobj = imeobj.getInputObj();
 	alert("start initializing: " + inputobj.id);
 	imeobj.setQWERTYPos(550, 230); // IME XT9, new function
-	imeobj.setKeyFunc(tvKey.KEY_RETURN, function(){
+	imeobj.setKeyFunc(tvKey.KEY_RETURN, function() {
 		alert("IME RETURN");
 		imeInsertCloset._blur();
 		$("#insCloset").blur();
-		document.getElementById("anchor").focus();	
+		document.getElementById("anchor").focus();
+		$("#insCloset").addClass("inputfocus");
 	});
 	imeobj.setEnterFunc(function() {
 		imeInsertCloset._blur();
@@ -70,22 +79,46 @@ function ime_mod_closet(imeobj) {
 	alert("start initializing: " + inputobj.id);
 	imeobj.setQWERTYPos(550, 230); // IME XT9, new function
 
-	imeobj.setKeyFunc(tvKey.KEY_RETURN, function(){
+	imeobj.setKeyFunc(tvKey.KEY_RETURN, function() {
 		alert("IME RETURN");
 		imeModifyCloset._blur();
-		$("#insCloset").blur();
-		document.getElementById("anchor").focus();	
+		$("#modCloset").blur();
+		document.getElementById("anchor").focus();
+		$("#modCloset").addClass("inputfocus");
 	});
 	imeobj.setEnterFunc(function() {
 		imeModifyCloset._blur();
-		$("#insCloset").blur();
-		$("#insClosetBtn").addClass("focus");
+		$("#modCloset").blur();
+		$("#modClosetBtn").addClass("focus");
 		loc = 1;
 		document.getElementById("anchor").focus();
 	});
 	imeobj.setKeySetFunc('qwerty');
 	_g_ime.init("ko", "1_35_259_11", "KOR", "", "kr");
 	alert("ime_mod_closet end...");
+};
+function ime_mod_codyset(imeobj) {
+	var inputobj = imeobj.getInputObj();
+	alert("start initializing: " + inputobj.id);
+	imeobj.setQWERTYPos(550, 230); // IME XT9, new function
+
+	imeobj.setKeyFunc(tvKey.KEY_RETURN, function() {
+		alert("IME RETURN");
+		imeModifyCodyset._blur();
+		$("#modCodyset").blur();
+		document.getElementById("anchor").focus();
+		$("#modCodyset").addClass("inputfocus");
+	});
+	imeobj.setEnterFunc(function() {
+		imeModifyCloset._blur();
+		$("#modCodyset").blur();
+		$("#modCodysetBtn").addClass("focus");
+		loc = 1;
+		document.getElementById("anchor").focus();
+	});
+	imeobj.setKeySetFunc('qwerty');
+	_g_ime.init("ko", "1_35_259_11", "KOR", "", "kr");
+	alert("ime_mod_codyset end...");
 };
 function setDefault() {
 
@@ -520,7 +553,7 @@ function add_closet() {
 
 	alert('add_closet() start');
 	var cName = document.getElementById('insCloset').value;
-	if (cName == null) {
+	if (cName != null) {
 		var url = 'http://finfra.com/~tv11/ins_closet.php';
 
 		$.ajax({
@@ -555,7 +588,8 @@ function mod_closet() {
 
 	alert('modi_closet() start()');
 
-	var cname = document.getElementById('modCloset').value;;
+	var cname = document.getElementById('modCloset').value;
+	;
 	var cid;
 	// //////////////////////////
 
@@ -646,32 +680,36 @@ Main.enableKeys = function() {
 function mod_codiset() {
 
 	var url = 'http://finfra.com/~tv11/mod_cody.php';
+	var csName = document.getElementById('modCodyset').value;
+	if (csName != null) {
+		$.ajax({
+			async : false,
+			url : url,
+			dataType : 'json',
+			type : 'get',
+			data : {
+				csName : csName,
+				csId : sessionStorage.getItem('csid')
+			},
+			success : function(data) {
+				if (data) {
+					alert("success " + data);
 
-	$.ajax({
-		async : false,
-		url : url,
-		dataType : 'json',
-		type : 'get',
-		data : {
-			csName : "new codiset name",
-			csId : sessionStorage.getItem('csid')
-		},
-		success : function(data) {
-			if (data) {
-				alert("success " + data);
+					setDefault();
 
-				setDefault();
-
-			} else {
-				alert('mod_codiset() fail');
+				} else {
+					alert('mod_codiset() fail');
+				}
+			},
+			error : function() {
+				alert('mod_codiset() ajax error');
 			}
-		},
-		error : function() {
-			alert('mod_codiset() ajax error');
-		}
-	});
+		});
+		alert('mod_codiset() end');
+	} else {
+		alert('modCodyset is null');
+	}
 
-	alert('mod_codiset() end');
 }
 function setHelpbar() { // position.x 값을 참조하여 맞는 헬프바 아이콘 구현
 
@@ -796,6 +834,14 @@ Main.keyDown = function() {
 	case tvKey.KEY_RETURN:
 	case tvKey.KEY_PANEL_RETURN:
 		alert("RETURN");
+		if (pop > 0) {
+			$("#popup").hide();
+			$("#insertCloset").hide();
+			$("#modifyCloset").hide();
+			$("#modifyCodyset").hide();
+			pop = 0;
+			loc = 0;
+		}
 		widgetAPI.sendReturnEvent();
 		alert("pop :" + pop + "|loc :" + loc);
 		break;
@@ -814,6 +860,28 @@ Main.keyDown = function() {
 				$("#insClosetBtn").addClass("focus");
 				$("#insClosetCancle").removeClass("focus");
 			}
+		} else if (pop == 2) {
+			if (loc == 1) {
+				loc = 2;
+				$("#modClosetCancle").addClass("focus");
+				$("#modClosetBtn").removeClass("focus");
+
+			} else if (loc == 2) {
+				loc = 1;
+				$("#modClosetBtn").addClass("focus");
+				$("#modClosetCancle").removeClass("focus");
+			}
+		} else if (pop == 3) {
+			if (loc == 1) {
+				loc = 2;
+				$("#modCodysetCancle").addClass("focus");
+				$("#modCodysetBtn").removeClass("focus");
+
+			} else if (loc == 2) {
+				loc = 1;
+				$("#modCodysetBtn").addClass("focus");
+				$("#modCodysetCancle").removeClass("focus");
+			}
 		}
 		alert("pop :" + pop + "|loc :" + loc);
 		break;
@@ -831,6 +899,28 @@ Main.keyDown = function() {
 				$("#insClosetBtn").addClass("focus");
 				$("#insClosetCancle").removeClass("focus");
 			}
+		} else if (pop == 2) {
+			if (loc == 1) {
+				loc = 2;
+				$("#modClosetCancle").addClass("focus");
+				$("#modClosetBtn").removeClass("focus");
+
+			} else if (loc == 2) {
+				loc = 1;
+				$("#modClosetBtn").addClass("focus");
+				$("#modClosetCancle").removeClass("focus");
+			}
+		} else if (pop == 3) {
+			if (loc == 1) {
+				loc = 2;
+				$("#modCodysetCancle").addClass("focus");
+				$("#modCodysetBtn").removeClass("focus");
+
+			} else if (loc == 2) {
+				loc = 1;
+				$("#modCodysetBtn").addClass("focus");
+				$("#modCodysetCancle").removeClass("focus");
+			}
 		}
 		alert("pop :" + pop + "|loc :" + loc);
 		break;
@@ -845,6 +935,20 @@ Main.keyDown = function() {
 				$("#insClosetCancle").removeClass("focus");
 				$("#insCloset").addClass("inputfocus");
 			}
+		} else if (pop == 2) {
+			if (loc != 0) {
+				loc = 0;
+				$("#modClosetBtn").removeClass("focus");
+				$("#modClosetCancle").removeClass("focus");
+				$("#modCloset").addClass("inputfocus");
+			}
+		} else if (pop == 3) {
+			if (loc != 0) {
+				loc = 0;
+				$("#modCodysetBtn").removeClass("focus");
+				$("#modCodysetCancle").removeClass("focus");
+				$("#modCodyset").addClass("inputfocus");
+			}
 		}
 		alert("pop :" + pop + "|loc :" + loc);
 		break;
@@ -858,6 +962,18 @@ Main.keyDown = function() {
 				$("#insCloset").removeClass("inputfocus");
 				$("#insClosetBtn").addClass("focus");
 			}
+		} else if (pop == 2) {
+			if (loc == 0) {
+				loc = 1;
+				$("#modCloset").removeClass("inputfocus");
+				$("#modClosetBtn").addClass("focus");
+			}
+		} else if (pop == 3) {
+			if (loc == 0) {
+				loc = 1;
+				$("#modCodyset").removeClass("inputfocus");
+				$("#modCodysetBtn").addClass("focus");
+			}
 		}
 		alert("pop :" + pop + "|loc :" + loc);
 		break;
@@ -869,24 +985,48 @@ Main.keyDown = function() {
 				alert("Ins :popup div->input focus");
 				imeInsertCloset._focus();
 				$("#insCloset").focus();
-				$("insCloset").removeClass("inputfocus");
+				$("#insCloset").removeClass("inputfocus");
 			} else if (loc == 1) {
 				add_closet();
+				$("#insClosetBtn").removeClass("focus");
+				$("#insClosetCancle").removeClass("focus");
 				hidePop('#insertCloset');
 			} else if (loc == 2) {
+				$("#insClosetBtn").removeClass("focus");
+				$("#insClosetCancle").removeClass("focus");
 				hidePop('#insertCloset');
 			}
-		}else if (pop == 2) {
+		} else if (pop == 2) {
 			if (loc == 0) {
 				alert("Mod C:popup div->input focus");
-				imeInsertCloset._focus();
-				$("#modClosetBtn").focus();
-				$("modCloset").removeClass("inputfocus");
+				imeModifyCloset._focus();
+				$("#modCloset").focus();
+				$("#modCloset").removeClass("inputfocus");
 			} else if (loc == 1) {
 				mod_closet();
-				hidePop('#modCloset');
+				hidePop('#modifyCloset');
+				$("#modClosetBtn").removeClass("focus");
+				$("#modClosetCancle").removeClass("focus");
 			} else if (loc == 2) {
-				hidePop('#modCloset');
+				hidePop('#modifyCloset');
+				$("#modClosetBtn").removeClass("focus");
+				$("#modClosetCancle").removeClass("focus");
+			}
+		} else if (pop == 3) {
+			if (loc == 0) {
+				alert("Mod CS:popup div->input focus");
+				imeModifyCodyset._focus();
+				$("#modCodyset").focus();
+				$("#modCodyset").removeClass("inputfocus");
+			} else if (loc == 1) {
+				mod_codiset();
+				hidePop('#modifyCodyset');
+				$("#modCodysetBtn").removeClass("focus");
+				$("#modCodysetCancle").removeClass("focus");
+			} else if (loc == 2) {
+				hidePop('#modifyCodyset');
+				$("#modCodysetBtn").removeClass("focus");
+				$("#modCodysetCancle").removeClass("focus");
 			}
 		}
 		alert("pop :" + pop + "|loc :" + loc);
@@ -917,20 +1057,33 @@ Main.keyDown = function() {
 		if (position.x == 0) {
 			$("#popup").show();
 			$("#modifyCloset").show();
-			pop = 1;
+			pop = 2;
 			$("#modCloset").addClass("inputfocus");
-			var cname=$($('#closetView div')[position.y]).html();
-			document.getElementById('modCloset').value = cname;
+			document.getElementById('modCloset').value = $(
+					$('#closetView div')[position.y]).html();
 		} else if (position.x == 1) {
-			mod_codiset();
+			$("#popup").show();
+			$("#modifyCodyset").show();
+			pop = 3;
+			$("#modCodyset").addClass("inputfocus");
+			document.getElementById('modCodyset').value = $(
+					$('#codiView div')[position.y]).html();
 		}
 		break;
 	case tvKey.KEY_BLUE: // blue
 		alert('BLUE');
 		if (position.x == 0) {
-			del_closet();
+			$("#popup").show();
+			$("#deleteCloset").show();
+			pop = 4;
+			$("#delClosetBtn").addClass("focus");
+
+			// del_closet();
 		} else if (position.x == 1) {
-			del_codiset();
+			$("#popup").show();
+			$("#deleteCodyset").show();
+			pop = 5;
+			// del_codiset();
 		}
 		break;
 	case tvKey.KEY_RED:
