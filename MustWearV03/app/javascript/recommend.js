@@ -664,7 +664,8 @@ Main.keyDown = function() {
 				var csName = $('#insCloset').html();
 				
 				add_closet();
-				refreshClosetList(csName);
+				refreshClosetList();
+			
 				
 				$("#insertCloset").hide();//hide insCloset
 				$("#window").show();// show window
@@ -738,6 +739,46 @@ Main.keyDown = function() {
 		break;
 	}
 };
+
+function refreshClosetList(){
+	alert("refreshClosetList() start");
+	
+	
+	var userId = localStorage.getItem('user');
+
+	var url = 'http://finfra.com/~tv11/closet.php';
+
+	$.ajax({
+		async : false,
+		url : url,
+		dataType : 'json',
+		type : 'get',
+		data : {
+			id : userId
+		},
+		success : function(data) {
+			closetList = data.closet;
+			
+			alert('refresh ajax success!!!');
+			
+			if(closetList.length>0){
+				
+				
+				
+				$('#popupClosetName').html(closetList[0].cname);
+				sessionStorage.setItem('cid',closetList[0].cid);
+			}
+
+		},
+		error : function() {
+			alert('ajax error');
+		}
+
+	});
+
+	
+	alert("refreshClosetList() end");
+}
 
 function saveCodi() {
 
@@ -879,54 +920,18 @@ function excutePopup() {
 		}
 	}
 }
-function refreshClosetList(csName){
-	alert('refreshClosetList() start');
-	
-	var url = 'http://finfra.com/~tv11/closet.php';
 
-	$.ajax({
-		async : false,
-		url : url,
-		dataType : 'json',
-		type : 'get',
-		data : {
-			id : localStorage.getItem('user')
-		},
-		success : function(data) {
-			closetList = data.closet;
 
-			if (closetList.length > 0) {
-				
-				len = closetList.length;
-				
-				alert("length is ----------------"+len);
-				
-				for(var i=0;i<(len-1);i++){
-					closetList = nextItem(closetList);
-				}
-				
-				$('#popupClosetName').html(closetList[0].cname);
-				sessionStorage.setItem('cid',closetList[0].cid);
-			}
-		},
-		error : function() {
-			alert('ajax error');
-		}
-
-	});
-	
-
-	alert('refreshClosetList() end');
-}
 function add_closet() {
 
 	alert('add_closet() start');
 	
-	var cName = document.getElementById('insCloset').value;
+	var cName = $('#insCloset').val();
 	if (cName != null) {
 		var url = 'http://finfra.com/~tv11/ins_closet.php';
 
 		$.ajax({
+			async:false,
 			url : url,
 			dataType : 'json',
 			type : 'get',
@@ -940,6 +945,7 @@ function add_closet() {
 
 				sessionStorage.removeItem('cid');
 
+				alert('add_closet success!!!!!!!!!!!!!!!!!!!!');
 			},
 			error : function() {
 				alert('add_closet ajax error');
