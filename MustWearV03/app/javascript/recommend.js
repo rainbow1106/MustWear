@@ -45,6 +45,7 @@ function ime_init_csName(imeobj) {
 		alert("IME RETURN");
 		imeCsName._blur();
 		$("#popupCodiName").blur();
+		$('#window').css('top','50px');
 		document.getElementById("anchor").focus();
 	});
 	// //////////
@@ -54,6 +55,7 @@ function ime_init_csName(imeobj) {
 	imeobj.setEnterFunc(function() {
 		imeCsName._blur();
 		$('#popupCodiName').blur();
+		$('#window').css('top','50px');
 		document.getElementById('anchor').focus();
 	});
 	imeobj.setBlockSpace(true);
@@ -265,8 +267,9 @@ function shuffleArray(arr) {
 	arr = newArr;
 	return arr;
 }
-function logOut() {
+function logout() {
 	localStorage.clear();
+	sesstionStorage.clear();
 	document.location.replace("index.html");
 }
 function nextItem(arr) {
@@ -416,21 +419,12 @@ Main.enableKeys = function() {
 
 function setDefault() {
 
-	alert('setDefault()');
+	alert('setDefault() start');
 
 	// // hide other windows
 
 	$('#popup').hide();
-	// //////////////////////////////////
-	imeCsName = new IMEShell('popupCodiName', ime_init_csName, this);
-	if (imeCsName == null) {
-		alert("IME fail");
-	}
 
-	imeInsertCloset = new IMEShell("insCloset", ime_ins_closet, this);
-	_g_ime.init("en", "2_35_259_12", "USA", "", "us");
-
-	// /////////////////////////////////
 	var sexSet = localStorage.getItem('sexSet');
 	var styleSet = localStorage.getItem('styleSet');
 	var topArr = localStorage.getItem('topArr');
@@ -480,7 +474,7 @@ function setDefault() {
 	var tid = sessionStorage.getItem('tid');
 	var bid = sessionStorage.getItem('bid');
 
-	if (!tid && !bid) {
+	if (tid==null && bid==null) {
 		alert("첫 로그인시");
 		getCodi();
 	} else {
@@ -520,6 +514,18 @@ function setDefault() {
 	var arr = $('#selector div');
 	$(arr[1]).css('background-color', 'rgba(255,255,255,0.5)');
 
+	// //////////////////////////////////
+	imeCsName = new IMEShell('popupCodiName', ime_init_csName, this);
+	if (imeCsName == null) {
+		alert("IME fail");
+	}
+
+	imeInsertCloset = new IMEShell("insCloset", ime_ins_closet, this);
+	_g_ime.init("en", "2_35_259_12", "USA", "", "us");
+
+	// /////////////////////////////////
+	alert('setDefault() end');
+
 }
 Main.keyDown = function() {
 
@@ -528,7 +534,10 @@ Main.keyDown = function() {
 
 	switch (keyCode) {
 	case tvKey.KEY_RETURN:
-
+		if(position.x==3){
+			$('#popup').hide();
+			position.x=preX;
+		}
 		break;
 	case tvKey.KEY_PANEL_RETURN:
 		alert("RETURN");
@@ -655,8 +664,11 @@ Main.keyDown = function() {
 		} else if (position.x == 5) {
 			if (insPosition == 0) {
 				// focus input & IME
+				
 				$("#insCloset").focus();
 				imeInsertCloset._focus();
+				
+				
 			} else if (insPosition == 1) {
 				// add closet 
 				position.x =3;
@@ -666,7 +678,7 @@ Main.keyDown = function() {
 				add_closet();
 				refreshClosetList();
 			
-				
+
 				$("#insertCloset").hide();//hide insCloset
 				$("#window").show();// show window
 				$("#insClosetBtn").removeClass("focus");
@@ -684,32 +696,35 @@ Main.keyDown = function() {
 		break;
 	case tvKey.KEY_BLUE:
 		alert("BLUE");
-		document.location.href = 'closet.html';
+		alert("x is "+position.x);
+		if(position.x==0 || position.x == 1){
+			document.location.href = 'closet.html';	
+		}
 		break;
 	case tvKey.KEY_YELLOW:
 		alert("YELLOW");
 
-		if ((sessionStorage.getItem('tid') != null)
-				&& (sessionStorage.getItem('bid') != null)) {
-			saveCodi();
+		alert("x is "+position.x);
+		if(position.x==0 || position.x == 1){
+			if ((sessionStorage.getItem('tid') != null) && (sessionStorage.getItem('bid') != null)) {
+				saveCodi();
+			}
 		}
 		break;
 	case tvKey.KEY_RED:
 		alert("RED");
-		document.location.href = "weather.html";
+
+		alert("x is "+position.x);
+		if(position.x==0 || position.x == 1){
+			document.location.href = "weather.html";
+		}
 		break;
 	case tvKey.KEY_GREEN:
+
+		alert("x is "+position.x);
 		alert("GREEN");
 		alert(position.x + "&" + position.y);
-		if (position.x == 0) {
-
-			$("#popup").show();
-			$("#insertCloset").show();
-			pop = 1;
-			$("#insCloset").addClass("inputfocus");
-			document.getElementById('insCloset').value = "";
-
-		} else if (position.x == 1) {
+		if (position.x == 1) {
 
 			alert(sessionStorage.getItem('tid') + " tid!!!!!");
 			alert(sessionStorage.getItem('bid') + " bid!!!!!");
@@ -787,11 +802,12 @@ function saveCodi() {
 	preX = position.x;
 	position.x = 3;
 
+	
 	$('#popup').show();
 	$('#window').show();
 	$('#confirm').hide();
 	$('#insertCloset').hide();
-
+	
 	topArr = localStorage.getItem('topArr');
 	topArr = JSON.parse(topArr);
 	$('#popupTopName').html(topArr[0].tname);
@@ -836,7 +852,10 @@ function saveCodi() {
 			+ "시" + d.getMinutes() + "분의 코디";
 
 	$('#popupCodiName').val(str);
+	
 
+
+	
 	popupPosition.x = 0;
 	popupPosition.y = 2;
 
@@ -855,7 +874,9 @@ function excutePopup() {
 
 		} else if (popupPosition.y == 1) {
 			// codi Name
-			alert("focus!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+			
+			
+			$('#window').css('top','-110px');
 			imeCsName._focus();
 			$('#popupCodiName').focus();
 
@@ -871,12 +892,17 @@ function excutePopup() {
 			$("#insertCloset").show();
 			$('#window').hide();
 			$("#insCloset").addClass("inputfocus");
-			document.getElementById('insCloset').value = "";
+			
+			var str = "옷장"+(closetList.length+1);
+			$('#insCloset').val(str);
+			
 			$("#insCloset").focus();
 			imeInsertCloset._focus();
 			position.x = 5;
 		} else if (popupPosition.y == 1) {
 			// codi Name
+			
+			$('#window').css('top','-110px');
 			imeCsName._focus();
 			$('#popupCodiName').focus();
 
@@ -906,11 +932,19 @@ function excutePopup() {
 						alert('codiSave success');
 						// ////////////
 						$('#window').hide();
-						$('#confirm').show();
-						position.x = 4;
+						
 						// ///////////
 						var str = $('#popupClosetName').html() + "에 저장되었습니다.";
+						
 						$('#confirm').html(str);
+						$('#confirm').show();
+						position.x = 4;
+						
+						setTimeout(function(){
+							$('#popup').hide();
+							position.x = preX;
+						},1000);
+						
 					} else {
 						alert("saveCodi failed");
 						$('#popup').hide();

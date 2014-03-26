@@ -15,6 +15,14 @@ Main.onLoad = function() {
 	drawLineGraph();
 };
 
+
+function logout() {
+	localStorage.clear();
+	sessionStorage.clear();
+	document.location.replace("index.html");
+}
+
+
 function drawLineGraph() {
 	alert("drawLineGraph()");
 
@@ -291,6 +299,10 @@ Main.keyDown = function() {
 	case tvKey.KEY_BLUE:
 		alert("BLUE");
 		document.location.href = "recommend.html";
+		break;
+	case 31:
+		alert("info");
+		logout();
 		break;
 	default:
 		alert("Unhandled key");
