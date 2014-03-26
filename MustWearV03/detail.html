@@ -22,7 +22,7 @@
 </head>
 
 <body onload="Main.onLoad();" onunload="Main.onUnload();">
-	<div id="sound" style="width: 0px; height: 0px;"><audio src='app/sound/click.wav'></audio></div>
+	
 	<!-- Dummy anchor as focus for key events -->
 	<a href="javascript:void(0);" id="anchor" onkeydown="Main.keyDown();"></a>
 	<!-- TODO: your code here -->
@@ -73,6 +73,14 @@
 			<a href='#' class='button' id="ok">확인</a>
 		</div>
 	</div>
-	<div id="helpBar">A 추천페이지 &nbsp; &nbsp; &nbsp; &nbsp;D 구매하기</div>
+	<div id="helpBar">
+			
+		
+			<font id='red'><img class = "helpBarIcon" src="app/image/red.png">이전  </font>
+		
+			<font id='blue'><img class = "helpBarIcon" src="app/image/blue.png">구매  </font>
+		
+			
+		</div>
 </body>
 </html>

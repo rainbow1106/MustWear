@@ -66,10 +66,10 @@
 	height: 310px;
 	background-color: rgba(242, 227, 210, 0.8);
 	border-radius: 20px;
-	
+	line-height:310px;
 	text-align: center;
 	font-size: 36px;
-	font-style:oblique;
+
 	color: #725129;
 	
 }
@@ -225,6 +225,11 @@
 	
 }
 
+
+#confirm{
+	text-align: center;
+	font-size: 35px;
+}
 .inputfocus{
 	border:solid;
 	border-color: rgba(255,255,255,0.4);

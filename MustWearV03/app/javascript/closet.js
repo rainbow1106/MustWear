@@ -27,12 +27,7 @@ Main.onLoad = function() {
 	widgetAPI.sendReadyEvent();
 
 	setDefault();
-	$("#popup").hide();
-	$("#insertCloset").hide();
-	$("#modifyCloset").hide();
-	$("#modifyCodiset").hide();
-	$("#deleteCloset").hide();
-	$("#deleteCodiset").hide();
+	 hidePop();
 	imeInsertCloset = new IMEShell("insCloset", ime_ins_closet, this);
 	if (!imeInsertCloset) {
 		alert("object for IMEShell create failed", 3);
@@ -224,12 +219,14 @@ function movePosition(direction) {
 
 			$(arr[position.y]).css('background-color',
 					'rgba(255, 255, 255, 0.5)');
-
+			if(arr.length>0){
 			getCodisetList(arr[position.y].id);
 
 			sessionStorage.setItem('cid', arr[position.y].id);
-
-			alert('saved cid is ' + arr[position.y].id);
+			}else{
+			sessionStorage.removeItem('cid');	
+			}
+			//alert('saved cid is ' + arr[position.y].id);
 			break;
 		}
 		case 2: {
@@ -528,7 +525,7 @@ function getClosetList() {
 		success : function(data) {
 			var arr = data.closet;
 
-			if (arr.length > 0) {
+			if (arr != null) {
 				for ( var i = 0; i < arr.length; i++) {
 					var item = $('<div/>', {
 						id : arr[i].cid,
@@ -541,6 +538,8 @@ function getClosetList() {
 
 				sessionStorage.setItem('cid', arr[0].cid);
 
+			}else{
+				alert("arr = NULL ")
 			}
 		},
 		error : function() {
@@ -554,7 +553,8 @@ function add_closet() {
 
 	alert('add_closet() start');
 	var cName = document.getElementById('insCloset').value;
-	if (cName != null) {
+	alert(cName);
+	if (cName.length>0) {
 		var url = 'http://finfra.com/~tv11/ins_closet.php';
 
 		$.ajax({
@@ -1157,7 +1157,7 @@ Main.keyDown = function() {
 		break;
 	case tvKey.KEY_RED:
 		alert("RED");
-		if (position.x == 0) {
+		if (position.x < 3) {
 			document.location.href = 'recommend.html';
 		}
 	default:
