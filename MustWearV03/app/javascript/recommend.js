@@ -286,7 +286,7 @@ function movePopup(direction) {
 
 	alert('movePopup() start');
 	alert('position is (' + popupPosition.x + ", " + popupPosition.y + ")");
-	$('#input div').css('background-color', 'rgba(255,255,255,0.2)');
+	$('#input div').css('background-color', 'rgba(100,100,100,0.2)');
 
 	switch (direction) {
 
@@ -836,9 +836,22 @@ function saveCodi() {
 			closetList = data.closet;
 
 			if (closetList.length > 0) {
-
+				
+				var len = closetList.length;
+				var cid = sessionStorage.getItem('cid');
+				if( cid != null){
+					for(var i=0;i<len;i++){
+						if(closetList[0].cid != cid){
+							closetList = nextItem(closetList);
+						}
+					}
+				}
+				
+				
 				sessionStorage.setItem('cid', closetList[0].cid);
 				$('#popupClosetName').html(closetList[0].cname);
+				
+				
 			}
 		},
 		error : function() {
@@ -858,8 +871,9 @@ function saveCodi() {
 	
 	popupPosition.x = 0;
 	popupPosition.y = 2;
-
-	$('#cancel').css('background-color', 'rgba(100,100,100,0.5)');
+	
+	$('#input div').css('background-color', 'rgba(100,100,100,0.2)');
+	$('#cancel').css('background-color', 'rgba(100,100,100,0.6)');
 	alert('saveCodi() end');
 
 }
@@ -893,7 +907,15 @@ function excutePopup() {
 			$('#window').hide();
 			$("#insCloset").addClass("inputfocus");
 			
-			var str = "옷장"+(closetList.length+1);
+			var str;
+			
+			if(closetList!=null){
+				str= "옷장"+(closetList.length+1);
+			}else if(closetList==null){
+				str = "옷장1";
+			}
+			 
+			
 			$('#insCloset').val(str);
 			
 			$("#insCloset").focus();

@@ -152,6 +152,7 @@
 	font-style:oblique;
 	font-size: 30px;
 	color: #725129;
+	width: 85%;
 }
 #input p{
 	margin:4% 0 0 2%;
@@ -166,7 +167,7 @@
 #input div{
 	margin: 4% 0 0 2%;
 	border-radius:10px;
-	background-color: rgba(255,255,255,0.2);
+	background-color: rgba(100,100,100,0.2);
 	text-align: center;
 	width: 96%;
 }

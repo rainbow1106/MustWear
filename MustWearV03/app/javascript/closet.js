@@ -11,6 +11,10 @@ var pop = 0;
 var loc = 0;
 var imeInsertCloset, imeModifyCloset, imeModifyCodiset;
 var arr;
+
+var closetList = [];
+var codisetList = [];
+
 var Main = {
 
 };
@@ -27,7 +31,7 @@ Main.onLoad = function() {
 	widgetAPI.sendReadyEvent();
 
 	setDefault();
-	 hidePop();
+	hidePop();
 	imeInsertCloset = new IMEShell("insCloset", ime_ins_closet, this);
 	if (!imeInsertCloset) {
 		alert("object for IMEShell create failed", 3);
@@ -81,7 +85,7 @@ function ime_mod_closet(imeobj) {
 		document.getElementById("anchor").focus();
 		$("#modCloset").addClass("inputfocus");
 	});
-	
+
 	imeobj.setEnterFunc(function() {
 		imeModifyCloset._blur();
 		$("#modCloset").blur();
@@ -121,9 +125,6 @@ function setDefault() {
 	alert('setDefault() start');
 	// 기본 옷장리스트 구현
 
-	alert("////////////////////////////////////////////");
-	alert(localStorage.getItem('topArr'));
-	alert("////////////////////////////////////////////");
 
 	var cid = sessionStorage.getItem('cid');
 	var csid = sessionStorage.getItem('csid');
@@ -132,19 +133,19 @@ function setDefault() {
 
 	getClosetList();
 
-	if (cid != null) {
+	if (cid != null) { //해당 cid 포커스 주는거
 
 		var closetIndex = -1;
 
 		var arr = $('#closetView div');
 
-		alert("arr is " + arr);
+		alert("closetList is " + closetList);
 
-		for ( var i = 0; i < arr.length; i++) {
+		for ( var i = 0; i < closetList.length; i++) {
 
-			alert("index is " + i);
+			
 
-			if (arr[i].id == cid) {
+			if (closetList[i].cid == cid) {
 				alert('found it!!!!!!!!!!');
 				closetIndex = i;
 				break;
@@ -152,43 +153,41 @@ function setDefault() {
 
 		}
 
-		position.x = 0;
-		position.y = closetIndex + 1;
+		alert("closet Index is "+closetIndex);
+		//////////////////////////////////
+		
+		if(closetIndex>6){
+			
+			alert("here I am");
+			position.x=0;
+			position.y=6;
+			replaceClosetView(1);
+			getCodisetList(cid);
+			
+		//////////////////////////////////
+		}else{
 
-		movePosition(1);
+			position.x = 0;
+			position.y = closetIndex;
+			
+			$(arr[position.y]).css('background-color','rgba(255,255,255,0.5)');
 
-		if (csid != null) {
-
-			var codisetArr = $('#codiView div');
-
-			alert("codisetArr is " + codisetArr);
-
-			var codisetIndex = -1;
-
-			for ( var i = 0; i < codisetArr.length; i++) {
-				alert(i);
-
-				if (codisetArr[i].id == csid) {
-					codisetIndex = i;
-					break;
-				}
-			}
-
-			position.x = 1;
-			closetY = position.y;
-
-			position.y = codisetIndex + 1;
-
-			movePosition(1);
+			getCodisetList(cid);
+			
 
 		}
+		
+		
+		
 
 	} else {// cid가 null일때
 
+		arr = $('#closetView div');
 		position.x = 0;
-		position.y = 1;// 포지션 초기화
-
-		movePosition(1);
+		position.y = 0;// 포지션 초기화
+		$(arr[position.y]).css('background-color','rgba(255,255,255,0.5)');
+		getCodisetList($(arr[position.y]).attr('id'));
+		
 		// 포커스 주고 세션에 해당 cid저장 cid로 코디셋리스트 뿌리기
 
 	}
@@ -201,7 +200,7 @@ function movePosition(direction) {
 	// move focus
 	// x 0,1,2
 	// y:var
-	alert("movePostion()");
+	alert("movePostion() start");
 	switch (position.x) {
 	case 0: {
 		// x index is 0 (closetList)
@@ -209,24 +208,54 @@ function movePosition(direction) {
 		case 1: {
 			// top
 			position.y--;
-			var arr = $('#closetView div');
-			var col = arr.length;
-			if (position.y == -1) {
-				position.y = col - 1;
-			}
-
-			arr.css('background-color', 'rgba(255, 255, 255, 0.1)');
-
-			$(arr[position.y]).css('background-color',
-					'rgba(255, 255, 255, 0.5)');
-			if(arr.length>0){
-			getCodisetList(arr[position.y].id);
-
-			sessionStorage.setItem('cid', arr[position.y].id);
+			
+			var arr;
+			
+			alert("closetList length is "+closetList.length);
+			alert("position.y is "+position.y);
+			if(closetList.length>7){
+				if(position.y == 0){
+					replaceClosetView(0);
+				}else if(position.y == -1){
+					replaceClosetView(2);
+				}else{
+					arr = $('#closetView div');
+					
+					
+					//css change
+					arr.css('background-color','rgba(255,255,255,0.1)');
+					$(arr[position.y]).css('background-color','rgba(255,255,255,0.5)');
+					
+					var cid = $(arr[position.y]).attr('id');
+					sessionStorage.setItem('cid',cid);
+					
+					alert("saved cid is "+cid);
+				
+				}
+				
+				
 			}else{
-			sessionStorage.removeItem('cid');	
+				arr = $('#closetView div');
+				var len = arr.length;
+				if(position.y == -1){
+					position.y = (len-1);
+				}
+				
+				arr.css('background-color','rgba(255,255,255,0.1)');
+				$(arr[position.y]).css('background-color','rgba(255,255,255,0.5)');
+			
+				var cid = $(arr[position.y]).attr('id');
+				sessionStorage.setItem('cid',cid);
+				
+				alert("saved cid is "+cid);
+		
 			}
-			//alert('saved cid is ' + arr[position.y].id);
+			
+			var cid = sessionStorage.getItem('cid');
+			if(cid != null){
+				getCodisetList(cid);
+			}
+			
 			break;
 		}
 		case 2: {
@@ -255,26 +284,57 @@ function movePosition(direction) {
 			break;
 		}
 		case 3: {
-			// botttom
+
+
 			position.y++;
-			var arr = $('#closetView div');
-			var max = arr.length - 1;
-			if (position.y == max + 1) {
-				position.y = 0;
+			
+			var arr;
+			
+			alert("closetList length is "+closetList.length);
+			alert("position.y is "+position.y);
+			if(closetList.length>7){
+				if(position.y == 6){
+					replaceClosetView(1);
+				}else if(position.y == 7){
+					replaceClosetView(3);
+				}else{
+					arr = $('#closetView div');
+					
+					
+					//css change
+					arr.css('background-color','rgba(255,255,255,0.1)');
+					$(arr[position.y]).css('background-color','rgba(255,255,255,0.5)');
+					
+					var cid = $(arr[position.y]).attr('id');
+					sessionStorage.setItem('cid',cid);
+					
+					alert("saved cid is "+cid);
+				
+				}
+				
+				
+			}else{
+				arr = $('#closetView div');
+				var len = arr.length;
+				if(position.y == 7){
+					position.y = 0
+				}
+				
+				arr.css('background-color','rgba(255,255,255,0.1)');
+				$(arr[position.y]).css('background-color','rgba(255,255,255,0.5)');
+			
+				var cid = $(arr[position.y]).attr('id');
+				sessionStorage.setItem('cid',cid);
+				
+				alert("saved cid is "+cid);
+		
 			}
-			arr.css('background-color', 'rgba(255, 255, 255, 0.1)');
-
-			var selectedItem = arr[parseInt(position.y)];
-			alert(selectedItem + "--" + position.y);
-			$(arr[position.y]).css('background-color',
-					'rgba(255, 255, 255, 0.5)');
-
-			getCodisetList(arr[position.y].id);
-
-			sessionStorage.setItem('cid', arr[position.y].id);
-
-			alert('saved cid is ' + arr[position.y].id);
-
+			
+			var cid = sessionStorage.getItem('cid');
+			if(cid != null){
+				getCodisetList(cid);
+			}
+			
 			break;
 		}
 		case 4: {
@@ -290,20 +350,70 @@ function movePosition(direction) {
 		case 1: {
 			// top
 
+//			position.y--;
+//			var arr = $('#codiView div');
+//			var max = arr.length - 1;
+//			if (position.y == -1) {
+//				position.y = max;
+//			}
+//
+//			arr.css('background-color', 'rgba(255, 255, 255, 0.1)');
+//			$(arr[position.y]).css('background-color',
+//					'rgba(255, 255, 255, 0.5)');
+//
+//			getCodiView($(arr[position.y]).attr('id'));
+//
+//			sessionStorage.setItem('csid', $(arr[position.y]).attr('id'));
+			
 			position.y--;
-			var arr = $('#codiView div');
-			var max = arr.length - 1;
-			if (position.y == -1) {
-				position.y = max;
+			
+			var codiArr;
+			
+			alert("codisetList length is "+codisetList.length);
+			alert("position.y is "+position.y);
+			if(codisetList.length>5){
+				if(position.y == 0){
+					replaceCodisetView(0);
+				}else if(position.y == -1){
+					replaceCodisetView(2);
+				}else{
+					codiArr = $('#codiView div');
+					
+					
+					//css change
+					codiArr.css('background-color','rgba(255,255,255,0.1)');
+					$(codiArr[position.y]).css('background-color','rgba(255,255,255,0.5)');
+					
+					var csid = $(codiArr[position.y]).attr('id');
+					sessionStorage.setItem('csid',csid);
+					
+					alert("saved csid is "+csid);
+				
+				}
+				
+				
+			}else{
+				codiArr = $('#codiView div');
+				var len = codiArr.length;
+				if(position.y == -1){
+					position.y = (len-1);
+				}
+				
+				codiArr.css('background-color','rgba(255,255,255,0.1)');
+				$(codiArr[position.y]).css('background-color','rgba(255,255,255,0.5)');
+			
+				var csid = $(codiArr[position.y]).attr('id');
+				sessionStorage.setItem('csid',csid);
+				
+				alert("saved csid is "+csid);
+		
 			}
-
-			arr.css('background-color', 'rgba(255, 255, 255, 0.1)');
-			$(arr[position.y]).css('background-color',
-					'rgba(255, 255, 255, 0.5)');
-
-			getCodiView(arr[position.y].id);
-
-			sessionStorage.setItem('csid', arr[position.y].id);
+			
+			var csid = sessionStorage.getItem('csid');
+			if(csid != null){
+				getCodiView(csid);
+			}
+			
 
 			break;
 		}
@@ -324,22 +434,71 @@ function movePosition(direction) {
 		case 3: {
 			// bottom
 
+//			position.y++;
+//			var arr = $('#codiView div');
+//			var max = arr.length - 1;
+//			if (position.y == max + 1) {
+//				position.y = 0;
+//			}
+//
+//			arr.css('background-color', 'rgba(255, 255, 255, 0.1)');
+//			$(arr[position.y]).css('background-color',
+//					'rgba(255, 255, 255, 0.5)');
+//
+//			getCodiView(arr[position.y].id);
+//
+//			alert("--------------------------" + arr[position.y].id);
+//
+//			sessionStorage.setItem('csid', arr[position.y].id);
+			
 			position.y++;
-			var arr = $('#codiView div');
-			var max = arr.length - 1;
-			if (position.y == max + 1) {
-				position.y = 0;
+			
+			var codiArr;
+			
+			alert("codisetList length is "+codisetList.length);
+			alert("position.y is "+position.y);
+			if(codisetList.length>5){
+				if(position.y == 4){
+					replaceCodisetView(1);
+				}else if(position.y == 5){
+					replaceCodisetView(3);
+				}else{
+					codiArr = $('#codiView div');
+					
+					
+					//css change
+					codiArr.css('background-color','rgba(255,255,255,0.1)');
+					$(codiArr[position.y]).css('background-color','rgba(255,255,255,0.5)');
+					
+					var csid = $(codiArr[position.y]).attr('id');
+					sessionStorage.setItem('csid',csid);
+					
+					alert("saved csid is "+csid);
+				
+				}
+				
+				
+			}else{
+				codiArr = $('#codiView div');
+				var len = codiArr.length;
+				if(position.y == 5){
+					position.y = 0
+				}
+				
+				codiArr.css('background-color','rgba(255,255,255,0.1)');
+				$(codiArr[position.y]).css('background-color','rgba(255,255,255,0.5)');
+			
+				var csid = $(codiArr[position.y]).attr('id');
+				sessionStorage.setItem('csid',csid);
+				
+				alert("saved csid is "+csid);
+		
 			}
-
-			arr.css('background-color', 'rgba(255, 255, 255, 0.1)');
-			$(arr[position.y]).css('background-color',
-					'rgba(255, 255, 255, 0.5)');
-
-			getCodiView(arr[position.y].id);
-
-			alert("--------------------------" + arr[position.y].id);
-
-			sessionStorage.setItem('csid', arr[position.y].id);
+			
+			var csid = sessionStorage.getItem('csid');
+			if(csid != null){
+				getCodiView(csid);
+			}
 
 			break;
 		}
@@ -410,6 +569,9 @@ function movePosition(direction) {
 		break;
 	}
 	}
+	
+
+	alert("movePostion() end");
 }
 function getCodiView(csid) {
 
@@ -477,7 +639,7 @@ function getCodiView(csid) {
 	});
 }
 function getCodisetList(cid) {
-	alert('getCodiset()');
+	alert('getCodisetList() start');
 
 	var url = 'http://finfra.com/~tv11/codyset.php';
 
@@ -491,10 +653,19 @@ function getCodisetList(cid) {
 		},
 		success : function(data) {
 			var arr = data.codyset;
-
+			
+			///save to global
+			
+			codisetList = data.codyset;
+			
 			$('#codiView').empty();
-			if (arr) {
-				for ( var i = 0; i < arr.length; i++) {
+			if (arr.length>0) {
+				
+				
+				for ( var i = 0; i <arr.length ; i++) {
+					if(i == 5){
+						break;
+					}
 					var codi = $('<div/>', {
 						id : arr[i].csid,
 						text : arr[i].csname,
@@ -507,10 +678,17 @@ function getCodisetList(cid) {
 
 		},
 	});
+
+	alert('getCodisetList() end');
+
 }
 function getClosetList() {
 
-	alert('getCloset()');
+	alert('getClosetList() start');
+
+	
+	alert(localStorage.getItem('user'));
+	
 	$('#closetView').empty();
 	var url = 'http://finfra.com/~tv11/closet.php';
 
@@ -525,20 +703,40 @@ function getClosetList() {
 		success : function(data) {
 			var arr = data.closet;
 
-			if (arr != null) {
-				for ( var i = 0; i < arr.length; i++) {
-					var item = $('<div/>', {
-						id : arr[i].cid,
-						text : arr[i].cname,
-						class : 'listItem movingDiv'
-					});
+			closetList = data.closet;
 
-					$('#closetView').append(item);
+			if (arr != null) {
+				if(arr.length<8){
+					
+					alert('팔보다 작다');
+					for ( var i = 0; i < arr.length; i++) {
+						var item = $('<div/>', {
+							id : arr[i].cid,
+							text : arr[i].cname,
+							class : 'listItem movingDiv'
+						});
+
+						$('#closetView').append(item);
+					}
+				}else{
+					
+
+					alert('팔보다 크다');
+					for ( var i = 0; i < 7; i++) {
+						var item = $('<div/>', {
+							id : arr[i].cid,
+							text : arr[i].cname,
+							class : 'listItem movingDiv'
+						});
+
+						$('#closetView').append(item);
+					}
 				}
+				
 
 				sessionStorage.setItem('cid', arr[0].cid);
 
-			}else{
+			} else {
 				alert("arr = NULL ")
 			}
 		},
@@ -548,13 +746,15 @@ function getClosetList() {
 
 	});
 
+
+	alert('getClosetList() end');
 }
 function add_closet() {
 
 	alert('add_closet() start');
 	var cName = document.getElementById('insCloset').value;
 	alert(cName);
-	if (cName.length>0) {
+	if (cName.length > 0) {
 		var url = 'http://finfra.com/~tv11/ins_closet.php';
 
 		$.ajax({
@@ -637,37 +837,41 @@ function del_closet() {
 
 	var arr = $('#closetView div');
 	alert(arr);
-	var cid = $(arr[position.y]).attr('id');
+	
+	
 
-	alert("selected cid is " + cid + " for del");
+		var cid = $(arr[position.y]).attr('id');
 
-	$.ajax({
-		async : false,
-		url : url,
-		dataType : 'json',
-		type : 'get',
-		data : {
-			cId : cid
-		},
-		success : function(data) {
+		alert("selected cid is " + cid + " for del");
 
-			alert(data);
-			if (data) {
+		$.ajax({
+			async : false,
+			url : url,
+			dataType : 'json',
+			type : 'get',
+			data : {
+				cId : cid
+			},
+			success : function(data) {
 
-				alert('del_closet() success');
-				sessionStorage.removeItem('cid');
+				alert(data);
+				if (data) {
 
-				setDefault();
+					alert('del_closet() success');
+					sessionStorage.removeItem('cid');
 
-			} else {
-				alert('del_closet() fail');
+					setDefault();
+
+				} else {
+					alert('del_closet() fail');
+				}
+			},
+			error : function() {
+				alert('ajax error');
 			}
-		},
-		error : function() {
-			alert('ajax error');
-		}
-	});
+		});
 
+	
 	alert('del_closet() end');
 }
 Main.onUnload = function() {
@@ -939,7 +1143,7 @@ Main.keyDown = function() {
 				$("#modCodisetBtn").addClass("focus");
 				$("#modCodisetCancle").removeClass("focus");
 			}
-			} else if (pop == 4) {
+		} else if (pop == 4) {
 			if (loc == 1) {
 				loc = 2;
 				$("#delClosetCancle").addClass("focus");
@@ -1068,28 +1272,28 @@ Main.keyDown = function() {
 				$("#modCodisetBtn").removeClass("focus");
 				$("#modCodisetCancle").removeClass("focus");
 			}
-		}else if (pop == 4) {
+		} else if (pop == 4) {
 			if (loc == 1) {
 				$("#delClosetBtn").removeClass("focus");
 				$("#delClosetCancle").removeClass("focus");
 				del_closet();
-				hidePop();			
+				hidePop();
 			} else if (loc == 2) {
 				$("#delClosetBtn").removeClass("focus");
 				$("#delClosetCancle").removeClass("focus");
 				hidePop();
 			}
-		}else if (pop == 5) {
+		} else if (pop == 5) {
 			if (loc == 1) {
 				$("#delCodisetBtn").removeClass("focus");
 				$("#delCodisetCancle").removeClass("focus");
 				del_codiset();
-				hidePop('#deleteCodiset');			
+				hidePop('#deleteCodiset');
 			} else if (loc == 2) {
 				$("#delCodisetBtn").removeClass("focus");
 				$("#delCodisetCancle").removeClass("focus");
 				hidePop();
-		}
+			}
 		}
 		alert("pop :" + pop + "|loc :" + loc);
 		break;
@@ -1099,9 +1303,23 @@ Main.keyDown = function() {
 		if (position.x == 0) {
 			$("#popup").show();
 			$("#insertCloset").show();
+			
+			var str;
+			
+			alert(closetList);
+			
+			if(closetList!=null){
+				str= "옷장"+(closetList.length+1);
+			}else if(closetList==null){
+				str = "옷장1";
+			}
+			
+	
+			
+			
 			pop = 1;
 			$("#insCloset").addClass("inputfocus");
-			document.getElementById('insCloset').value = "";
+			$('#insCloset').val(str);
 			// 
 		} else if (position.x == 2) {
 			if (position.y == 0) {
@@ -1125,7 +1343,7 @@ Main.keyDown = function() {
 					$('#closetView div')[position.y]).html();
 		} else if (position.x == 1) {
 			$("#popup").show();
-				$("#modifyCodiset").show();
+			$("#modifyCodiset").show();
 			pop = 3;
 			$("#modCodiset").addClass("inputfocus");
 			document.getElementById('modCodiset').value = $(
@@ -1134,16 +1352,22 @@ Main.keyDown = function() {
 		break;
 	case tvKey.KEY_BLUE: // blue
 		alert('BLUE');
-			if (position.x == 0) {
-			$("#popup").show();
-			$("#deleteCloset").show();
-			pop = 4;
-			loc = 1;
-			$("#delClosetBtn").addClass("focus");
-			$("#delCloset").html(
-					"[" + $($('#closetView div')[position.y]).html()
-							+ " ] 을 제거 하시겠습니까 ?");
-		} else if (position.x == 1) {
+		if (position.x == 0) {
+			arr = $('#closetView div');
+			
+				if(arr.length > 0){
+
+					$("#popup").show();
+					$("#deleteCloset").show();
+					pop = 4;
+					loc = 1;
+					$("#delClosetBtn").addClass("focus");
+					$("#delCloset").html(
+							"[" + $($('#closetView div')[position.y]).html()
+									+ " ] 을 제거 하시겠습니까 ?");
+				
+				}
+			} else if (position.x == 1) {
 			$("#popup").show();
 			$("#deleteCodiset").show();
 			pop = 5;
@@ -1154,16 +1378,16 @@ Main.keyDown = function() {
 							+ " ] 을 제거 하시겠습니까 ?");
 		}
 		break;
-		break;
-	case tvKey.KEY_RED:
-		alert("RED");
-		if (position.x < 3) {
-			document.location.href = 'recommend.html';
-		}
-	default:
-		alert("Unhandled key");
-		break;
+	break;
+case tvKey.KEY_RED:
+	alert("RED");
+	if (position.x < 3) {
+		document.location.href = 'recommend.html';
 	}
+default:
+	alert("Unhandled key");
+	break;
+}
 };
 function hidePop() {
 	$("#popup").hide();
@@ -1172,7 +1396,7 @@ function hidePop() {
 	$("#modifyCodiset").hide();
 	$("#deleteCloset").hide();
 	$("#deleteCodiset").hide();
-	
+
 	$('#insClosetBtn').removeClass('focus');
 	$('#modClosetBtn').removeClass('focus');
 	$('#modCodisetBtn').removeClass('focus');
@@ -1184,8 +1408,260 @@ function hidePop() {
 	$('#modCodisetCancle').removeClass('focus');
 	$('#delClosetCancle').removeClass('focus');
 	$('#delCodisetCancle').removeClass('focus');
-	
+
 	pop = 0;
 	loc = 0;
 }
 
+function replaceClosetView(direction) {  //refer up or down
+	alert('replaceClosetView() start');
+	
+	arr = $('#closetView div');
+
+	var cid = $(arr[position.y]).attr('id');
+
+	var pivot = -1;
+
+	if (direction == 0) {
+		// up
+		if (cid != closetList[0].cid) {
+			for ( var i = 0; i < closetList.length; i++) {
+				// find closetList's index
+
+				if (cid == closetList[i].cid) {
+					pivot = i;
+					break;
+				}
+			}
+
+			$('#closetView').empty();
+
+			for ( var i = (pivot - 1); i < (pivot + 6); i++) {
+				var item = $('<div/>', {
+					id : closetList[i].cid,
+					text : closetList[i].cname,
+					class : 'listItem movingDiv'
+				});
+
+				$('#closetView').append(item);
+			}
+
+			arr = $('#closetView div');
+			$(arr[1]).css('background-color', 'rgba(255,255,255,0.5)');
+			position.y = 1;
+			sessionStorage.setItem('cid', $(arr[1]).attr('id'));
+
+		}else{
+			arr = $('#closetView div');
+			arr.css('background-color', 'rgba(255,255,255,0.1)');
+			$(arr[position.y]).css('background-color', 'rgba(255,255,255,0.5)');
+			sessionStorage.setItem('cid', $(arr[position.y]).attr('id'));
+		}
+
+	} else if (direction == 1) {
+		if (cid != (closetList[closetList.length - 1].cid)) {
+			for ( var i = 0; i < closetList.length; i++) {
+				// find closetList's index
+
+				if (cid == closetList[i].cid) {
+					pivot = i;
+					break;
+				}
+			}
+
+			$('#closetView').empty();
+
+			for ( var i = (pivot - 5); i < (pivot + 2); i++) {
+				var item = $('<div/>', {
+					id : closetList[i].cid,
+					text : closetList[i].cname,
+					class : 'listItem movingDiv'
+				});
+
+				$('#closetView').append(item);
+			}
+
+			arr = $('#closetView div');
+			$(arr[5]).css('background-color', 'rgba(255,255,255,0.5)');
+			position.y = 5;
+			sessionStorage.setItem('cid', $(arr[5]).attr('id'));
+
+		}else{
+			
+			arr = $('#closetView div');
+			arr.css('background-color', 'rgba(255,255,255,0.1)');
+			$(arr[position.y]).css('background-color', 'rgba(255,255,255,0.5)');
+			sessionStorage.setItem('cid', $(arr[position.y]).attr('id'));
+		}
+	}else if(direction == 2){
+			//in case position.y == -1
+			//refresh to end of closetList
+			$('#closetView').empty();
+			var len = closetList.length;
+			for ( var i = (len-7); i < len; i++) {
+
+					var item = $('<div/>', {
+						id : closetList[i].cid,
+						text : closetList[i].cname,
+						class : 'listItem movingDiv'
+					});
+
+					$('#closetView').append(item);
+
+				}
+			arr = $('#closetView div');
+			$(arr[6]).css('background-color', 'rgba(255,255,255,0.5)');
+			position.y = 6;
+			sessionStorage.setItem('cid', $(arr[6]).attr('id'));
+		}else if(direction == 3){
+			//in case position.y == 7
+			//refresh to end of closetList
+			$('#closetView').empty();
+			var len = closetList.length;
+			for ( var i = 0; i < 7; i++) {
+
+					var item = $('<div/>', {
+						id : closetList[i].cid,
+						text : closetList[i].cname,
+						class : 'listItem movingDiv'
+					});
+
+					$('#closetView').append(item);
+
+				}
+			arr = $('#closetView div');
+			$(arr[0]).css('background-color', 'rgba(255,255,255,0.5)');
+			position.y = 0;
+			sessionStorage.setItem('cid', $(arr[0]).attr('id'));
+
+		}
+	
+	alert('replaceClosetView() end');
+	}
+	
+function replaceCodisetView(direction){
+	alert('replaceCodisetView() start');
+	
+	var csArr = $('#codiView div');
+	
+	var csid = $(csArr[position.y]).attr('id');
+	var pivot = -1;
+
+	if (direction == 0) {
+		// up
+		if (csid != codisetList[0].csid) {
+			for ( var i = 0; i < codisetList.length; i++) {
+				// find closetList's index
+
+				if (csid == codisetList[i].csid) {
+					pivot = i;
+					break;
+				}
+			}
+
+			$('#codiView').empty();
+
+			for ( var i = (pivot - 1); i < (pivot + 4); i++) {
+				var item = $('<div/>', {
+					id : codisetList[i].csid,
+					text : codisetList[i].csname,
+					class : 'listItem movingDiv'
+				});
+
+				$('#codiView').append(item);
+			}
+
+			arr = $('#codiView div');
+			$(arr[1]).css('background-color', 'rgba(255,255,255,0.5)');
+			position.y = 1;
+			sessionStorage.setItem('csid', $(arr[1]).attr('id'));
+
+		}else{
+			arr = $('#codiView div');
+			arr.css('background-color', 'rgba(255,255,255,0.1)');
+			$(arr[position.y]).css('background-color', 'rgba(255,255,255,0.5)');
+			sessionStorage.setItem('csid', $(arr[position.y]).attr('id'));
+		}
+
+	} else if (direction == 1) {
+		if (csid != (codisetList[codisetList.length - 1].csid)) {
+			for ( var i = 0; i < codisetList.length; i++) {
+				// find closetList's index
+
+				if (csid == codisetList[i].csid) {
+					pivot = i;
+					break;
+				}
+			}
+
+			$('#codiView').empty();
+
+			for ( var i = (pivot - 3); i < (pivot + 2); i++) {
+				var item = $('<div/>', {
+					id : codisetList[i].csid,
+					text : codisetList[i].csname,
+					class : 'listItem movingDiv'
+				});
+
+				$('#codiView').append(item);
+			}
+
+			arr = $('#codiView div');
+			$(arr[3]).css('background-color', 'rgba(255,255,255,0.5)');
+			position.y = 3;
+			sessionStorage.setItem('csid', $(arr[position.y]).attr('id'));
+
+		}else{
+			
+			arr = $('#codiView div');
+			arr.css('background-color', 'rgba(255,255,255,0.1)');
+			$(arr[position.y]).css('background-color', 'rgba(255,255,255,0.5)');
+			sessionStorage.setItem('csid', $(arr[position.y]).attr('id'));
+		}
+	}else if(direction == 2){
+			//in case position.y == -1
+			//refresh to end of closetList
+			$('#codiView').empty();
+			var len = codisetList.length;
+			for ( var i = (len-5); i < len; i++) {
+
+					var item = $('<div/>', {
+						id : codisetList[i].csid,
+						text : codisetList[i].csname,
+						class : 'listItem movingDiv'
+					});
+
+					$('#codiView').append(item);
+
+				}
+			arr = $('#codiView div');
+			$(arr[4]).css('background-color', 'rgba(255,255,255,0.5)');
+			position.y = 4;
+			sessionStorage.setItem('csid', $(arr[position.y]).attr('id'));
+		}else if(direction == 3){
+			//in case position.y == 7
+			//refresh to end of closetList
+			$('#codiView').empty();
+			var len = codisetList.length;
+			for ( var i = 0; i < 5; i++) {
+
+					var item = $('<div/>', {
+						id : codisetList[i].csid,
+						text : codisetList[i].csname,
+						class : 'listItem movingDiv'
+					});
+
+					$('#codiView').append(item);
+
+				}
+			arr = $('#codiView div');
+			$(arr[0]).css('background-color', 'rgba(255,255,255,0.5)');
+			position.y = 0;
+			sessionStorage.setItem('cid', $(arr[0]).attr('id'));
+
+		}
+	
+	
+	alert('replaceCodisetView() end');
+}	
+	
