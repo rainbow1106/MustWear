@@ -35,19 +35,29 @@
 	<!-- TODO: your code here -->
 	<div id="titleBar">closet</div>
 	<div id="contents">
-		<div id="closetView" class='container'></div>
-		<div id="codiView" class='container'></div>
+	
+		<div class="container" id="closetBox">
+			<img id="closetUp" src="app/image/up.png" hidden='true'>
+			<div id="closetView"></div>
+			<img id="closetDown" src="app/image/down.png" hidden='true'>
+		</div>
+		<div class="container" id="codiBox">
+			<img id="codiUp" src="app/image/up.png" hidden='true'>
+			<div id="codiView"></div>
+			<img id="codiDown" src="app/image/down.png" hidden='true'>
+		</div>
+		
 		<div id="itemView" class='container'>
 			<div id="topContainer" class="movingDiv">
 				<p id="topName"></p>
-				<img class="clothView" id="topView">
+				<img class="clothView" id="topView" hidden="true">
 
 				<div id="topDetail"></div>
 			</div>
 			<div id="botContainer" class="movingDiv">
 				<p id="botName"></p>
 
-				<img class="clothView" id="botView">
+				<img class="clothView" id="botView" hidden="true">
 				<div id="botDetail"></div>
 			</div>
 
@@ -78,7 +88,7 @@
 		<div class='window' id="insertCloset">
 			<div style="margin: 40px;">옷장 추가</div>
 			<div style="margin: 20px;">
-				옷 장 이 름 : <input type="text" id="insCloset"
+				옷 장 이 름 : <input type="text" id="insCloset" maxlength="6"
 					style="width: 450px; height: 45px; background-color: rgba(242, 227, 210, 0.0);">
 			</div>
 			<a href='#' class='button' id="insClosetBtn">옷장 생성</a><a href='#'
@@ -87,7 +97,7 @@
 		<div class='window' id="modifyCloset">
 			<div style="margin: 40px;">수정</div>
 			<div style="margin: 20px;">
-				옷 장 이 름 : <input type="text" id="modCloset"
+				옷 장 이 름 : <input type="text" id="modCloset" maxlength="6"
 					style="width: 450px; height: 45px; background-color: rgba(242, 227, 210, 0.0);">
 			</div>
 			<a href='#' class='button' id="modClosetBtn">이름 수정</a><a href='#'
@@ -96,7 +106,7 @@
 		<div class='window' id="modifyCodiset">
 			<div style="margin: 40px;">수정</div>
 			<div style="margin: 20px;">
-				코 디 이 름 : <input type="text" id="modCodiset"
+				코 디 이 름 : <input type="text" id="modCodiset" maxlength="14"
 					style="width: 450px; height: 45px; background-color: rgba(242, 227, 210, 0.0);">
 			</div>
 			<a href='#' class='button' id="modCodisetBtn">이름 수정</a><a href='#'

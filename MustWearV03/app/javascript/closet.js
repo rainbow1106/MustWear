@@ -50,6 +50,8 @@ Main.onLoad = function() {
 	} else {
 		alert("imeModifyCodiset ok", 3);
 	}
+	
+	
 };
 function ime_ins_closet(imeobj) {
 	var inputobj = imeobj.getInputObj();
@@ -120,82 +122,422 @@ function ime_mod_codyset(imeobj) {
 	_g_ime.init("ko", "1_35_259_11", "KOR", "", "kr");
 	alert("ime_mod_codyset end...");
 };
+
 function setDefault() {
 
 	alert('setDefault() start');
 	// 기본 옷장리스트 구현
 
-
+	////////////////
+	$('#closetView').empty();
+	$('#codiView').empty();
+	////////////////
 	var cid = sessionStorage.getItem('cid');
 	var csid = sessionStorage.getItem('csid');
 
 	alert("cid is " + cid + " csid is " + csid);
 
-	getClosetList();
-
-	if (cid != null) { //해당 cid 포커스 주는거
-
-		var closetIndex = -1;
-
-		var arr = $('#closetView div');
-
-		alert("closetList is " + closetList);
-
-		for ( var i = 0; i < closetList.length; i++) {
-
+	///  getClosetList
+	getClosetList2();
+	
+	alert('closetList` length is '+closetList.length);
+	
+	if( closetList.length > 7 ){
+		
+		alert('((((((((((((if)))))))))) closetList.length > 7');
+		if(cid != null){ // cid exist
+			//finding cIndex
+			alert('((((((((((((if)))))))))) cid!=null');
 			
-
-			if (closetList[i].cid == cid) {
-				alert('found it!!!!!!!!!!');
-				closetIndex = i;
-				break;
+			var cIndex = -1;
+			
+			for(var i=0;i<closetList.length;i++){
+				var closetId = closetList[i].cid;
+				
+				if(cid == closetId){
+					cIndex = i;
+					break;
+				}
 			}
+			alert("cIndex is "+cIndex);
+			if(cIndex>5){
+				alert('((((((((((((if)))))))))) cIndex > 7');
+				if(cIndex == (closetList.length-1)){
+					//position.y=6
+					alert('((((((((((((if)))))))))) cIndex == (closetList.length-1)');
+					for(var i=(cIndex-6);i<(cIndex+1);i++){
+						var item = $('<div/>', {
+							id : closetList[i].cid,
+							text : closetList[i].cname,
+							class : 'listItem movingDiv'
+						});
 
-		}
+						$('#closetView').append(item);
+					}
+					
+					position.x=0;
+					position.y=6;
+					
+					/////////////display up
+					$('#closetUp').attr('hidden',false);
+					
+				}else{
+					alert('((((((((((((if)))))))))) else');
+					
+					//position.y=5
+					
+					for(var i=(cIndex-5);i<(cIndex+2);i++){
+						var item = $('<div/>', {
+							id : closetList[i].cid,
+							text : closetList[i].cname,
+							class : 'listItem movingDiv'
+						});
 
-		alert("closet Index is "+closetIndex);
-		//////////////////////////////////
-		
-		if(closetIndex>6){
+						$('#closetView').append(item);
+					}
+					
+					position.x=0;
+					position.y=5;
+					
+					/////////////////
+					$('#closetDown').attr('hidden',false);
+					$('#closetUp').attr('hidden',false);
+				}
+				
 			
-			alert("here I am");
+			}else{ //cIndex is less than 7
+				alert('((((((((((((if)))))))))) cIndex <= 5');
+				
+				for(var i=0;i<7;i++){
+					var item = $('<div/>', {
+						id : closetList[i].cid,
+						text : closetList[i].cname,
+						class : 'listItem movingDiv'
+					});
+
+					$('#closetView').append(item);
+				}
+				
+				position.x=0;
+				position.y=cIndex;
+				
+				$('#closetDown').attr('hidden',false);
+				$('#closetUp').attr('hidden',true);
+				
+			}
+			
+			////////////////////////////
+			var closetArr = $('#closetView div');
+			$(closetArr[position.y]).css('background-color','rgba(255,255,255,0.5)');
+			///////////////////////////
+			
+			closetY = position.y;
+			if(csid != null ){ //closetLength is more than 7, cid exist, csid not exist
+				alert('((((((((((((if)))))))))) csid != null');
+				
+				//get codisetList
+				var url = 'http://finfra.com/~tv11/codyset.php';
+
+				$.ajax({
+					async : false,
+					url : url,
+					dataType : 'json',
+					type : 'get',
+					data : {
+						cId : cid
+					},
+					success : function(data) {
+						codisetList = data.codyset;
+					}
+				});
+				
+				if( codisetList != null){
+					alert('((((((((((((if)))))))))) codisetList.length > 0');
+					
+					var csIndex = -1;
+					for(var i=0;i<codisetList.length;i++){
+						var codisetId = codisetList[i].csid;
+						if(csid == codisetId){
+							csIndex = i;
+							break;
+						}
+					}
+					alert('csIndex is '+csIndex);
+					
+					if(csIndex>2){
+						alert('((((((((((((if)))))))))) csIndex > 4');
+						
+						if(csIndex == (codisetList.length-1)){
+							alert('((((((((((((if)))))))))) csIndex == (codisetList.length-1)');
+							
+							for(var i=(csIndex-4);i<(csIndex+1);i++){
+								var codi = $('<div/>', {
+									id : codisetList[i].csid,
+									text : codisetList[i].csname,
+									class : 'listItem movingDiv'
+								});
+								
+								$('#codiView').append(codi);
+							}
+							
+							position.x=1;
+							position.y=4;
+							
+
+							$('#codiUp').attr('hidden',false);
+							
+						}else{
+							alert('((((((((((((if)))))))))) else');
+							
+							for(var i=(csIndex-3);i<(csIndex+2);i++){
+								var codi = $('<div/>', {
+									id : codisetList[i].csid,
+									text : codisetList[i].csname,
+									class : 'listItem movingDiv'
+								});
+								
+								$('#codiView').append(codi);
+							
+							}
+							
+							position.x=1;
+							position.y=3;
+						
+
+							$('#codiDown').attr('hidden',false);
+							$('#codiUp').attr('hidden',false);
+						}
+						
+						
+					}else{
+						alert('((((((((((((if)))))))))) csIndex <= 4');
+						
+						for(var i=0;i<codisetList.length;i++){
+							if(i == 5){break;}
+							var codi = $('<div/>', {
+								id : codisetList[i].csid,
+								text : codisetList[i].csname,
+								class : 'listItem movingDiv'
+							});
+							
+							$('#codiView').append(codi);
+						}
+						
+						position.x=1;
+						position.y=csIndex;
+
+						$('#codiDown').attr('hidden',false);
+					}
+					
+					
+					var codiArr = $("#codiView div");
+					$(codiArr[position.y]).css('background-color','rgba(255,255,255,0.5)');
+					getCodiView(csid);
+				}
+				
+
+			}else{ //closetLength is more than 7, cid exist, csid not exist
+				alert('((((((((((((if)))))))))) csid == null');
+				
+				getCodisetList(cid);
+			}
+	
+		}else{//closetLength is more than 7, cid not exist
+			alert('((((((((((((if)))))))))) cid == null');
+			
+			//make 0to6 focus 0 call getcodisetList 0
+			for(var i=0;i<7;i++){
+				var item = $('<div/>', {
+					id : closetList[i].cid,
+					text : closetList[i].cname,
+					class : 'listItem movingDiv'
+				});
+
+				$('#closetView').append(item);
+			}
+			
 			position.x=0;
-			position.y=6;
-			replaceClosetView(1);
-			getCodisetList(cid);
-			
-		//////////////////////////////////
-		}else{
-
-			position.x = 0;
-			position.y = closetIndex;
-			
-			$(arr[position.y]).css('background-color','rgba(255,255,255,0.5)');
-
-			getCodisetList(cid);
-			
-
+			position.y=0;
+			var closetArr = $('#closetView div');
+			$(closetArr[position.y]).css('background-color','rgba(255,255,255,0.5)');
+			alert($(closetArr[position.y]).attr('id'));
+			getCodisetList($(closetArr[position.y]).attr('id'));
 		}
 		
 		
+	}else if(closetList.length<=7){ //length is less than 7
+		alert('((((((((((((if)))))))))) closetList.length <= 7');
 		
+		if(closetList != null){
+			
+			for ( var i = 0; i < closetList.length; i++) {
+				var item = $('<div/>', {
+					id : closetList[i].cid,
+					text : closetList[i].cname,
+					class : 'listItem movingDiv'
+				});
 
-	} else {// cid가 null일때
+				$('#closetView').append(item);
+			}
+			
+			if( cid != null){
+				alert('((((((((((((if)))))))))) cid != null');
+				
+				//finding index of "cid"
+				var closetArr = $('#closetView div');
+				var cIndex = -1;
+				
+				alert("closetList`s length is "+closetList.length);
+				for(var i=0;i<closetList.length;i++){
+					var closetId = closetList[i].cid;
+					alert("index is "+i+" closetId is"+closetId);
+					if( cid == closetId){
+						cIndex = i;
+						break;
+					}
+				}
+				//////
+				alert('cIndex is '+cIndex);
+				
+				position.x = 0;
+				position.y=cIndex;
+				closetY = position.y;
+				$(closetArr[position.y]).css('background-color','rgba(255,255,255,0.5)');
+				
+				
+				if(csid != null ){
+					
+					alert('((((((((((((if)))))))))) csid != null');
+					
+					//get codisetList
+					var url = 'http://finfra.com/~tv11/codyset.php';
 
-		arr = $('#closetView div');
-		position.x = 0;
-		position.y = 0;// 포지션 초기화
-		$(arr[position.y]).css('background-color','rgba(255,255,255,0.5)');
-		getCodisetList($(arr[position.y]).attr('id'));
-		
-		// 포커스 주고 세션에 해당 cid저장 cid로 코디셋리스트 뿌리기
+					$.ajax({
+						async : false,
+						url : url,
+						dataType : 'json',
+						type : 'get',
+						data : {
+							cId : cid
+						},
+						success : function(data) {
+							codisetList = data.codyset;
+						}
+					});
+					
+					if( codisetList != null){
+						alert('((((((((((((if)))))))))) codisetList != null');
+						
+						var csIndex = -1;
+						for(var i=0;i<codisetList.length;i++){
+							var codisetId = codisetList[i].csid;
+							if(csid == codisetId){
+								csIndex = i;
+								break;
+							}
+						}
+						
+						alert("csIndex is "+csIndex);
+						
+						if(csIndex>3){
+							alert('((((((((((((if)))))))))) csIndex>3');
+							
+							if(csIndex == (codisetList.length-1)){
+							
+								alert('((((((((((((if)))))))))) csIndex == (codisetList.length-1)');
+								
+								for(var i=(csIndex-4);i<(csIndex+1);i++){
+									var codi = $('<div/>', {
+										id : codisetList[i].csid,
+										text : codisetList[i].csname,
+										class : 'listItem movingDiv'
+									});
+									
+									$('#codiView').append(codi);
+								}
+								
+								position.x=1;
+								position.y=4;
+								
 
-	}
+								$('#codiUp').attr('hidden',false);
+								
+							}else{
+								alert('((((((((((((if)))))))))) csIndex != (codisetList.length-1)');
+								
+								for(var i=(csIndex-3);i<(csIndex+2);i++){
+									var codi = $('<div/>', {
+										id : codisetList[i].csid,
+										text : codisetList[i].csname,
+										class : 'listItem movingDiv'
+									});
+									
+									$('#codiView').append(codi);
+								
+								}
+								
+								position.x=1;
+								position.y=3;
 
-	setHelpbar();
-
+								$('#codiDown').attr('hidden',false);
+								$('#codiUp').attr('hidden',false);
+							}
+							
+							
+						}else{
+							alert('((((((((((((if)))))))))) csIndex <= 3');
+							
+							for(var i=0;i<codisetList.length;i++){
+								if(i==5){
+									break;
+								}
+								var codi = $('<div/>', {
+									id : codisetList[i].csid,
+									text : codisetList[i].csname,
+									class : 'listItem movingDiv'
+								});
+								
+								$('#codiView').append(codi);
+							}
+							
+							position.x=1;
+							position.y=csIndex;
+						}
+						
+						
+						var codiArr = $("#codiView div");
+						$(codiArr[position.y]).css('background-color','rgba(255,255,255,0.5)');
+						getCodiView(csid);
+					}
+					
+				}else{
+					getCodisetList($(closetArr[position.y]).attr('id'));
+				}
+				
+				
+			}else{  //cid is null csid null length is less than 7
+				
+				alert('((((((((((((if)))))))))) cid == null');
+				
+				position.x=0;
+				position.y=0;
+				var closetArr = $('#closetView div');
+				$(closetArr[position.y]).css('background-color','rgba(255,255,255,0.5)');
+				
+				getCodisetList($(closetArr[position.y]).attr('id'));
+				
+				//set session cid
+				sessionStorage.setItem('cid',$(closetArr[position.y]).attr('id'));
+				}
+			}
+		}
+	
+	alert("position.x is "+position.x+"position.y is "+position.y);
 	alert('setDefault() end');
+
 }
+
+
 function movePosition(direction) {
 	// move focus
 	// x 0,1,2
@@ -255,7 +597,9 @@ function movePosition(direction) {
 			if(cid != null){
 				getCodisetList(cid);
 			}
-			
+
+			$('#codiUp').attr('hidden',true);
+			$('#codiDown').attr('hidden',true);
 			break;
 		}
 		case 2: {
@@ -264,6 +608,9 @@ function movePosition(direction) {
 			var arr = $('#codiView div');
 
 			if (arr.length > 0) {
+				if(codisetList.length>5){
+					$('#codiDown').attr('hidden',false);
+				}
 				closetY = position.y;
 
 				position.x = 1;
@@ -276,9 +623,9 @@ function movePosition(direction) {
 				var arr2 = $('#codiView div');
 
 				sessionStorage.setItem('csid', arr2[0].id);
-
+				
 				setHelpbar();
-
+				
 			}
 
 			break;
@@ -316,7 +663,7 @@ function movePosition(direction) {
 			}else{
 				arr = $('#closetView div');
 				var len = arr.length;
-				if(position.y == 7){
+				if(position.y == (len)){
 					position.y = 0
 				}
 				
@@ -334,6 +681,9 @@ function movePosition(direction) {
 			if(cid != null){
 				getCodisetList(cid);
 			}
+			
+			$('#codiUp').attr('hidden',true);
+			$('#codiDown').attr('hidden',true);
 			
 			break;
 		}
@@ -481,7 +831,7 @@ function movePosition(direction) {
 			}else{
 				codiArr = $('#codiView div');
 				var len = codiArr.length;
-				if(position.y == 5){
+				if(position.y == (len)){
 					position.y = 0
 				}
 				
@@ -504,6 +854,7 @@ function movePosition(direction) {
 		}
 		case 4: {
 			// left
+
 			position.x = 0;
 			position.y = closetY;
 
@@ -570,7 +921,8 @@ function movePosition(direction) {
 	}
 	}
 	
-
+	alert("x is "+position.x+" y is "+position.y);
+	alert('cid is '+sessionStorage.getItem('cid')+" csid is "+sessionStorage.getItem('csid'));
 	alert("movePostion() end");
 }
 function getCodiView(csid) {
@@ -611,6 +963,7 @@ function getCodiView(csid) {
 			var str = data.detail.tcomments + "(가격 : " + data.detail.price
 					+ ")";
 			$('#topDetail').html(str);
+			$('#topView').attr('hidden',false);
 			sessionStorage.setItem('tid', tid);
 		},
 		error : function() {
@@ -631,6 +984,7 @@ function getCodiView(csid) {
 			var str = data.detail.bcomments + "(가격 : " + data.detail.price
 					+ ")";
 			$('#botDetail').html(str);
+			$('#botView').attr('hidden',false);
 			sessionStorage.setItem('bid', bid);
 		},
 		error : function() {
@@ -659,7 +1013,7 @@ function getCodisetList(cid) {
 			codisetList = data.codyset;
 			
 			$('#codiView').empty();
-			if (arr.length>0) {
+			if (arr!=null) {
 				
 				
 				for ( var i = 0; i <arr.length ; i++) {
@@ -676,11 +1030,47 @@ function getCodisetList(cid) {
 				}
 			}
 
-		},
+		}
 	});
 
 	alert('getCodisetList() end');
 
+}
+
+function getClosetList2() {
+
+	alert('getClosetList2() start');
+
+	
+	alert(localStorage.getItem('user'));
+	
+	$('#closetView').empty();
+	var url = 'http://finfra.com/~tv11/closet.php';
+
+	$.ajax({
+		async : false,
+		url : url,
+		dataType : 'json',
+		type : 'get',
+		data : {
+			id : localStorage.getItem('user')
+		},
+		success : function(data) {
+			closetList = data.closet;
+			if(closetList!=null){
+				alert("getClosetList success");
+			}else{
+				alert("getClosetList fail");
+			}
+		},
+		error : function() {
+			alert('ajax error');
+		}
+
+	});
+
+
+	alert('getClosetList2() end');
 }
 function getClosetList() {
 
@@ -749,6 +1139,8 @@ function getClosetList() {
 
 	alert('getClosetList() end');
 }
+
+
 function add_closet() {
 
 	alert('add_closet() start');
@@ -1002,32 +1394,13 @@ function del_codiset() {
 function initItemView() {
 
 	$('#topName').html("");
-	$('#topView').remove();
+	$('#topView').attr('hidden',true);
 	$('#topDetail').html("");
 
-	var newEle = $('<img class="clothView" id="topView">');
-	$('#topName').after(newEle);
-	$('#topView').css({
-		'float' : 'left',
-		'width' : '40%',
-		'height' : 'width',
-		'margin' : '2% 2% 0 2%',
-		'border-radius' : '30px'
-	});
 
 	$('#botName').html("");
-	$('#botView').remove();
+	$('#botView').attr('hidden',true);
 	$('#botDetail').html("");
-
-	var newEle = $('<img class="clothView" id="botView">');
-	$('#botName').after(newEle);
-	$('#botView').css({
-		'float' : 'right',
-		'width' : '40%',
-		'height' : 'width',
-		'margin' : '2% 2% 0 2%',
-		'border-radius' : '30px'
-	});
 
 }
 Main.keyDown = function() {
@@ -1450,12 +1823,19 @@ function replaceClosetView(direction) {  //refer up or down
 			$(arr[1]).css('background-color', 'rgba(255,255,255,0.5)');
 			position.y = 1;
 			sessionStorage.setItem('cid', $(arr[1]).attr('id'));
-
+			
+			$('#closetUp').attr('hidden',false);
+			$('#closetDown').attr('hidden',false);
+			
+			
 		}else{
 			arr = $('#closetView div');
 			arr.css('background-color', 'rgba(255,255,255,0.1)');
 			$(arr[position.y]).css('background-color', 'rgba(255,255,255,0.5)');
 			sessionStorage.setItem('cid', $(arr[position.y]).attr('id'));
+			
+			$('#closetUp').attr('hidden',true);
+			$('#closetDown').attr('hidden',false);
 		}
 
 	} else if (direction == 1) {
@@ -1485,13 +1865,17 @@ function replaceClosetView(direction) {  //refer up or down
 			$(arr[5]).css('background-color', 'rgba(255,255,255,0.5)');
 			position.y = 5;
 			sessionStorage.setItem('cid', $(arr[5]).attr('id'));
-
+			
+			$('#closetDown').attr('hidden',false);
+			$('#closetUp').attr('hidden',false);
 		}else{
 			
 			arr = $('#closetView div');
 			arr.css('background-color', 'rgba(255,255,255,0.1)');
 			$(arr[position.y]).css('background-color', 'rgba(255,255,255,0.5)');
 			sessionStorage.setItem('cid', $(arr[position.y]).attr('id'));
+			$('#closetDown').attr('hidden',true);
+			$('#closetUp').attr('hidden',false);
 		}
 	}else if(direction == 2){
 			//in case position.y == -1
@@ -1513,6 +1897,9 @@ function replaceClosetView(direction) {  //refer up or down
 			$(arr[6]).css('background-color', 'rgba(255,255,255,0.5)');
 			position.y = 6;
 			sessionStorage.setItem('cid', $(arr[6]).attr('id'));
+			
+			$('#closetUp').attr('hidden',false);
+			$('#closetDown').attr('hidden',true);
 		}else if(direction == 3){
 			//in case position.y == 7
 			//refresh to end of closetList
@@ -1534,6 +1921,9 @@ function replaceClosetView(direction) {  //refer up or down
 			position.y = 0;
 			sessionStorage.setItem('cid', $(arr[0]).attr('id'));
 
+
+			$('#closetUp').attr('hidden',true);
+			$('#closetDown').attr('hidden',false);
 		}
 	
 	alert('replaceClosetView() end');
@@ -1575,12 +1965,19 @@ function replaceCodisetView(direction){
 			$(arr[1]).css('background-color', 'rgba(255,255,255,0.5)');
 			position.y = 1;
 			sessionStorage.setItem('csid', $(arr[1]).attr('id'));
+			
+			$('#codiDown').attr('hidden',false);
+			$('#codiUp').attr('hidden',false);
 
 		}else{
 			arr = $('#codiView div');
 			arr.css('background-color', 'rgba(255,255,255,0.1)');
 			$(arr[position.y]).css('background-color', 'rgba(255,255,255,0.5)');
 			sessionStorage.setItem('csid', $(arr[position.y]).attr('id'));
+			
+			$('#codiDown').attr('hidden',false);
+			$('#codiUp').attr('hidden',true);
+
 		}
 
 	} else if (direction == 1) {
@@ -1611,12 +2008,19 @@ function replaceCodisetView(direction){
 			position.y = 3;
 			sessionStorage.setItem('csid', $(arr[position.y]).attr('id'));
 
+			$('#codiUp').attr('hidden',false);
+			$('#codiDown').attr('hidden',false);
+
 		}else{
 			
 			arr = $('#codiView div');
 			arr.css('background-color', 'rgba(255,255,255,0.1)');
 			$(arr[position.y]).css('background-color', 'rgba(255,255,255,0.5)');
 			sessionStorage.setItem('csid', $(arr[position.y]).attr('id'));
+			
+			$('#codiDown').attr('hidden',true);
+			$('#codiUp').attr('hidden',false);
+
 		}
 	}else if(direction == 2){
 			//in case position.y == -1
@@ -1638,7 +2042,11 @@ function replaceCodisetView(direction){
 			$(arr[4]).css('background-color', 'rgba(255,255,255,0.5)');
 			position.y = 4;
 			sessionStorage.setItem('csid', $(arr[position.y]).attr('id'));
-		}else if(direction == 3){
+		
+			$('#codiUp').attr('hidden',false);
+			$('#codiDown').attr('hidden',true);
+			
+	}else if(direction == 3){
 			//in case position.y == 7
 			//refresh to end of closetList
 			$('#codiView').empty();
@@ -1657,8 +2065,10 @@ function replaceCodisetView(direction){
 			arr = $('#codiView div');
 			$(arr[0]).css('background-color', 'rgba(255,255,255,0.5)');
 			position.y = 0;
-			sessionStorage.setItem('cid', $(arr[0]).attr('id'));
-
+			sessionStorage.setItem('csid', $(arr[0]).attr('id'));
+			
+			$('#codiDown').attr('hidden',false);
+			$('#codiUp').attr('hidden',true);
 		}
 	
 	
