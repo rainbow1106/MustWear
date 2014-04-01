@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <widget xmlns="http://www.samsung.com/">  
   <cpname itemtype="string"/>  
   <cplogo itemtype="string"/>  
   <cpauthjs itemtype="string"/>  
-  <ThumbIcon itemtype="string"/>  
-  <BigThumbIcon itemtype="string"/>  
-  <ListIcon itemtype="string"/>  
-  <BigListIcon itemtype="string"/>  
+  <ThumbIcon itemtype="string">icon/shirt.png</ThumbIcon>  
+  <BigThumbIcon itemtype="string">icon/shirt.png</BigThumbIcon>  
+  <ListIcon itemtype="string">icon/shirt.png</ListIcon>  
+  <BigListIcon itemtype="string">icon/shirt.png</BigListIcon>  
   <category itemtype="string"/>  
   <autoUpdate itemtype="boolean">n</autoUpdate>  
   <ver itemtype="string">0.100</ver>  
@@ -19,14 +18,14 @@
   <childlock itemtype="boolean">n</childlock>  
   <videomute itemtype="boolean">n</videomute>  
   <dcont itemtype="boolean">y</dcont>  
-  <widgetname itemtype="string">MustWearV03</widgetname>  
+  <widgetname itemtype="string">MustWear</widgetname>  
   <description itemtype="string"/>  
   <width itemtype="string">1280</width>  
   <height itemtype="string">720</height>  
   <author itemtype="group"> 
-    <name itemtype="string"/>  
+    <name itemtype="string">woosoon &amp; byungjun</name>  
     <email itemtype="string"/>  
     <link itemtype="string"/>  
-    <organization itemtype="string"/> 
+    <organization itemtype="string">closure</organization> 
   </author> 
 </widget>
