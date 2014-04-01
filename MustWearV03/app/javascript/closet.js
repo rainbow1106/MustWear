@@ -32,6 +32,7 @@ Main.onLoad = function() {
 
 	setDefault();
 	hidePop();
+	$("#confirm").hide();
 	imeInsertCloset = new IMEShell("insCloset", ime_ins_closet, this);
 	if (!imeInsertCloset) {
 		alert("object for IMEShell create failed", 3);
@@ -531,6 +532,9 @@ function setDefault() {
 				}
 			}
 		}
+	
+	
+	setHelpbar();
 	
 	alert("position.x is "+position.x+"position.y is "+position.y);
 	alert('setDefault() end');
@@ -1170,7 +1174,7 @@ function add_closet() {
 			}
 
 		});
-
+		alertMsg("["+cName+"] 이  추가 되었습니다");
 		alert('add_closet() end');
 	} else {
 		alert('closet name = NULL');
@@ -1214,7 +1218,7 @@ function mod_closet() {
 			alert('mod_closet ajax error');
 		}
 	});
-
+	alertMsg("["+cName+"] 으로 수정 되었습니다");
 	alert('mod_closet() end');
 }
 function del_closet() {
@@ -1263,11 +1267,19 @@ function del_closet() {
 			}
 		});
 
-	
+	alertMsg("["+cName+"] 을  제거 하였습니다");
 	alert('del_closet() end');
 }
 Main.onUnload = function() {
-
+	if (imeInsertCloset) {
+		imeInsertCloset._blur();
+	}
+	if (imeModifyCloset) {
+		imeModifyCloset._blur();
+	}
+	if (imeModifyCodiset) {
+		imeModifyCodiset._blur();
+	}
 };
 
 Main.enableKeys = function() {
@@ -1302,6 +1314,7 @@ function mod_codiset() {
 				alert('mod_codiset() ajax error');
 			}
 		});
+		alertMsg("코디셋 이름을 ["+csName+"] 으로 수정 되었습니다");
 		alert('mod_codiset() end');
 	} else {
 		alert('modCodiset is null');
@@ -1413,9 +1426,13 @@ Main.keyDown = function() {
 	case tvKey.KEY_PANEL_RETURN:
 		alert("RETURN");
 		if (pop > 0) {
+			alert("close Popup")
 			hidePop();
+			event.preventDefault();
+		} else {
+			alert("close App")
 		}
-		widgetAPI.sendReturnEvent();
+		
 		alert("pop :" + pop + "|loc :" + loc);
 		break;
 	case tvKey.KEY_LEFT:
@@ -1785,7 +1802,17 @@ function hidePop() {
 	pop = 0;
 	loc = 0;
 }
+function alertMsg(msg) {
+	alert("alertMsg() start");
+	$("#confirm").html(msg);
+	$("#confirm").show();
+	setTimeout(function() {
+		$("#confirm").hide();
+	}, 1000);
+	
 
+	alert("alertMsg() end");
+};
 function replaceClosetView(direction) {  //refer up or down
 	alert('replaceClosetView() start');
 	
