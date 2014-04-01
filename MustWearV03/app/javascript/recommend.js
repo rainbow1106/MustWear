@@ -23,14 +23,7 @@ var Main = {
 
 };
 
-function playSound(){
-	var sound = new Audio('app/sound/sound4.mp3');
-	
-	sound.play();
-	
-	if(sound.currentTime > 0) // INVALID_STATE_ERR를 피하기 위한 꼼수
-		sound.currentTime = 0; 
-}
+
 Main.onLoad = function() {
 	// Enable key event processing
 	this.enableKeys();
@@ -39,7 +32,33 @@ Main.onLoad = function() {
 	setDefault();
 
 };
+function setCsid(cid){
+	alert('setCsid() start');
 
+	var url = 'http://finfra.com/~tv11/codyset.php';
+
+	$.ajax({
+		async : false,
+		url : url,
+		dataType : 'json',
+		type : 'get',
+		data : {
+			cId : cid
+		},
+		success : function(data) {
+			var arr = data.codyset;
+			
+			if (arr!=null) {
+				
+				sessionStorage.setItem('csid',arr[0].csid);
+				alert('setCsid success');
+			}
+
+		}
+	});
+
+	alert('setCsid() end');
+}
 function ime_init_csName(imeobj) {
 	var inputobj = imeobj.getInputObj();
 	alert("start initializing: " + inputobj.id);
@@ -544,18 +563,17 @@ Main.keyDown = function() {
 
 	switch (keyCode) {
 	case tvKey.KEY_RETURN:
+	case tvKey.KEY_PANEL_RETURN:
+		alert("RETURN");
 		if(position.x==3){
 			$('#popup').hide();
 			position.x=preX;
+			event.preventDefault();
 		}
-		break;
-	case tvKey.KEY_PANEL_RETURN:
-		alert("RETURN");
-		widgetAPI.sendReturnEvent();
 		break;
 	case tvKey.KEY_LEFT:
 		alert("LEFT");
-		playSound();
+
 		if (position.x == 3) {
 			movePopup(4);
 		} else if (position.x == 5) {
@@ -812,6 +830,8 @@ function refreshClosetList(){
 	alert("refreshClosetList() end");
 }
 
+
+
 function saveCodi() {
 
 	alert('saveCodi() start');
@@ -896,6 +916,9 @@ function saveCodi() {
 }
 
 function excutePopup() {
+	
+	alert('excutePopup() start');
+	
 	if (popupPosition.x == 0) {
 		if (popupPosition.y == 0) {
 			// closetName
@@ -976,7 +999,12 @@ function excutePopup() {
 						var str = $('#popupClosetName').html() + "에 저장되었습니다.";
 						alertMsg(str);
 						position.x = 4;
+						////////////////////
+						// 새로이 옷장리스트 할당
+						// 세션에 최근 코디 저장
+						setCsid(cid);
 						
+						/////////////////////
 						setTimeout(function(){
 							$('#popup').hide();
 							position.x = preX;
@@ -990,6 +1018,9 @@ function excutePopup() {
 			});
 		}
 	}
+	
+
+	alert('excutePopup() end');
 };
 
 function add_closet() {

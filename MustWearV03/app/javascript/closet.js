@@ -361,7 +361,11 @@ function setDefault() {
 			position.y=0;
 			var closetArr = $('#closetView div');
 			$(closetArr[position.y]).css('background-color','rgba(255,255,255,0.5)');
+		
 			alert($(closetArr[position.y]).attr('id'));
+
+			sessionStorage.setItem('cid',$(closetArr[position.y]).attr('id'));
+			$('#closetDown').attr('hidden',false);
 			getCodisetList($(closetArr[position.y]).attr('id'));
 		}
 		
