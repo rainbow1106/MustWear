@@ -23,6 +23,14 @@ var Main = {
 
 };
 
+function playSound(){
+	var sound = new Audio('app/sound/sound4.mp3');
+	
+	sound.play();
+	
+	if(sound.currentTime > 0) // INVALID_STATE_ERR를 피하기 위한 꼼수
+		sound.currentTime = 0; 
+}
 Main.onLoad = function() {
 	// Enable key event processing
 	this.enableKeys();
@@ -547,6 +555,7 @@ Main.keyDown = function() {
 		break;
 	case tvKey.KEY_LEFT:
 		alert("LEFT");
+		playSound();
 		if (position.x == 3) {
 			movePopup(4);
 		} else if (position.x == 5) {
