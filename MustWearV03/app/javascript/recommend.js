@@ -424,7 +424,9 @@ function setDefault() {
 	// // hide other windows
 
 	$('#popup').hide();
-
+	$("#confirm").hide();
+	$('#window').hide();
+	$('#insertCloset').hide();
 	var sexSet = localStorage.getItem('sexSet');
 	var styleSet = localStorage.getItem('styleSet');
 	var topArr = localStorage.getItem('topArr');
@@ -708,6 +710,8 @@ Main.keyDown = function() {
 		if(position.x==0 || position.x == 1){
 			if ((sessionStorage.getItem('tid') != null) && (sessionStorage.getItem('bid') != null)) {
 				saveCodi();
+			}else{
+				alertMsg("불 완전한 코디셋 입니다.");
 			}
 		}
 		break;
@@ -736,6 +740,8 @@ Main.keyDown = function() {
 					sessionStorage.setItem('flag', 'top');
 					document.location.href = "detail.html";
 
+				}else{	
+					alertMsg("상의 정보가 없습니다.");
 				}
 
 			} else if (position.y == 1) {
@@ -745,6 +751,8 @@ Main.keyDown = function() {
 					sessionStorage.setItem('flag', 'bot');
 					document.location.href = "detail.html";
 
+				}else{	
+					alertMsg("하의 정보가 없습니다.");
 				}
 			}
 		}
@@ -907,7 +915,7 @@ function excutePopup() {
 			$('#window').hide();
 			$("#insCloset").addClass("inputfocus");
 			
-			var str;
+			var str=null;
 			
 			if(closetList!=null){
 				str= "옷장"+(closetList.length+1);
@@ -957,9 +965,7 @@ function excutePopup() {
 						
 						// ///////////
 						var str = $('#popupClosetName').html() + "에 저장되었습니다.";
-						
-						$('#confirm').html(str);
-						$('#confirm').show();
+						alertMsg(str);
 						position.x = 4;
 						
 						setTimeout(function(){
@@ -975,8 +981,7 @@ function excutePopup() {
 			});
 		}
 	}
-}
-
+};
 
 function add_closet() {
 
@@ -1015,4 +1020,14 @@ function add_closet() {
 	}
 	
 	alert('add_closet() end');
-}
+};
+function alertMsg(msg) {
+	$("#confirm").html(msg);
+	$('#popup').show();
+	$("#confirm").show();
+	setTimeout(function() {
+		$('#popup').hide();
+		$("#confirm").hide();
+	}, 1250);
+
+};

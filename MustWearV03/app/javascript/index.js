@@ -11,7 +11,7 @@ Main.onLoad = function() {
 	// Enable key event processing
 	this.enableKeys();
 	widgetAPI.sendReadyEvent();
-	//location.href = 'recommend.html';
+	// location.href = 'recommend.html';
 	if (localStorage.getItem("user")) {
 		location.replace("weather.html");
 	} else {
@@ -31,11 +31,11 @@ Main.onLoad = function() {
 	} else {
 		alert("imeId ok", 3);
 	}
-
 	_g_ime.init("en", "2_35_259_12", "USA", "", "us");
-	document.getElementById('helpBar').innerHTML = "INPUT ID";
-	$(idList[position]).addClass("focus");
-	document.getElementById('getId').focus();
+	$("#getId").addClass("focus");
+	$("#form").addClass("centre");
+	$('#popup').hide();
+	$("#confirm").hide();
 
 };
 
@@ -53,14 +53,18 @@ function ime_init_passwd(imeobj) {
 	alert("start initializing: " + inputobj.id);
 	imeobj.setQWERTYPos(290, 230); // IME XT9, new function
 	alert("PW: setQWERTYPos!");
-	imeobj.setKeyFunc(tvKey.KEY_UP, passwdObjKeyFunc);
-	alert("PW: imeobj.setKeyFunc!");
-	imeobj.setKeyFunc(tvKey.KEY_DOWN, passwdObjKeyFunc);
+	imeobj.setKeyFunc(tvKey.KEY_RETURN, function() {
+		alert("IME RETURN");
+		imePw._blur();
+		$("#getPassword").blur();
+		document.getElementById("anchor").focus();
+		$("#getPassword").addClass("focus");
+		$("#form").addClass("centre");
+	});
 	imeobj.setEnterFunc(login);
 	imeobj.setBlockSpace(true);
 	imeobj.setPasswordMode(true);
 	imeobj.setKeySetFunc('qwerty');
-	document.getElementById('getPassword').focus();
 	alert("ime_init_passwd end...");
 };
 function ime_init_id(imeobj) {
@@ -68,102 +72,43 @@ function ime_init_id(imeobj) {
 	alert("start initializing: " + inputobj.id);
 	imeobj.setQWERTYPos(290, 230); // IME XT9, new function
 	alert("ID: setQWERTYPos!");
-	imeobj.setKeyFunc(tvKey.KEY_UP, idObjKeyFunc);
-	alert("ID: imeobj.setKeyFunc!");
-	imeobj.setKeyFunc(tvKey.KEY_DOWN, idObjKeyFunc);
-	
-	imeobj.setKeyFunc(tvKey.KEY_YELLOW, function(){
-		alert("ID :YELLOW");
-		location.replace("register.html");
+	imeobj.setKeyFunc(tvKey.KEY_RETURN, function() {
+		alert("IME RETURN");
+		imeId._blur();
+		$("#getId").blur();
+		document.getElementById("anchor").focus();
+		$("#getId").addClass("focus");
+		$("#form").addClass("centre");
+		
 	});
-	imeobj.setKeySetFunc('qwerty');
-	imeobj.setEnterFunc(idOk);
+	imeobj.setEnterFunc(function() {
+		imeId._blur();
+		$("#getId").blur();
+		$("#getPassword").focus();
+		imePw._focus();
+		$("#getPassword").addClass("focus");
+		$("#getId").removeClass("focus");
+		document.getElementById("anchor").focus();
+		position=1;
+	});
 	imeobj.setBlockSpace(true);
 	imeobj.setUsetIDMode(true);
-	document.getElementById('getId').focus();
 	alert("ime_init_id end...");
 };
 
-function idObjKeyFunc(keyCode) {
-	alert("idObjKeyFunc");
-
-	switch (keyCode) {
-	case tvKey.KEY_UP: // Up Key
-		alert("ID :UP KEY");
-		$(idList[position]).removeClass("focus");
-		position++;
-		alert(position);
-		$(idList[position]).addClass("focus");
-		$(idList[position]).focus();
-		break;
-
-	case tvKey.KEY_DOWN: // Down Key
-		alert("ID :DOWN KEY");
-		$(idList[position]).removeClass("focus");
-		position++;
-		alert(position);
-		$(idList[position]).addClass("focus");
-		$(idList[position]).focus();
-		break;
-
-	case tvKey.KEY_RETURN:
-	case tvKey.KEY_PANEL_RETURN: // return Key
-		alert("ID :Return KEY");
-		$(idList[position]).blur();
-		break;
-	case tvKey.KEY_YELLOW:
-		alert("ID :YELLOW");
-		location.replace("register.html");
-		break;
-	default:
-		alert("Unhandled key");
-		break;
-	}
-	return false;
-};
-function passwdObjKeyFunc(keyCode) {
-	alert("passwdObjKeyFunc");
-	switch (keyCode) {
-	case tvKey.KEY_UP: // Up Key
-		alert("PW :UP KEY");
-		
-		$(idList[position]).removeClass("focus");
-		position--;
-		alert(position);
-		$(idList[position]).addClass("focus");
-		$(idList[position]).focus();
-		break;
-
-	case tvKey.KEY_DOWN: // Down Key
-		alert("PW :DOWN KEY");
-		
-		$(idList[position]).removeClass("focus");
-		position--;
-		alert(position);
-		$(idList[position]).addClass("focus");
-		$(idList[position]).focus();
-		break;
-
-	case tvKey.KEY_RETURN:
-	case tvKey.KEY_PANEL_RETURN: // return Key
-		alert("PW :Return KEY");
-		$(idList[position]).blur();
-		break;
-	default:
-		alert("Unhandled key");
-		break;
-	}
-	return false;
-};
 function login() {
 	alert("Login Function");
 
 	var id = $("#getId").val();
 	var pw = $("#getPassword").val();
 	if (id.trim() == "") {
-		alert("input id");
+		alertMsg("아이디를 입력 해 주세요");
 		return;
 	}
+	if (pw.trim() == "") {
+		alertMsg("비밀번호 를 입력 해 주세요");
+		return;
+	}	
 	var url = "http://finfra.com/~tv11/login.php";
 	$.ajax({
 		url : url,
@@ -179,7 +124,7 @@ function login() {
 				localStorage.setItem("user", id);
 				location.replace("weather.html");
 			} else {
-				alert("login failed");
+				alertMsg("로그인 실패! :아이디/비밀번호를 확인 하세요");
 			}
 		},
 		error : function() {
@@ -188,22 +133,15 @@ function login() {
 	});
 
 };
-function idOk() {
-	$(idList[position]).removeClass("focus");
-	position++;
-	alert(position);
-	$(idList[position]).addClass("focus");
-	$(idList[position]).focus();
-}
 /** ************************************************************************ */
 Main.enableKeys = function() {
 	document.getElementById("anchor").focus();
 };
 
 Main.keyDown = function() {
-	
-	//$("#sound").html("<audio src='app/sound/click.wav' autoplay></audio>");
-	
+
+	// $("#sound").html("<audio src='app/sound/click.wav' autoplay></audio>");
+
 	var keyCode = event.keyCode;
 	alert("Key pressed: " + keyCode);
 
@@ -222,19 +160,44 @@ Main.keyDown = function() {
 		break;
 	case tvKey.KEY_UP:
 		alert("UP");
+		if (position == 0) {
+			position =1;
+			$("#getPassword").addClass("focus");
+			$("#getId").removeClass("focus");
+		} else if (position == 1) {
+			position =0;
+			$("#getId").addClass("focus");
+			$("#getPassword").removeClass("focus");			
+		}
 		break;
 	case tvKey.KEY_DOWN:
 		alert("DOWN");
+		if (position == 0) {
+			position =1;
+			$("#getPassword").addClass("focus");
+			$("#getId").removeClass("focus");
+		} else if (position == 1) {
+			position =0;
+			$("#getId").addClass("focus");
+			$("#getPassword").removeClass("focus");			
+		}
 		break;
 	case tvKey.KEY_ENTER:
 	case tvKey.KEY_PANEL_ENTER:
 		alert("ENTER");
-		$(idList[0]).focus();
+		if (position == 0) {
+			$("#getId").focus();
+			imeId._focus();
+			$("#form").removeClass("centre");
+		} else if (position == 1) {
+			$("#getPassword").focus();
+			imePw._focus();	
+			$("#form").removeClass("centre");
+		}
 		break;
 	case tvKey.KEY_BLUE:
 	case 22:
 		alert("BLUE");
-
 		break;
 	case tvKey.KEY_RED:
 	case 108:
@@ -243,10 +206,21 @@ Main.keyDown = function() {
 		break;
 	case tvKey.KEY_YELLOW:
 		alert("ID :YELLOW");
-		location.replace("register.html");
 		break;
 	default:
 		alert("Unhandled key");
 		break;
 	}
+};
+function alertMsg(msg) {
+	imePw._blur();
+	$("#confirm").html(msg);
+	$('#popup').show();
+	$("#confirm").show();
+	setTimeout(function() {
+		$('#popup').hide();
+		$("#confirm").hide();
+		imePw._focus();
+	}, 1250);
+
 };
