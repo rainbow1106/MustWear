@@ -135,7 +135,7 @@ function register() {
 		return;
 	}
 
-	if (id.trim().length <= 5) {
+	if (id.trim().length < 5) {
 		alertMsg("아이디 를 5자 이상 입력 해주세요");
 		return;
 	}
