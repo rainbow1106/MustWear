@@ -11,8 +11,7 @@ Main.onLoad = function() {
 	// Enable key event processing
 	this.enableKeys();
 	widgetAPI.sendReadyEvent();
-	getWeatherCode();
-	drawLineGraph();
+	setDefault();
 };
 
 
@@ -22,7 +21,11 @@ function logout() {
 	document.location.replace("index.html");
 }
 
-
+function setDefault(){
+	$('#popup').show();
+	getWeatherCode();
+	drawLineGraph();
+}
 function drawLineGraph() {
 	alert("drawLineGraph()");
 
@@ -31,7 +34,7 @@ function drawLineGraph() {
 	$
 			.ajax({
 				url : hourlyUrl,
-				dataType : 'jsonp',
+				dataType : 'json',
 				type : 'get',
 				success : function(data) {
 
@@ -56,10 +59,10 @@ function drawLineGraph() {
 					}
 
 					var lineChartData = {
-						labels : [ tempArr[0].date, tempArr[1].date,
-								tempArr[2].date, tempArr[3].date,
-								tempArr[4].date, tempArr[5].date,
-								tempArr[6].date ],
+						labels : [ tempArr[0].date+"시", tempArr[1].date+"시",
+								tempArr[2].date+"시", tempArr[3].date+"시",
+								tempArr[4].date+"시", tempArr[5].date+"시",
+								tempArr[6].date+"시" ],
 						datasets : [ {
 							fillColor : "rgba(220,220,220,0.5)",
 							strokeColor : "rgba(220,220,220,1)",
@@ -167,6 +170,9 @@ function drawLineGraph() {
 				},
 				error : function() {
 					alert("ajax error");
+				},
+				complete:function(){
+					$('#popup').hide();
 				}
 			});
 };
@@ -176,7 +182,7 @@ function getWeatherCode() {
 
 	$.ajax({
 		url : conditionUrl,
-		dataType : 'jsonp',
+		dataType : 'json',
 		type : 'get',
 		success : function(data) {
 			alert("success");

@@ -253,7 +253,7 @@ function setDefault() {
 				});
 				
 				if( codisetList != null){
-					alert('((((((((((((if)))))))))) codisetList.length > 0');
+					alert('((((((((((((if)))))))))) codisetList.length != 0');
 					
 					var csIndex = -1;
 					for(var i=0;i<codisetList.length;i++){
@@ -265,32 +265,58 @@ function setDefault() {
 					}
 					alert('csIndex is '+csIndex);
 					
-					if(csIndex>2){
-						alert('((((((((((((if)))))))))) csIndex > 4');
-						
-						if(csIndex == (codisetList.length-1)){
-							alert('((((((((((((if)))))))))) csIndex == (codisetList.length-1)');
+					if(codisetList.length>5){
+						alert('((((((((((((if)))))))))) codisetList.length > 5');
+						if(csIndex>2){
+							alert('((((((((((((if)))))))))) csIndex > 2');
 							
-							for(var i=(csIndex-4);i<(csIndex+1);i++){
-								var codi = $('<div/>', {
-									id : codisetList[i].csid,
-									text : codisetList[i].csname,
-									class : 'listItem movingDiv'
-								});
+							if(csIndex == (codisetList.length-1)){
+								alert('((((((((((((if)))))))))) csIndex == (codisetList.length-1)');
 								
-								$('#codiView').append(codi);
-							}
-							
-							position.x=1;
-							position.y=4;
+								for(var i=(csIndex-4);i<(csIndex+1);i++){
+									var codi = $('<div/>', {
+										id : codisetList[i].csid,
+										text : codisetList[i].csname,
+										class : 'listItem movingDiv'
+									});
+									
+									$('#codiView').append(codi);
+								}
+								
+								position.x=1;
+								position.y=4;
+								
+
+								$('#codiUp').attr('hidden',false);
+								
+							}else{
+								alert('((((((((((((if)))))))))) else');
+								
+								for(var i=(csIndex-3);i<(csIndex+2);i++){
+									var codi = $('<div/>', {
+										id : codisetList[i].csid,
+										text : codisetList[i].csname,
+										class : 'listItem movingDiv'
+									});
+									
+									$('#codiView').append(codi);
+								
+								}
+								
+								position.x=1;
+								position.y=3;
 							
 
-							$('#codiUp').attr('hidden',false);
+								$('#codiDown').attr('hidden',false);
+								$('#codiUp').attr('hidden',false);
+							}
+							
 							
 						}else{
-							alert('((((((((((((if)))))))))) else');
+							alert('((((((((((((if)))))))))) csIndex <= 2');
 							
-							for(var i=(csIndex-3);i<(csIndex+2);i++){
+							for(var i=0;i<codisetList.length;i++){
+								if(i == 5){break;}
 								var codi = $('<div/>', {
 									id : codisetList[i].csid,
 									text : codisetList[i].csname,
@@ -298,23 +324,19 @@ function setDefault() {
 								});
 								
 								$('#codiView').append(codi);
-							
 							}
 							
 							position.x=1;
-							position.y=3;
-						
+							position.y=csIndex;
 
 							$('#codiDown').attr('hidden',false);
-							$('#codiUp').attr('hidden',false);
 						}
-						
-						
+
 					}else{
-						alert('((((((((((((if)))))))))) csIndex <= 4');
+						alert('((((((((((((if)))))))))) codisetList.length <= 5');
 						
 						for(var i=0;i<codisetList.length;i++){
-							if(i == 5){break;}
+							
 							var codi = $('<div/>', {
 								id : codisetList[i].csid,
 								text : codisetList[i].csname,
@@ -324,12 +346,10 @@ function setDefault() {
 							$('#codiView').append(codi);
 						}
 						
-						position.x=1;
-						position.y=csIndex;
-
-						$('#codiDown').attr('hidden',false);
+						position.x = 1;
+						position.y = csIndex;
 					}
-					
+										
 					
 					var codiArr = $("#codiView div");
 					$(codiArr[position.y]).css('background-color','rgba(255,255,255,0.5)');

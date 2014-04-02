@@ -26,7 +26,7 @@
 	</head>
 
 	<body onload="Main.onLoad();" onunload="Main.onUnload();">
-<div id="sound" style="width: 0px; height: 0px;"></div>
+
 		<!-- Dummy anchor as focus for key events -->
 		<a href="javascript:void(0);" id="anchor" onkeydown="Main.keyDown();"></a>
 
@@ -35,7 +35,7 @@
 		<div id="contents">
 			<div id="weatherImage" class="container">
 				<img id="image"/>
-				<div id="condition"></div>
+				<p id="condition"></p>
 			</div>
 			<div id="forecast" class="container">
 				<div id="temp"></div>
@@ -57,5 +57,11 @@
 			<font id='blue'><img class = "helpBarIcon" src="app/image/blue.png">다음  </font>
 		</div>
 	
+	
+		<div id="popup">
+			<div id="loading">
+				<img src="app/image/loading.gif">
+			</div>
+		</div>
 	</body>
 </html>
