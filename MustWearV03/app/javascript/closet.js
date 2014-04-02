@@ -1719,6 +1719,9 @@ Main.keyDown = function() {
 			} else if (loc == 2) {
 				$("#insClosetBtn").removeClass("focus");
 				$("#insClosetCancle").removeClass("focus");
+				
+				position.x = 0;
+				
 				hidePop();
 			}
 		} else if (pop == 2) {
@@ -1738,6 +1741,9 @@ Main.keyDown = function() {
 				hidePop();
 				$("#modClosetBtn").removeClass("focus");
 				$("#modClosetCancle").removeClass("focus");
+				
+				position.x = 0;
+				
 			}
 		} else if (pop == 3) {
 			if (loc == 0) {
@@ -1754,6 +1760,9 @@ Main.keyDown = function() {
 				hidePop();
 				$("#modCodisetBtn").removeClass("focus");
 				$("#modCodisetCancle").removeClass("focus");
+			
+				position.x = 1;
+				
 			}
 		} else if (pop == 4) {
 			if (loc == 1) {
@@ -1765,6 +1774,8 @@ Main.keyDown = function() {
 				$("#delClosetBtn").removeClass("focus");
 				$("#delClosetCancle").removeClass("focus");
 				hidePop();
+				position.x = 0;
+				
 			}
 		} else if (pop == 5) {
 			if (loc == 1) {
@@ -1776,6 +1787,8 @@ Main.keyDown = function() {
 				$("#delCodisetBtn").removeClass("focus");
 				$("#delCodisetCancle").removeClass("focus");
 				hidePop();
+				position.x = 1;
+				
 			}
 		}
 		alert("pop :" + pop + "|loc :" + loc);
