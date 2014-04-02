@@ -1509,6 +1509,18 @@ Main.keyDown = function() {
 	case tvKey.KEY_PANEL_RETURN:
 		alert("RETURN");
 		if (pop > 0) {
+			
+			if(pop == 1){
+				position.x = 0;
+			}else if(pop == 2){
+				position.x = 0;
+			}else if(pop  = 3){
+				position.x = 1;
+			}else if(pop == 4){
+				position.x = 0;
+			}else if(pop == 5){
+				position.x = 1;
+			}
 			alert("close Popup")
 			hidePop();
 			event.preventDefault();
