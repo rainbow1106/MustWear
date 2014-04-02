@@ -15,6 +15,9 @@ var styleSet = [ '포멀', '캐주얼', '스포츠' ];
 var topArr;
 var botArr;
 
+var topOriginalArr;
+var botOriginalArr;
+
 var preX;
 
 var imeCsName, imeInsertCloset;
@@ -239,12 +242,16 @@ function getCodi() {
 			if (topArr) {
 				var topArr = shuffleArray(topArr);
 				localStorage.setItem('topArr', JSON.stringify(topArr));
-
+				
+				topOriginalArr = topArr;
+				
 				$('#topName').html(topArr[0].tname);
 
 				$('#topView').attr('src', topArr[0].t_url_1);
 
 				sessionStorage.setItem('tid', topArr[0].tid);
+				
+				setNumber(1);
 
 			} else {
 
@@ -255,22 +262,29 @@ function getCodi() {
 				$('#topName').html("해당 의류가 없습니다.");
 				$('#topView').attr('src', 'app/image/apple.jpg');
 
+				setNumber(1);
 			}
 
 			if (botArr) {
 				var botArr = shuffleArray(botArr);
 				localStorage.setItem('botArr', JSON.stringify(botArr));
 
+				botOriginalArr = botArr;
+				
 				$('#botName').html(botArr[0].bname);
 				$('#botView').attr('src', botArr[0].b_url_1);
 
 				sessionStorage.setItem('bid', botArr[0].bid);
 
+				setNumber(2);
+				
 			} else {
 				localStorage.removeItem('botArr');
 				sessionStorage.removeItem('bid');
 				$('#botName').html("해당 의류가 없습니다.");
 				$('#botView').attr('src', 'app/image/apple.jpg');
+				
+				setNumber(2);
 			}
 		},
 
@@ -520,16 +534,24 @@ function setDefault() {
 			topArr = JSON.parse(topArr);
 
 			localStorage.setItem('topArr', JSON.stringify(topArr));
-
+			
+			topOriginalArr = topArr;
+			
 			$('#topName').html(topArr[0].tname);
 			$('#topView').attr('src', topArr[0].t_url_1);
 			sessionStorage.setItem('tid', topArr[0].tid);
+		
+			setNumber(1);
+			
 		} else {
 			localStorage.removeItem('topArr');
 
 			$('#topName').html("해당 의류가 없습니다.");
 			$('#topView').attr('src', 'app/image/apple.jpg');
 			sessionStorage.removeItem('tid');
+			
+			setNumber(1);
+			
 		}
 
 		if (botArr) {
@@ -537,14 +559,21 @@ function setDefault() {
 
 			localStorage.setItem('botArr', JSON.stringify(botArr));
 
+			botOriginalArr = botArr;
+			
 			$('#botName').html(botArr[0].bname);
 			$('#botView').attr('src', botArr[0].b_url_1);
 			sessionStorage.setItem('bid', botArr[0].bid);
+		
+			setNumber(2, botArr[0].bid);
+			
 		} else {
 			localStorage.removeItem('botArr');
 			$('#botName').html("해당 의류가 없습니다.");
 			$('#botView').attr('src', 'app/image/apple.jpg');
 			sessionStorage.removeItem('bid');
+			
+			setNumber(2, null);
 		}
 	}
 
@@ -677,6 +706,9 @@ Main.keyDown = function() {
 					// /////////////
 					sessionStorage.setItem('tid', topArr[0].tid);
 					// //////////////
+					
+					setNumber(1);
+				
 				}
 			} else {
 				botArr = localStorage.getItem('botArr');
@@ -690,6 +722,8 @@ Main.keyDown = function() {
 					$('#botView').attr('src', botArr[0].b_url_1);
 
 					sessionStorage.setItem('bid', botArr[0].bid);
+					
+					setNumber(2);
 				}
 			}
 		} else if (position.x == 3) {
@@ -798,6 +832,62 @@ Main.keyDown = function() {
 	}
 };
 
+
+function setNumber(cloth){
+	
+	alert('setNumber() start');
+	if(cloth == 1){
+		if(topOriginalArr != null && topOriginalArr.length>0){
+			var index = -1;
+			var idx = sessionStorage.getItem('tid');
+			
+			if(idx != null){
+
+				for(var i=0;i<topOriginalArr.length;i++){
+					var originalId = topOriginalArr[i].tid;
+					if(originalId == idx){
+						index = i;
+						break;
+					}
+				}
+				
+				if(index != -1){
+					var str = ""+(index+1)+"/"+topOriginalArr.length;
+					$('#topNumber').html(str);
+				}
+			}else{
+				$('#topNumber').empty();
+			}
+		}
+		
+	}else if(cloth == 2){
+		if(botOriginalArr != null && botOriginalArr.length>0){
+			var index = -1;
+			var idx = sessionStorage.getItem('bid');
+			
+			if(idx != null){
+
+				for(var i=0;i<botOriginalArr.length;i++){
+					var originalId = botOriginalArr[i].bid;
+					if(originalId == idx){
+						index = i;
+						break;
+					}
+				}
+				
+				if(index != -1){
+					var str = ""+(index+1)+"/"+botOriginalArr.length;
+					$('#botNumber').html(str);
+				}
+			}else{
+				$('#botNumber').empty();
+			}
+		}
+	}
+	
+
+	alert('setNumber() end');
+}
 function refreshClosetList(){
 	alert("refreshClosetList() start");
 	

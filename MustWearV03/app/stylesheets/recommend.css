@@ -21,7 +21,15 @@
 	position: absolute;
 	
 	top:90%;
-	left: 90%;
+	left: 80%;
+	
+	font-size: 21px;
+}
+#botNumber{
+	position: absolute;
+	
+	top:90%;
+	left: 80%;
 	
 	font-size: 21px;
 }
@@ -38,6 +46,9 @@
 }
 
 #topContainer{
+	position: relative;
+}
+#botContainer{
 	position: relative;
 }
 #contents{

@@ -566,12 +566,58 @@ function setDefault() {
 	
 	
 	setHelpbar();
+	setNumber(1);
+	setNumber(2);
+	
 	
 	alert("position.x is "+position.x+"position.y is "+position.y);
 	alert('setDefault() end');
 
 }
-
+function setNumber(category){
+	
+	var index = -1;
+	if(category == 1){
+		//closet
+		
+		var cid = sessionStorage.getItem('cid');
+		if(closetList != null && closetList.length > 0){
+			for(var i=0;i<closetList.length;i++){
+				var idx = closetList[i].cid;
+				if(idx == cid){
+					index = i;
+					break;
+				}
+			}
+			
+			if(index != -1){
+				var str = ""+(index+1)+"/"+closetList.length;
+				$('#closetNumber').html(str);
+			}
+		}else{
+			$('#closetNumber').empty();
+		}
+	}else if(category == 2){
+		
+		var csid = sessionStorage.getItem('csid');
+		if(codisetList != null && codisetList.length > 0){
+			for(var i=0;i<codisetList.length;i++){
+				var idx = codisetList[i].csid;
+				if(csid == idx){
+					index = i;
+					break;
+				}
+			}
+			
+			if(index != -1){
+				var str = ""+(index+1)+"/"+codisetList.length;
+				$('#codisetNumber').html(str);
+			}
+		}else{
+			$('#codisetNumber').empty();
+		}
+	}
+}
 
 function movePosition(direction) {
 	// move focus
@@ -635,6 +681,10 @@ function movePosition(direction) {
 
 			$('#codiUp').attr('hidden',true);
 			$('#codiDown').attr('hidden',true);
+			
+			setNumber(1);
+			setNumber(2);
+			
 			break;
 		}
 		case 2: {
@@ -664,7 +714,8 @@ function movePosition(direction) {
 				
 				
 			}
-
+			
+			setNumber(2);
 			break;
 		}
 		case 3: {
@@ -721,6 +772,9 @@ function movePosition(direction) {
 			
 			$('#codiUp').attr('hidden',true);
 			$('#codiDown').attr('hidden',true);
+			
+			setNumber(1);
+			setNumber(2);
 			
 			break;
 		}
@@ -801,7 +855,8 @@ function movePosition(direction) {
 				getCodiView(csid);
 			}
 			
-
+			setNumber(2);
+			
 			break;
 		}
 		case 2: {
@@ -889,7 +944,9 @@ function movePosition(direction) {
 			if(csid != null){
 				getCodiView(csid);
 			}
-
+			
+			setNumber(2);
+			
 			break;
 		}
 		case 4: {
@@ -906,7 +963,8 @@ function movePosition(direction) {
 			sessionStorage.removeItem('csid');
 
 			setHelpbar();
-
+			
+			
 			break;
 		}
 		}
