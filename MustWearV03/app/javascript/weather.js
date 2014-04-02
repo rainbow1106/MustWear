@@ -22,7 +22,7 @@ function logout() {
 }
 
 function setDefault(){
-	$('#popup').show();
+	$('#loading').show();
 	getWeatherCode();
 	drawLineGraph();
 }
@@ -172,7 +172,7 @@ function drawLineGraph() {
 					alert("ajax error");
 				},
 				complete:function(){
-					$('#popup').hide();
+					$('#loading').hide();
 				}
 			});
 };

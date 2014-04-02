@@ -277,6 +277,12 @@ function getCodi() {
 		error : function(xhr, ajaxOption, thrownError) {
 			alert(xhr.status);
 			alert(thrownError);
+		},
+		beforeSend:function(){
+			$('#loading').show();
+		},
+		complete:function(){
+			$('#loading').hide();
 		}
 	});
 }
@@ -454,6 +460,8 @@ function setDefault() {
 	$("#confirm").hide();
 	$('#window').hide();
 	$('#insertCloset').hide();
+	$('#loading').hide();
+	
 	var sexSet = localStorage.getItem('sexSet');
 	var styleSet = localStorage.getItem('styleSet');
 	var topArr = localStorage.getItem('topArr');

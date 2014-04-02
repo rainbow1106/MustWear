@@ -7,6 +7,7 @@ var position = {
 };
 var closetY;
 var codisetY;
+var preX;
 var pop = 0;
 var loc = 0;
 var imeInsertCloset, imeModifyCloset, imeModifyCodiset;
@@ -132,6 +133,7 @@ function setDefault() {
 	////////////////
 	$('#closetView').empty();
 	$('#codiView').empty();
+	$('#loading').hide();
 	////////////////
 	var cid = sessionStorage.getItem('cid');
 	var csid = sessionStorage.getItem('csid');
@@ -286,7 +288,7 @@ function setDefault() {
 								position.x=1;
 								position.y=4;
 								
-
+								
 								$('#codiUp').attr('hidden',false);
 								
 							}else{
@@ -306,7 +308,8 @@ function setDefault() {
 								position.x=1;
 								position.y=3;
 							
-
+						
+								
 								$('#codiDown').attr('hidden',false);
 								$('#codiUp').attr('hidden',false);
 							}
@@ -328,7 +331,8 @@ function setDefault() {
 							
 							position.x=1;
 							position.y=csIndex;
-
+				
+							
 							$('#codiDown').attr('hidden',false);
 						}
 
@@ -348,6 +352,7 @@ function setDefault() {
 						
 						position.x = 1;
 						position.y = csIndex;
+
 					}
 										
 					
@@ -484,7 +489,8 @@ function setDefault() {
 								position.x=1;
 								position.y=4;
 								
-
+						
+								
 								$('#codiUp').attr('hidden',false);
 								
 							}else{
@@ -503,7 +509,8 @@ function setDefault() {
 								
 								position.x=1;
 								position.y=3;
-
+								
+						
 								$('#codiDown').attr('hidden',false);
 								$('#codiUp').attr('hidden',false);
 							}
@@ -644,15 +651,17 @@ function movePosition(direction) {
 				position.x = 1;
 				position.y = 0;
 
+				setHelpbar();
+				
 				$(arr[position.y]).css('background-color',
 						'rgba(255, 255, 255, 0.5)');
 				getCodiView(arr[position.y].id);
-
+				
 				var arr2 = $('#codiView div');
 
 				sessionStorage.setItem('csid', arr2[0].id);
 				
-				setHelpbar();
+				
 				
 			}
 
@@ -955,6 +964,10 @@ function movePosition(direction) {
 }
 function getCodiView(csid) {
 
+	var flag = false;
+	
+	preX = position.x;
+	
 	var url = "http://finfra.com/~tv11/clothes.php"
 	var tid;
 	var bid;
@@ -973,6 +986,11 @@ function getCodiView(csid) {
 		},
 		error : function() {
 			alert("get tid bid error");
+		},
+		beforeSend:function(){
+			$('#loading').show();
+	
+			position.x = 3;
 		}
 	});
 
@@ -996,6 +1014,15 @@ function getCodiView(csid) {
 		},
 		error : function() {
 			alert("ajax error(tid)");
+		},
+		complete:function(){
+			if(flag == true){
+				alert('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+				alert("position.x = "+position.x);
+				$('#loading').hide();
+				position.x = preX;
+			}
+			flag = true;
 		}
 	});
 	$.ajax({
@@ -1017,8 +1044,21 @@ function getCodiView(csid) {
 		},
 		error : function() {
 			alert("ajax error(bid)");
+		},
+		complete:function(){
+			if(flag == true){
+
+				alert('????????????????????????????????????????????????????????????????????????????????');
+				alert("position.x = "+position.x);
+				$('#loading').hide();
+				position.x = preX;
+			}
+			flag = true;
 		}
 	});
+	
+	
+	alert('getCodiView() end');
 }
 function getCodisetList(cid) {
 	alert('getCodisetList() start');
@@ -1190,15 +1230,18 @@ function add_closet() {
 				alert(data);
 
 				sessionStorage.removeItem('cid');
-
+				alertMsg("["+cName+"] 이  추가 되었습니다");
 				setDefault();
 			},
 			error : function() {
 				alert('add_closet ajax error');
+			},
+			complete:function(){
+				position.x = 0;
 			}
 
 		});
-		alertMsg("["+cName+"] 이  추가 되었습니다");
+		
 		alert('add_closet() end');
 	} else {
 		alert('closet name = NULL');
@@ -1233,6 +1276,7 @@ function mod_closet() {
 		},
 		success : function(data) {
 			if (data) {
+				alertMsg("["+cname+"] 으로 수정 되었습니다");
 				setDefault();
 			} else {
 				alert('fail');
@@ -1240,9 +1284,12 @@ function mod_closet() {
 		},
 		error : function() {
 			alert('mod_closet ajax error');
+		},
+		complete:function(){
+			position.x = 0;
 		}
 	});
-	alertMsg("["+cName+"] 으로 수정 되었습니다");
+	
 	alert('mod_closet() end');
 }
 function del_closet() {
@@ -1261,7 +1308,7 @@ function del_closet() {
 	
 
 		var cid = $(arr[position.y]).attr('id');
-
+		var cname = $(arr[position.y]).html();
 		alert("selected cid is " + cid + " for del");
 
 		$.ajax({
@@ -1281,17 +1328,20 @@ function del_closet() {
 					sessionStorage.removeItem('cid');
 
 					setDefault();
-
+					alertMsg("["+cname+"] 을  제거 하였습니다");
 				} else {
 					alert('del_closet() fail');
 				}
 			},
 			error : function() {
 				alert('ajax error');
+			},
+			complete:function(){
+				position.x = 0;
 			}
 		});
 
-	alertMsg("["+cName+"] 을  제거 하였습니다");
+	
 	alert('del_closet() end');
 }
 Main.onUnload = function() {
@@ -1327,7 +1377,7 @@ function mod_codiset() {
 			success : function(data) {
 				if (data) {
 					alert("success " + data);
-
+					alertMsg("코디셋 이름을 ["+csName+"] 으로 수정 되었습니다");
 					setDefault();
 
 				} else {
@@ -1336,9 +1386,12 @@ function mod_codiset() {
 			},
 			error : function() {
 				alert('mod_codiset() ajax error');
+			},
+			complete:function(){
+				position.x = 1;
 			}
 		});
-		alertMsg("코디셋 이름을 ["+csName+"] 으로 수정 되었습니다");
+		
 		alert('mod_codiset() end');
 	} else {
 		alert('modCodiset is null');
@@ -1370,7 +1423,7 @@ function setHelpbar() { // position.x 값을 참조하여 맞는 헬프바 아�
 		$('#blue img').attr('src', 'app/image/blue.png');
 		$('#green img').attr('src', 'app/image/green.png');
 
-	} else if (position.x == 1) {
+	} else if (position.x == 1 || position.x == 3) {
 		yellow = $('<font id="yellow"><img class="helpBarIcon">코디셋 수정  </font>');
 		blue = $('<font id="blue"><img class="helpBarIcon">코디셋 삭제  </font>');
 
@@ -1400,7 +1453,8 @@ function del_codiset() {
 
 	var arr = $('#codiView div');
 	var csid = $(arr[position.y]).attr('id');
-
+	var cname = $(arr[position.y]).html();
+	
 	var url = "http://finfra.com/~tv11/del_cody.php";
 
 	$.ajax({
@@ -1418,11 +1472,16 @@ function del_codiset() {
 				initItemView();
 				sessionStorage.removeItem('csid');
 
+				alertMsg("["+cname+"] 을  제거 하였습니다");
 				setDefault();
 
 			} else {
 				alert('del_codiset() fail');
 			}
+		},
+		complete:function(){
+			position.x = 0;
+			alertMsg(msg);
 		}
 	});
 	alert('del_codiset() end');
@@ -1462,7 +1521,9 @@ Main.keyDown = function() {
 	case tvKey.KEY_LEFT:
 		alert("LEFT");
 		if (pop == 0) {
-			movePosition(4);
+			if(position.x != 3){
+				movePosition(4);
+			}
 		} else if (pop == 1) {
 			if (loc == 1) {
 				loc = 2;
@@ -1524,7 +1585,9 @@ Main.keyDown = function() {
 	case tvKey.KEY_RIGHT:
 		alert("RIGHT");
 		if (pop == 0) {
-			movePosition(2);
+			if(position.x != 3){
+				movePosition(2);
+			}
 		} else if (pop == 1) {
 			if (loc == 1) {
 				loc = 2;
@@ -1585,7 +1648,9 @@ Main.keyDown = function() {
 	case tvKey.KEY_UP:
 		alert("UP");
 		if (pop == 0) {
-			movePosition(1);
+			if(position.x != 3){
+				movePosition(1);
+			}
 		} else if (pop == 1) {
 			if (loc != 0) {
 				loc = 0;
@@ -1613,7 +1678,9 @@ Main.keyDown = function() {
 	case tvKey.KEY_DOWN:
 		alert("DOWN");
 		if (pop == 0) {
-			movePosition(3);
+			if(position.x != 3){
+				movePosition(3);
+			}
 		} else if (pop == 1) {
 			if (loc == 0) {
 				loc = 1;
@@ -1662,9 +1729,11 @@ Main.keyDown = function() {
 				$("#modCloset").removeClass("inputfocus");
 			} else if (loc == 1) {
 				mod_closet();
-				hidePop();
+				
 				$("#modClosetBtn").removeClass("focus");
 				$("#modClosetCancle").removeClass("focus");
+			
+				hidePop();
 			} else if (loc == 2) {
 				hidePop();
 				$("#modClosetBtn").removeClass("focus");
@@ -1716,6 +1785,10 @@ Main.keyDown = function() {
 
 		if (position.x == 0) {
 			$("#popup").show();
+			
+			position.x=3;
+			
+			
 			$("#insertCloset").show();
 			
 			var str;
@@ -1749,6 +1822,9 @@ Main.keyDown = function() {
 	case tvKey.KEY_YELLOW: // yellow
 		alert("YELLOW");
 		if (position.x == 0) {
+			
+			position.x = 3;
+			
 			$("#popup").show();
 			$("#modifyCloset").show();
 			pop = 2;
@@ -1756,6 +1832,9 @@ Main.keyDown = function() {
 			document.getElementById('modCloset').value = $(
 					$('#closetView div')[position.y]).html();
 		} else if (position.x == 1) {
+			
+			position.x = 3;
+			
 			$("#popup").show();
 			$("#modifyCodiset").show();
 			pop = 3;
@@ -1770,7 +1849,9 @@ Main.keyDown = function() {
 			arr = $('#closetView div');
 			
 				if(arr.length > 0){
-
+					
+					position.x = 3;
+					
 					$("#popup").show();
 					$("#deleteCloset").show();
 					pop = 4;
@@ -1782,7 +1863,10 @@ Main.keyDown = function() {
 				
 				}
 			} else if (position.x == 1) {
-			$("#popup").show();
+			
+				position.x = 3;
+				
+				$("#popup").show();
 			$("#deleteCodiset").show();
 			pop = 5;
 			loc = 1;
@@ -1828,6 +1912,7 @@ function hidePop() {
 }
 function alertMsg(msg) {
 	alert("alertMsg() start");
+	
 	$("#confirm").html(msg);
 	$("#confirm").show();
 	setTimeout(function() {
