@@ -841,8 +841,11 @@ function movePosition(direction) {
 			position.y++;
 			
 			var codiArr;
-			
-			alert("codisetList length is "+codisetList.length);
+			if(codisetList != null){
+
+				alert("codisetList length is "+codisetList.length);
+					
+			}
 			alert("position.y is "+position.y);
 			if(codisetList.length>5){
 				if(position.y == 4){
@@ -1510,20 +1513,26 @@ Main.keyDown = function() {
 		alert("RETURN");
 		if (pop > 0) {
 			
-			if(pop == 1){
-				position.x = 0;
-			}else if(pop == 2){
-				position.x = 0;
-			}else if(pop  = 3){
-				position.x = 1;
-			}else if(pop == 4){
-				position.x = 0;
-			}else if(pop == 5){
-				position.x = 1;
-			}
+//			if(pop == 1){
+//				position.x = 0;
+//			}else if(pop == 2){
+//				position.x = 0;
+//			}else if(pop  = 3){
+//				position.x = 1;
+//			}else if(pop == 4){
+//				position.x = 0;
+//			}else if(pop == 5){
+//				position.x = 1;
+//			}
+			
+			setDefault();
+			
 			alert("close Popup")
 			hidePop();
 			event.preventDefault();
+			
+			alert('position.x is '+position.x+" position.y is "+position.y);
+			
 		} else {
 			alert("close App")
 		}
@@ -1883,7 +1892,7 @@ Main.keyDown = function() {
 					loc = 1;
 					$("#delClosetBtn").addClass("focus");
 					$("#delCloset").html(
-							"[" + $($('#closetView div')[position.y]).html()
+							"[" + $(arr[position.y]).html()
 									+ " ] 을 제거 하시겠습니까 ?");
 				
 				}
