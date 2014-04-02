@@ -14,9 +14,17 @@
 	float: left;
 	text-align: center;
 	
+	
 }
 
-
+#topNumber{
+	position: absolute;
+	
+	top:90%;
+	left: 90%;
+	
+	font-size: 21px;
+}
 #selector div{
 	
 	font-size:33px;
@@ -29,6 +37,9 @@
 	
 }
 
+#topContainer{
+	position: relative;
+}
 #contents{
 	z-index: 1;
 }
