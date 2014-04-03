@@ -11,7 +11,7 @@ Main.onLoad = function() {
 	// Enable key event processing
 	this.enableKeys();
 	widgetAPI.sendReadyEvent();
-	// location.href = 'recommend.html';
+	
 	if (localStorage.getItem("user")) {
 		location.replace("weather.html");
 	} else {
