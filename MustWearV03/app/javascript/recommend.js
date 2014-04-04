@@ -116,6 +116,8 @@ function ime_ins_closet(imeobj) {
 	alert("ime_ins_closet end...");
 };
 
+
+
 function getWeather() {
 
 	alert("getWeather()");
@@ -126,27 +128,27 @@ function getWeather() {
 
 	switch (weatheCode) {
 	case 0: {
-		$('#weatherInfo').html('어어어엄청 추워요 단디 입어요.');
+		$('#weatherInfo').html('<br>한파가 절정입니다.<br>최대한 두텁게 입으세요.');
 		break;
 	}
 	case 1: {
-		$('#weatherInfo').html('추워요.');
+		$('#weatherInfo').html('<br>오늘은 무척이나 추운 날입니다. <br>따뜻한 옷을 입어 감기예방하세요.');
 		break;
 	}
 	case 2: {
-		$('#weatherInfo').html('쌀쌀해요.');
+		$('#weatherInfo').html('<br>쌀쌀한 날씨입니다. <br>보온력이 있는 옷을 추천드려요.');
 		break;
 	}
 	case 3: {
-		$('#weatherInfo').html('포근해요');
+		$('#weatherInfo').html('<br>포근한 날씨입니다. <br>가벼운 복장을 추천드립니다.');
 		break;
 	}
 	case 4: {
-		$('#weatherInfo').html('더워요.');
+		$('#weatherInfo').html('<br>조금 덥네요. <br>통풍이 잘되고 시원한 옷을 추천드립니다.');
 		break;
 	}
 	case 5: {
-		$('#weatherInfo').html('어어어어엄청 덥습니다. ');
+		$('#weatherInfo').html('<br>폭염의 날씨입니다. <br>최대한 더위를 피할 수 있는 옷을 입으세요. ');
 		break;
 	}
 	}
@@ -416,12 +418,14 @@ function moveDiv(direction) {
 	if (direction == 1) {
 		if (position.x == 1) {
 			position.x = 0;
+			setComments();
 			$('#green').remove();
 		} else {
-			$('#red')
-					.after(
+			$('#yellow')
+					.before(
 							'<font id="green"><img class = "helpBarIcon" src="app/image/green.png">상세정보  </font>');
 			position.x = 1;
+			setComments();
 		}
 	} else {
 		if (position.y == 1) {
@@ -589,6 +593,8 @@ function setDefault() {
 	imeInsertCloset = new IMEShell("insCloset", ime_ins_closet, this);
 	_g_ime.init("en", "2_35_259_12", "USA", "", "us");
 
+	
+	setComments();
 	// /////////////////////////////////
 	alert('setDefault() end');
 
@@ -602,10 +608,12 @@ Main.keyDown = function() {
 	case tvKey.KEY_RETURN:
 	case tvKey.KEY_PANEL_RETURN:
 		alert("RETURN");
+		event.preventDefault();
 		if(position.x==3){
 			$('#popup').hide();
 			position.x=preX;
-			event.preventDefault();
+		}else{
+			document.location.href = "weather.html";
 		}
 		break;
 	case tvKey.KEY_LEFT:
@@ -685,12 +693,14 @@ Main.keyDown = function() {
 				$('#sexSelector').html(sexSet[0]);
 				localStorage.setItem('sexSet', JSON.stringify(sexSet));
 				getCodi();
+				setCommentsAfterClick();
 			} else {
 				styleSet = JSON.parse(localStorage.getItem('styleSet'));
 				styleSet = nextItem(styleSet);
 				$('#styleSelector').html(styleSet[0]);
 				localStorage.setItem('styleSet', JSON.stringify(styleSet));
 				getCodi();
+				setCommentsAfterClick();
 			}
 		} else if (position.x == 1) {
 			if (position.y == 0) {
@@ -788,9 +798,9 @@ Main.keyDown = function() {
 		alert("RED");
 
 		alert("x is "+position.x);
-		if(position.x==0 || position.x == 1){
-			document.location.href = "weather.html";
-		}
+//		if(position.x==0 || position.x == 1){
+//			document.location.href = "weather.html";
+//		}
 		break;
 	case tvKey.KEY_GREEN:
 
@@ -831,8 +841,20 @@ Main.keyDown = function() {
 		break;
 	}
 };
-
-
+function setComments(){
+	if(position.x == 0){
+		$('#comments').html('<br><br>이동키와 엔터키를 사용하여 다른 조건의 옷을 검색할 수 있습니다.');
+	}else if(position.x == 1){
+		$('#comments').html('<br><br>엔터키로 다른 옷을, 녹색키로 상세정보를 볼 수 있습니다.');
+	}
+} 
+function setCommentsAfterClick(){
+	var sex = $('#sexSelector').html();
+	var style = $('#styleSelector').html();
+	
+	var str = "<br><br>"+sex+"의 "+style+" 스타일의 <br>옷들이 검색되었습니다.<br>노란 버튼으로 저장할 수 있습니다."
+	$('#comments').html(str);
+}
 function setNumber(cloth){
 	
 	alert('setNumber() start');

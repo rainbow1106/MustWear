@@ -86,6 +86,7 @@ Main.keyDown = function() {
 	switch (keyCode) {
 	case tvKey.KEY_RETURN:
 	case tvKey.KEY_PANEL_RETURN:
+		event.preventDefault();
 		if (pop == 1) {
 			$("#popup").hide();
 			$("#window").hide();
@@ -94,7 +95,11 @@ Main.keyDown = function() {
 			pop = 0;
 			row = 0;
 			alert("cancle :" + pop + row);
+		
 			break;
+		}else{
+			
+			history.back();
 		}
 		alert("RETURN");
 		widgetAPI.sendReturnEvent();
@@ -155,7 +160,7 @@ Main.keyDown = function() {
 		break;
 	case tvKey.KEY_RED:
 		alert("RED");
-		history.back();
+	
 		break;
 	case tvKey.KEY_BLUE:
 		alert("BLUE");

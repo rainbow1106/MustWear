@@ -283,7 +283,8 @@ Main.keyDown = function() {
 	case tvKey.KEY_RETURN:
 	case tvKey.KEY_PANEL_RETURN:
 		alert("RETURN");
-		widgetAPI.sendReturnEvent();
+		
+		event.preventDefault();
 		break;
 	case tvKey.KEY_LEFT:
 		alert("LEFT");
@@ -304,7 +305,7 @@ Main.keyDown = function() {
 		break;
 	case tvKey.KEY_BLUE:
 		alert("BLUE");
-		document.location.href = "recommend.html";
+		
 		break;
 	case 31:
 		alert("info");

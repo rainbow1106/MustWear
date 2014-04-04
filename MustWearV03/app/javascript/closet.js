@@ -1465,41 +1465,42 @@ function setHelpbar() { // position.x 값을 참조하여 맞는 헬프바 아�
 
 	alert("x value is" + position.x);
 
+	$('#red').remove();
 	$('#green').remove();
 	$('#yellow').remove();
-	$('#blue').remove();
 
-	var yellow, green, blue;
+	var red,yellow, green;
 
 	if (position.x == 0) {
-		green = $('<font id="green"><img class="helpBarIcon">옷장 추가  </font>');
-		yellow = $('<font id="yellow"><img class="helpBarIcon">옷장 수정  </font>');
-		blue = $('<font id="blue"><img class="helpBarIcon">옷장 삭제  </font>');
+		green = $('<font id="green"><img class="helpBarIcon">옷장 수정  </font>');
+		yellow = $('<font id="yellow"><img class="helpBarIcon">옷장 삭제  </font>');
+		red = $('<font id="red"><img class="helpBarIcon">옷장 추가  </font>');
 
+		$('#helpBar').append(red);
 		$('#helpBar').append(green);
 		$('#helpBar').append(yellow);
-		$('#helpBar').append(blue);
+		
 
 		$('#yellow img').attr('src', 'app/image/yellow.png');
-		$('#blue img').attr('src', 'app/image/blue.png');
+		$('#red img').attr('src', 'app/image/red.png');
 		$('#green img').attr('src', 'app/image/green.png');
 
 	} else if (position.x == 1 || position.x == 3) {
-		yellow = $('<font id="yellow"><img class="helpBarIcon">코디셋 수정  </font>');
-		blue = $('<font id="blue"><img class="helpBarIcon">코디셋 삭제  </font>');
-
-		$('#helpBar').append(yellow);
-		$('#helpBar').append(blue);
-
-		$('#yellow img').attr('src', 'app/image/yellow.png');
-		$('#blue img').attr('src', 'app/image/blue.png');
-
-	} else if (position.x == 2) {
-		green = $('<font id="green"><img class="helpBarIcon">상세정보  </font>');
+		green = $('<font id="green"><img class="helpBarIcon">코디셋 수정  </font>');
+		yellow = $('<font id="yellow"><img class="helpBarIcon">코디셋 삭제  </font>');
 
 		$('#helpBar').append(green);
+		$('#helpBar').append(yellow);
 
+		$('#yellow img').attr('src', 'app/image/yellow.png');
 		$('#green img').attr('src', 'app/image/green.png');
+
+	} else if (position.x == 2) {
+		enter = $('<font id="enter"><img class="helpBarIcon">상세보기</font>');
+		 
+		$('#helpBar').append(enter);
+		
+		$('#enter img').attr('src', 'app/image/enter.png');
 
 	} else {
 
@@ -1542,7 +1543,7 @@ function del_codiset() {
 		},
 		complete:function(){
 			position.x = 0;
-			alertMsg(msg);
+			
 		}
 	});
 	alert('del_codiset() end');
@@ -1569,6 +1570,7 @@ Main.keyDown = function() {
 	case tvKey.KEY_RETURN:
 	case tvKey.KEY_PANEL_RETURN:
 		alert("RETURN");
+		event.preventDefault();
 		if (pop > 0) {
 			
 //			if(pop == 1){
@@ -1592,7 +1594,10 @@ Main.keyDown = function() {
 			alert('position.x is '+position.x+" position.y is "+position.y);
 			
 		} else {
-			alert("close App")
+			if(position.x!=3){
+				document.location.href = "recommend.html";
+				
+			}
 		}
 		
 		alert("pop :" + pop + "|loc :" + loc);
@@ -1869,50 +1874,22 @@ Main.keyDown = function() {
 				position.x = 1;
 				
 			}
+		}else if(pop == 0){
+			if(position.x == 2){
+				if (position.y == 0) {
+					// top Item
+					sessionStorage.setItem('flag', 'top');
+				} else if (position.y == 1) {
+					// bot Item
+					sessionStorage.setItem('flag', 'bot');
+				}
+				document.location.href = 'detail.html';
+			}
 		}
 		alert("pop :" + pop + "|loc :" + loc);
 		break;
 	case tvKey.KEY_GREEN: // green
 		alert("GREEN");
-
-		if (position.x == 0) {
-			$("#popup").show();
-			
-			position.x=3;
-			
-			
-			$("#insertCloset").show();
-			
-			var str;
-			
-			alert(closetList);
-			
-			if(closetList!=null){
-				str= "옷장"+(closetList.length+1);
-			}else if(closetList==null){
-				str = "옷장1";
-			}
-			
-	
-			
-			
-			pop = 1;
-			$("#insCloset").addClass("inputfocus");
-			$('#insCloset').val(str);
-			// 
-		} else if (position.x == 2) {
-			if (position.y == 0) {
-				// top Item
-				sessionStorage.setItem('flag', 'top');
-			} else if (position.y == 1) {
-				// bot Item
-				sessionStorage.setItem('flag', 'bot');
-			}
-			document.location.href = 'detail.html';
-		}
-		break;
-	case tvKey.KEY_YELLOW: // yellow
-		alert("YELLOW");
 		if (position.x == 0) {
 			
 			position.x = 3;
@@ -1934,9 +1911,10 @@ Main.keyDown = function() {
 			document.getElementById('modCodiset').value = $(
 					$('#codiView div')[position.y]).html();
 		}
+		
 		break;
-	case tvKey.KEY_BLUE: // blue
-		alert('BLUE');
+	case tvKey.KEY_YELLOW: // yellow
+		alert("YELLOW");
 		if (position.x == 0) {
 			arr = $('#closetView div');
 			
@@ -1968,12 +1946,40 @@ Main.keyDown = function() {
 							+ " ] 을 제거 하시겠습니까 ?");
 		}
 		break;
-	break;
-case tvKey.KEY_RED:
+	case tvKey.KEY_BLUE: // blue
+		alert('BLUE');	
+		break;
+	case tvKey.KEY_RED:
 	alert("RED");
-	if (position.x < 3) {
-		document.location.href = 'recommend.html';
-	}
+	if (position.x == 0) {
+		$("#popup").show();
+		
+		position.x=3;
+		
+		
+		$("#insertCloset").show();
+		
+		var str;
+		
+		alert(closetList);
+		
+		if(closetList!=null){
+			str= "옷장"+(closetList.length+1);
+		}else if(closetList==null){
+			str = "옷장1";
+		}
+		
+
+		
+		
+		pop = 1;
+		$("#insCloset").addClass("inputfocus");
+		$('#insCloset').val(str);
+		// 
+	} 
+	
+	
+	break;
 default:
 	alert("Unhandled key");
 	break;

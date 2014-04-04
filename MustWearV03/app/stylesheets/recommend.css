@@ -1,10 +1,10 @@
 #selector{
 	width: 40%;
-	height: 52.5%;
+	height: 92%;
 	float: left;
 	text-align: center;
-	padding-top: 9%;
-	padding-bottom: 10%;
+	
+	
 }
 
 #view{
@@ -33,15 +33,33 @@
 	
 	font-size: 21px;
 }
-#selector div{
+#selector .movingDiv{
 	
 	font-size:33px;
 	margin:4% 10% 0% 10%;
 	width: 80%;
-	height: 20%;
+	height: 10%;
 	line-height:60px;
 	background-color: rgba(255, 255, 255, 0.1);
 	border-radius: 30px;
+	
+}
+
+#weatherInfo{
+	margin:4% 5% 0 7%;
+	width:90%;
+	height: 30%;
+	font-size: 30px;
+	text-align: left;
+	
+}
+
+#comments{
+	margin:8% 7% 0 7%;
+	width:90%;
+	height: 30%;
+	font-size: 24px;
+	text-align: left;
 	
 }
 
