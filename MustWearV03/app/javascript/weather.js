@@ -27,7 +27,7 @@ function setDefault(){
 	drawLineGraph();
 }
 function drawLineGraph() {
-	alert("drawLineGraph()");
+	//alert("drawLineGraph()");
 
 	var hourlyUrl = "http://api.wunderground.com/api/aea78f3b39ccafc6/hourly/lang:KR/q/autoip.json";
 
@@ -38,7 +38,7 @@ function drawLineGraph() {
 				type : 'get',
 				success : function(data) {
 
-					alert('success');
+					//alert('success');
 					var tempArr = [];
 					for ( var i = 0; i < 7; i++) {
 						var hour = data.hourly_forecast[i * 2].FCTTIME.hour;
@@ -54,8 +54,7 @@ function drawLineGraph() {
 					}
 
 					for ( var i = 0; i < tempArr.length; i++) {
-						alert((i + 1) + "---" + tempArr[i].date + " "
-								+ tempArr[i].temp);
+						//alert((i + 1) + "---" + tempArr[i].date + " "+ tempArr[i].temp);
 					}
 
 					var lineChartData = {
@@ -169,7 +168,7 @@ function drawLineGraph() {
 					setCode(tempArr);
 				},
 				error : function() {
-					alert("ajax error");
+					//alert("ajax error");
 				},
 				complete:function(){
 					$('#loading').hide();
@@ -177,7 +176,7 @@ function drawLineGraph() {
 			});
 };
 function getWeatherCode() {
-	alert("getWeatherCode()");
+	//alert("getWeatherCode()");
 	var conditionUrl = "http://api.wunderground.com/api/aea78f3b39ccafc6/conditions/lang:KR/q/autoip.json";
 
 	$.ajax({
@@ -185,7 +184,7 @@ function getWeatherCode() {
 		dataType : 'json',
 		type : 'get',
 		success : function(data) {
-			alert("success");
+			//alert("success");
 			var location;
 			var temp;
 			var wind;
@@ -198,7 +197,7 @@ function getWeatherCode() {
 			var nowTime = now.getFullYear()+"년"+(now.getMonth() + 1) + "월"
 					+ now.getDate() + "일" + (now.getHours() + 9) + "시"
 					+ now.getMinutes() + "분";
-			alert("time-" + nowTime);
+			//alert("time-" + nowTime);
 
 			location = data.current_observation.display_location.city;
 			temp = data.current_observation.temp_c;
@@ -220,19 +219,19 @@ function getWeatherCode() {
 
 		},
 		error : function() {
-			alert("ajax error");
+			//alert("ajax error");
 		}
 	});
 };
 
 function setCode(tempArr) {
 
-	alert("setCode()");
+	//alert("setCode()");
 	var highTemp = parseFloat(tempArr[0].temp);
 	var lowTemp = parseFloat(tempArr[0].temp);
 
 	for ( var i = 1; i < 5; i++) {
-		alert(tempArr[i].temp);
+		//alert(tempArr[i].temp);
 		var tem = parseFloat(tempArr[i].temp);
 
 		if (highTemp < tem) {
@@ -242,9 +241,9 @@ function setCode(tempArr) {
 		}
 	}
 
-	alert("highTemp-" + highTemp + " lowTemp-" + lowTemp);
+	//alert("highTemp-" + highTemp + " lowTemp-" + lowTemp);
 	var dayTemp = (highTemp * 0.4) + (lowTemp * 0.6);
-	alert(dayTemp);
+	//alert(dayTemp);
 	var weatherCode;
 	if (dayTemp < -10) {
 		weatherCode = 0;
@@ -261,7 +260,7 @@ function setCode(tempArr) {
 	}
 
 	localStorage.setItem("weatherCode", weatherCode);
-	alert("weatherCode is " + weatherCode);
+	//alert("weatherCode is " + weatherCode);
 }
 
 Main.onUnload = function() {
@@ -277,42 +276,42 @@ Main.keyDown = function() {
 	//$("#sound").html("<audio src='app/sound/click.wav' autoplay></audio>");
 	
 	var keyCode = event.keyCode;
-	alert("Key pressed: " + keyCode);
+	//alert("Key pressed: " + keyCode);
 
 	switch (keyCode) {
 	case tvKey.KEY_RETURN:
 	case tvKey.KEY_PANEL_RETURN:
-		alert("RETURN");
+		//alert("RETURN");
 		
 		event.preventDefault();
 		break;
 	case tvKey.KEY_LEFT:
-		alert("LEFT");
+		//alert("LEFT");
 		break;
 	case tvKey.KEY_RIGHT:
-		alert("RIGHT");
+		//alert("RIGHT");
 		break;
 	case tvKey.KEY_UP:
-		alert("UP");
+		//alert("UP");
 		break;
 	case tvKey.KEY_DOWN:
-		alert("DOWN");
+		//alert("DOWN");
 		break;
 	case tvKey.KEY_ENTER:
 	case tvKey.KEY_PANEL_ENTER:
-		alert("ENTER");
+		//alert("ENTER");
 		document.location.href = "recommend.html";
 		break;
 	case tvKey.KEY_BLUE:
-		alert("BLUE");
+		//alert("BLUE");
 		
 		break;
 	case 31:
-		alert("info");
+		//alert("info");
 		logout();
 		break;
 	default:
-		alert("Unhandled key");
+		//alert("Unhandled key");
 		break;
 	}
 };

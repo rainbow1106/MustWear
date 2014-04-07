@@ -36,7 +36,7 @@ Main.onLoad = function() {
 
 };
 function setCsid(cid){
-	alert('setCsid() start');
+	//alert('setCsid() start');
 
 	var url = 'http://finfra.com/~tv11/codyset.php';
 
@@ -54,25 +54,25 @@ function setCsid(cid){
 			if (arr!=null) {
 				
 				sessionStorage.setItem('csid',arr[0].csid);
-				alert('setCsid success');
+				//alert('setCsid success');
 			}
 
 		}
 	});
 
-	alert('setCsid() end');
+	//alert('setCsid() end');
 }
 function ime_init_csName(imeobj) {
 	var inputobj = imeobj.getInputObj();
-	alert("start initializing: " + inputobj.id);
+	//alert("start initializing: " + inputobj.id);
 	imeobj.setQWERTYPos(290, 230); // IME XT9, new function
-	alert("ID: setQWERTYPos!");
+	//alert("ID: setQWERTYPos!");
 
 	// //////////////
 
 	//	
 	imeobj.setKeyFunc(tvKey.KEY_RETURN, function() {
-		alert("IME RETURN");
+		//alert("IME RETURN");
 		imeCsName._blur();
 		$("#popupCodiName").blur();
 		$('#window').css('top','50px');
@@ -90,14 +90,14 @@ function ime_init_csName(imeobj) {
 	});
 	imeobj.setBlockSpace(true);
 
-	alert("ime_init_id end...");
+	//alert("ime_init_id end...");
 };
 function ime_ins_closet(imeobj) {
 	var inputobj = imeobj.getInputObj();
-	alert("start initializing: " + inputobj.id);
+	//alert("start initializing: " + inputobj.id);
 	imeobj.setQWERTYPos(570, 230); // IME XT9, new function
 	imeobj.setKeyFunc(tvKey.KEY_RETURN, function() {
-		alert("IME RETURN");
+		//alert("IME RETURN");
 		imeInsertCloset._blur();
 		$("#insCloset").blur();
 		$("#insCloset").addClass("inputfocus");
@@ -113,14 +113,14 @@ function ime_ins_closet(imeobj) {
 	});
 	imeobj.setKeySetFunc('qwerty');
 	_g_ime.init("ko", "1_35_259_11", "KOR", "", "kr");
-	alert("ime_ins_closet end...");
+	//alert("ime_ins_closet end...");
 };
 
 
 
 function getWeather() {
 
-	alert("getWeather()");
+	//alert("getWeather()");
 
 	var weatheCode = localStorage.getItem('weatherCode');
 
@@ -155,48 +155,48 @@ function getWeather() {
 }
 
 function idObjKeyFunc(keyCode) {
-	alert("idObjKeyFunc() start()");
+	//alert("idObjKeyFunc() start()");
 
 	switch (keyCode) {
 	case tvKey.KEY_UP: // Up Key
-		alert("ID :UP KEY");
+		//alert("ID :UP KEY");
 		$(idList[position]).removeClass("focus");
 		position++;
-		alert(position);
+		//alert(position);
 		$(idList[position]).addClass("focus");
 		$(idList[position]).focus();
 		break;
 
 	case tvKey.KEY_DOWN: // Down Key
-		alert("ID :DOWN KEY");
+		//alert("ID :DOWN KEY");
 		$(idList[position]).removeClass("focus");
 		position++;
-		alert(position);
+		//alert(position);
 		$(idList[position]).addClass("focus");
 		$(idList[position]).focus();
 		break;
 
 	case tvKey.KEY_RETURN:
 	case tvKey.KEY_PANEL_RETURN: // return Key
-		alert("ID :Return KEY");
+		//alert("ID :Return KEY");
 		$(idList[position]).blur();
 		break;
 	case tvKey.KEY_YELLOW:
-		alert("ID :YELLOW");
+		//alert("ID :YELLOW");
 		location.replace("register.html");
 		break;
 	default:
-		alert("Unhandled key");
+		//alert("Unhandled key");
 		break;
 	}
 
-	alert("idObjKeyFunc() end");
+	//alert("idObjKeyFunc() end");
 
 	return false;
 };
 
 function getCodi() {
-	alert("getCodi()");
+	//alert("getCodi()");
 	var sexSet = localStorage.getItem("sexSet");
 	var styleSet = localStorage.getItem("styleSet");
 
@@ -222,7 +222,7 @@ function getCodi() {
 		style = 'sports';
 	}
 
-	alert(sex + "   " + style);
+	//alert(sex + "   " + style);
 
 	var url = "http://finfra.com/~tv11/recommend.php";
 
@@ -236,7 +236,7 @@ function getCodi() {
 			weatherCode : localStorage.getItem('weatherCode')
 		},
 		success : function(data) {
-			alert('ajax success');
+			//alert('ajax success');
 
 			var topArr = data.detailTop;
 			var botArr = data.detailBot;
@@ -291,8 +291,8 @@ function getCodi() {
 		},
 
 		error : function(xhr, ajaxOption, thrownError) {
-			alert(xhr.status);
-			alert(thrownError);
+			//alert(xhr.status);
+			//alert(thrownError);
 		},
 		beforeSend:function(){
 			$('#loading').show();
@@ -323,7 +323,7 @@ function logout() {
 }
 function nextItem(arr) {
 
-	alert("nextItem()");
+	//alert("nextItem()");
 	var tem = arr[0];
 	arr.splice(0, 1);
 	arr.push(tem);
@@ -333,8 +333,8 @@ function nextItem(arr) {
 
 function movePopup(direction) {
 
-	alert('movePopup() start');
-	alert('position is (' + popupPosition.x + ", " + popupPosition.y + ")");
+	//alert('movePopup() start');
+	//alert('position is (' + popupPosition.x + ", " + popupPosition.y + ")");
 	$('#input div').css('background-color', 'rgba(100,100,100,0.2)');
 
 	switch (direction) {
@@ -441,22 +441,22 @@ function moveDiv(direction) {
 			$('#sexSelector').css('background-color',
 					'rgba(255, 255, 255, 0.5)');
 
-			alert($('#sexSelector').html());
+			//alert($('#sexSelector').html());
 		} else {
 
 			$('#styleSelector').css('background-color',
 					'rgba(255, 255, 255, 0.5)');
-			alert($('#styleSelector').html());
+			//alert($('#styleSelector').html());
 		}
 	} else {
 		if (position.y == 0) {
 			$('#topContainer').css('background-color',
 					'rgba(255, 255, 255, 0.5)');
-			alert($('#topContainer').html());
+			//alert($('#topContainer').html());
 		} else {
 			$('#botContainer').css('background-color',
 					'rgba(255, 255, 255, 0.5)');
-			alert($('#botContainer').html());
+			//alert($('#botContainer').html());
 		}
 	}
 }
@@ -470,7 +470,7 @@ Main.enableKeys = function() {
 
 function setDefault() {
 
-	alert('setDefault() start');
+	//alert('setDefault() start');
 
 	// // hide other windows
 
@@ -524,13 +524,13 @@ function setDefault() {
 		style = 'sprots';
 	}
 
-	alert(sex + "   " + style);
+	//alert(sex + "   " + style);
 
 	var tid = sessionStorage.getItem('tid');
 	var bid = sessionStorage.getItem('bid');
 
 	if (tid==null && bid==null) {
-		alert("첫 로그인시");
+		//alert("첫 로그인시");
 		getCodi();
 	} else {
 
@@ -587,7 +587,7 @@ function setDefault() {
 	// //////////////////////////////////
 	imeCsName = new IMEShell('popupCodiName', ime_init_csName, this);
 	if (imeCsName == null) {
-		alert("IME fail");
+		//alert("IME fail");
 	}
 
 	imeInsertCloset = new IMEShell("insCloset", ime_ins_closet, this);
@@ -596,18 +596,18 @@ function setDefault() {
 	
 	setComments();
 	// /////////////////////////////////
-	alert('setDefault() end');
+	//alert('setDefault() end');
 
 }
 Main.keyDown = function() {
 
 	var keyCode = event.keyCode;
-	alert("Key pressed: " + keyCode);
+	//alert("Key pressed: " + keyCode);
 
 	switch (keyCode) {
 	case tvKey.KEY_RETURN:
 	case tvKey.KEY_PANEL_RETURN:
-		alert("RETURN");
+		//alert("RETURN");
 		event.preventDefault();
 		if(position.x==3){
 			$('#popup').hide();
@@ -617,7 +617,7 @@ Main.keyDown = function() {
 		}
 		break;
 	case tvKey.KEY_LEFT:
-		alert("LEFT");
+		//alert("LEFT");
 
 		if (position.x == 3) {
 			movePopup(4);
@@ -636,7 +636,7 @@ Main.keyDown = function() {
 		}
 		break;
 	case tvKey.KEY_RIGHT:
-		alert("RIGHT");
+		//alert("RIGHT");
 		if (position.x == 3) {
 			movePopup(2);
 		} else if (position.x == 5) {
@@ -654,7 +654,7 @@ Main.keyDown = function() {
 		}
 		break;
 	case tvKey.KEY_UP:
-		alert("UP");
+		//alert("UP");
 		if (position.x == 3) {
 			movePopup(1);
 		} else if (position.x == 5) {
@@ -669,7 +669,7 @@ Main.keyDown = function() {
 		}
 		break;
 	case tvKey.KEY_DOWN:
-		alert("DOWN");
+		//alert("DOWN");
 		if (position.x == 3) {
 			movePopup(3);
 		} else if (position.x == 5) {
@@ -685,7 +685,7 @@ Main.keyDown = function() {
 		break;
 	case tvKey.KEY_ENTER:
 	case tvKey.KEY_PANEL_ENTER:
-		alert("ENTER");
+		//alert("ENTER");
 		if (position.x == 0) {
 			if (position.y == 0) {
 				sexSet = JSON.parse(localStorage.getItem('sexSet'));
@@ -776,16 +776,16 @@ Main.keyDown = function() {
 		}
 		break;
 	case tvKey.KEY_BLUE:
-		alert("BLUE");
-		alert("x is "+position.x);
+		//alert("BLUE");
+		//alert("x is "+position.x);
 		if(position.x==0 || position.x == 1){
 			document.location.href = 'closet.html';	
 		}
 		break;
 	case tvKey.KEY_YELLOW:
-		alert("YELLOW");
+		//alert("YELLOW");
 
-		alert("x is "+position.x);
+		//alert("x is "+position.x);
 		if(position.x==0 || position.x == 1){
 			if ((sessionStorage.getItem('tid') != null) && (sessionStorage.getItem('bid') != null)) {
 				saveCodi();
@@ -795,25 +795,25 @@ Main.keyDown = function() {
 		}
 		break;
 	case tvKey.KEY_RED:
-		alert("RED");
+		//alert("RED");
 
-		alert("x is "+position.x);
+		//alert("x is "+position.x);
 //		if(position.x==0 || position.x == 1){
 //			document.location.href = "weather.html";
 //		}
 		break;
 	case tvKey.KEY_GREEN:
 
-		alert("x is "+position.x);
-		alert("GREEN");
-		alert(position.x + "&" + position.y);
+		//alert("x is "+position.x);
+		//alert("GREEN");
+		//alert(position.x + "&" + position.y);
 		if (position.x == 1) {
 
-			alert(sessionStorage.getItem('tid') + " tid!!!!!");
-			alert(sessionStorage.getItem('bid') + " bid!!!!!");
+			//alert(sessionStorage.getItem('tid') + " tid!!!!!");
+			//alert(sessionStorage.getItem('bid') + " bid!!!!!");
 			if (position.y == 0) {
 				// top detail
-				alert(sessionStorage.getItem('tid'));
+				//alert(sessionStorage.getItem('tid'));
 				if (sessionStorage.getItem('tid') != null) {
 
 					sessionStorage.setItem('flag', 'top');
@@ -825,7 +825,7 @@ Main.keyDown = function() {
 
 			} else if (position.y == 1) {
 				// bot detail
-				alert(sessionStorage.getItem('bid'));
+				//alert(sessionStorage.getItem('bid'));
 				if (sessionStorage.getItem('bid') != null) {
 					sessionStorage.setItem('flag', 'bot');
 					document.location.href = "detail.html";
@@ -837,7 +837,7 @@ Main.keyDown = function() {
 		}
 		break;
 	default:
-		alert("Unhandled key");
+		//alert("Unhandled key");
 		break;
 	}
 };
@@ -857,7 +857,7 @@ function setCommentsAfterClick(){
 }
 function setNumber(cloth){
 	
-	alert('setNumber() start');
+	//alert('setNumber() start');
 	if(cloth == 1){
 		if(topOriginalArr != null && topOriginalArr.length>0){
 			var index = -1;
@@ -908,10 +908,10 @@ function setNumber(cloth){
 	}
 	
 
-	alert('setNumber() end');
+	//alert('setNumber() end');
 }
 function refreshClosetList(){
-	alert("refreshClosetList() start");
+	//alert("refreshClosetList() start");
 	
 	
 	var userId = localStorage.getItem('user');
@@ -929,7 +929,7 @@ function refreshClosetList(){
 		success : function(data) {
 			closetList = data.closet;
 			
-			alert('refresh ajax success!!!');
+			//alert('refresh ajax success!!!');
 			
 			if(closetList.length>0){
 				
@@ -941,20 +941,20 @@ function refreshClosetList(){
 
 		},
 		error : function() {
-			alert('ajax error');
+			//alert('ajax error');
 		}
 
 	});
 
 	
-	alert("refreshClosetList() end");
+	//alert("refreshClosetList() end");
 }
 
 
 
 function saveCodi() {
 
-	alert('saveCodi() start');
+	//alert('saveCodi() start');
 
 	preX = position.x;
 	position.x = 3;
@@ -1012,7 +1012,7 @@ function saveCodi() {
 			}
 		},
 		error : function() {
-			alert('ajax error');
+			//alert('ajax error');
 		}
 
 	});
@@ -1031,13 +1031,13 @@ function saveCodi() {
 	
 	$('#input div').css('background-color', 'rgba(100,100,100,0.2)');
 	$('#cancel').css('background-color', 'rgba(100,100,100,0.6)');
-	alert('saveCodi() end');
+	//alert('saveCodi() end');
 
 }
 
 function excutePopup() {
 	
-	alert('excutePopup() start');
+	//alert('excutePopup() start');
 	
 	if (popupPosition.x == 0) {
 		if (popupPosition.y == 0) {
@@ -1111,7 +1111,7 @@ function excutePopup() {
 				success : function(data) {
 					if (data) {
 						// when return value is true
-						alert('codiSave success');
+						//alert('codiSave success');
 						// ////////////
 						$('#window').hide();
 						
@@ -1131,7 +1131,7 @@ function excutePopup() {
 						},1000);
 						
 					} else {
-						alert("saveCodi failed");
+						//alert("saveCodi failed");
 						$('#popup').hide();
 					}
 				}
@@ -1140,12 +1140,12 @@ function excutePopup() {
 	}
 	
 
-	alert('excutePopup() end');
+	////alert('excutePopup() end');
 };
 
 function add_closet() {
 
-	alert('add_closet() start');
+	//alert('add_closet() start');
 	
 	var cName = $('#insCloset').val();
 	if (cName != null) {
@@ -1162,24 +1162,24 @@ function add_closet() {
 			},
 			success : function(data) {
 
-				alert(data);
+				//alert(data);
 
 				sessionStorage.removeItem('cid');
 
-				alert('add_closet success!!!!!!!!!!!!!!!!!!!!');
+		//alertrt('add_closet success!!!!!!!!!!!!!!!!!!!!');
 			},
 			error : function() {
-				alert('add_closet ajax error');
+				//alert('add_closet ajax error');
 			}
 
 		});
 
 		
 	} else {
-		alert('closet name = NULL');
+		//alert('closet name = NULL');
 	}
 	
-	alert('add_closet() end');
+	//alert('add_closet() end');
 };
 function alertMsg(msg) {
 	$("#confirm").html(msg);

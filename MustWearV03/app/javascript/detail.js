@@ -16,7 +16,7 @@ Main.onLoad = function() {
 	$("#window").hide();
 	$("payment").hide();
 	if (type == "top") {
-		alert("top- ajax");
+		//alert("top- ajax");
 		$
 				.ajax({
 					url : url,
@@ -26,7 +26,7 @@ Main.onLoad = function() {
 						tId : sessionStorage.getItem('tid')
 					},
 					success : function(data) {
-						alert(JSON.stringify(data));
+						//alert(JSON.stringify(data));
 						$('#name').html(" &nbsp;  &nbsp; " + data.detail.tname);
 						$('#sex').html(" &nbsp;  &nbsp; " + data.detail.sex);
 						$('#style')
@@ -41,11 +41,11 @@ Main.onLoad = function() {
 
 					},
 					error : function() {
-						alert("error getDetail");
+						//alert("error getDetail");
 					}
 				});
 	} else if (type == "bot") {
-		alert("bot - ajax");
+		//alert("bot - ajax");
 		$.ajax({
 			url : url,
 			dataType : 'json',
@@ -64,7 +64,7 @@ Main.onLoad = function() {
 				$("#secondImg").attr('src', data.detail.b_url_2);
 			},
 			error : function() {
-				alert("error getDetail");
+				//alert("error getDetail");
 			}
 		});
 	}
@@ -82,7 +82,7 @@ Main.keyDown = function() {
 
 	
 	var keyCode = event.keyCode;
-	alert("Key pressed: " + keyCode);
+	//alert("Key pressed: " + keyCode);
 	switch (keyCode) {
 	case tvKey.KEY_RETURN:
 	case tvKey.KEY_PANEL_RETURN:
@@ -94,18 +94,18 @@ Main.keyDown = function() {
 
 			pop = 0;
 			row = 0;
-			alert("cancle :" + pop + row);
+			//alert("cancle :" + pop + row);
 		
 			break;
 		}else{
 			
 			history.back();
 		}
-		alert("RETURN");
+		//alert("RETURN");
 		widgetAPI.sendReturnEvent();
 		break;
 	case tvKey.KEY_LEFT:
-		alert("LEFT");
+		//alert("LEFT");
 		if (pop == 1) {
 			if (row == 0) {
 				$("#buy").removeClass("focus");
@@ -116,11 +116,11 @@ Main.keyDown = function() {
 				$("#buy").addClass("focus");
 				row--;
 			}
-			alert("L :" + pop + row);
+			//alert("L :" + pop + row);
 		}
 		break;
 	case tvKey.KEY_RIGHT:
-		alert("RIGHT");
+		//alert("RIGHT");
 		if (pop == 1) {
 			if (row == 0) {
 				$("#buy").removeClass("focus");
@@ -132,18 +132,18 @@ Main.keyDown = function() {
 				$("#buy").addClass("focus");
 				row--;
 			}
-			alert("R :" + pop + row);
+			//alert("R :" + pop + row);
 		}
 		break;
 	case tvKey.KEY_UP:
-		alert("UP");
+		//alert("UP");
 		break;
 	case tvKey.KEY_DOWN:
-		alert("DOWN");
+		//alert("DOWN");
 		break;
 	case tvKey.KEY_ENTER:
 	case tvKey.KEY_PANEL_ENTER:
-		alert("ENTER");
+		//alert("ENTER");
 		if (pop == 1 && row == 0) {// buy clothes
 			$("#window").hide();
 			$("#payment").show();
@@ -155,15 +155,15 @@ Main.keyDown = function() {
 			$("img").css("opacity", "1");
 			pop = 0;
 			row = 0;
-			alert("cancle :" + pop + row);
+			//alert("cancle :" + pop + row);
 		}
 		break;
 	case tvKey.KEY_RED:
-		alert("RED");
+		//alert("RED");
 	
 		break;
 	case tvKey.KEY_BLUE:
-		alert("BLUE");
+		//alert("BLUE");
 		pop = 1;
 		$("#popup").show();
 		$("#window").show();
@@ -175,30 +175,30 @@ Main.keyDown = function() {
 		break;
 
 	default:
-		alert("Unhandled key");
+		//alert("Unhandled key");
 		break;
 	}
 	//$("#sound").Play();
 };
 getAbsPath = function(linkString)
 {
-	alert("**************linkString 2012**********"  + linkString );
+	//alert("**************linkString 2012**********"  + linkString );
 	var Abs_path = "";
 	var rootPath = window.location.href.substring(0, location.href.lastIndexOf("/")+1);
-	alert("**************rootPath* 2012**********"  + rootPath );
+	//alert("**************rootPath* 2012**********"  + rootPath );
 	// For 2012 platform
 	if (unescape(window.location.toString()).indexOf("localhost") == -1)
 	{	
-	alert("test 1");
+	//alert("test 1");
 		if (unescape(window.location.toString()).indexOf("file://C") != -1)
 		{ // For PC-SDK
-		alert("test 12");
+		//alert("test 12");
 		Abs_path = unescape(rootPath).split("file://")[1].replace("C/","C:/")+linkString;
-		alert("**************Abs_path* 2012**********"  + Abs_path );
+		//alert("**************Abs_path* 2012**********"  + Abs_path );
 		}
 		else
 		{ // For Real-Device
-		alert("test 13");
+		//alert("test 13");
 		Abs_path = unescape(rootPath).split("file://")[1]+linkString;
 		}
 	}
@@ -207,14 +207,14 @@ getAbsPath = function(linkString)
 		if (unescape(window.location.toString()).indexOf("C:") != -1)
 		{ 
 		// For PC-SDK
-		alert("test 14");
+		//alert("test 14");
 		Abs_path = "/" + unescape(rootPath).split("file://localhost/C:\\")[1].replace(/\\/g,"/")+linkString;
-		alert("**************Abs_path 2011***********"  + Abs_path );
+		//alert("**************Abs_path 2011***********"  + Abs_path );
 		}
 		else 
 		{ 
 		// For Real-Device
-		alert("test 15");
+		//alert("test 15");
 		Abs_path = "/" + unescape(rootPath).split("file://localhost/")[1]+linkString;
 		}
 	}

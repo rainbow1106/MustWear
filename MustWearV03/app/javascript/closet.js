@@ -25,7 +25,7 @@ Main.onLoad = function() {
 	localStorage.setItem('user', 'lee');
 	// ////////////////////////////////////////
 
-	alert(localStorage.getItem('user'));
+	//alert(localStorage.getItem('user'));
 	// Enable key event processing
 
 	this.enableKeys();
@@ -36,31 +36,31 @@ Main.onLoad = function() {
 	$("#confirm").hide();
 	imeInsertCloset = new IMEShell("insCloset", ime_ins_closet, this);
 	if (!imeInsertCloset) {
-		alert("object for IMEShell create failed", 3);
+		//alert("object for IMEShell create failed", 3);
 	} else {
-		alert("imeInsertCloset ok", 3);
+		//alert("imeInsertCloset ok", 3);
 	}
 	imeModifyCloset = new IMEShell("modCloset", ime_mod_closet, this);
 	if (!imeModifyCloset) {
-		alert("object for IMEShell create failed", 3);
+		//alert("object for IMEShell create failed", 3);
 	} else {
-		alert("imeModifyCloset ok", 3);
+		//alert("imeModifyCloset ok", 3);
 	}
 	imeModifyCodiset = new IMEShell("modCodiset", ime_mod_codyset, this);
 	if (!imeModifyCodiset) {
-		alert("object for IMEShell create failed", 3);
+		//alert("object for IMEShell create failed", 3);
 	} else {
-		alert("imeModifyCodiset ok", 3);
+		//alert("imeModifyCodiset ok", 3);
 	}
 	
 	
 };
 function ime_ins_closet(imeobj) {
 	var inputobj = imeobj.getInputObj();
-	alert("start initializing: " + inputobj.id);
+	//alert("start initializing: " + inputobj.id);
 	imeobj.setQWERTYPos(550, 230); // IME XT9, new function
 	imeobj.setKeyFunc(tvKey.KEY_RETURN, function() {
-		alert("IME RETURN");
+		//alert("IME RETURN");
 		imeInsertCloset._blur();
 		$("#insCloset").blur();
 		document.getElementById("anchor").focus();
@@ -75,15 +75,15 @@ function ime_ins_closet(imeobj) {
 	});
 	imeobj.setKeySetFunc('qwerty');
 	_g_ime.init("ko", "1_35_259_11", "KOR", "", "kr");
-	alert("ime_ins_closet end...");
+	//alert("ime_ins_closet end...");
 };
 function ime_mod_closet(imeobj) {
 	var inputobj = imeobj.getInputObj();
-	alert("start initializing: " + inputobj.id);
+	//alert("start initializing: " + inputobj.id);
 	imeobj.setQWERTYPos(550, 230); // IME XT9, new function
 
 	imeobj.setKeyFunc(tvKey.KEY_RETURN, function() {
-		alert("IME RETURN");
+		//alert("IME RETURN");
 		imeModifyCloset._blur();
 		$("#modCloset").blur();
 		document.getElementById("anchor").focus();
@@ -99,15 +99,15 @@ function ime_mod_closet(imeobj) {
 	});
 	imeobj.setKeySetFunc('qwerty');
 	_g_ime.init("ko", "1_35_259_11", "KOR", "", "kr");
-	alert("ime_mod_closet end...");
+	//alert("ime_mod_closet end...");
 };
 function ime_mod_codyset(imeobj) {
 	var inputobj = imeobj.getInputObj();
-	alert("start initializing: " + inputobj.id);
+	//alert("start initializing: " + inputobj.id);
 	imeobj.setQWERTYPos(550, 230); // IME XT9, new function
 
 	imeobj.setKeyFunc(tvKey.KEY_RETURN, function() {
-		alert("IME RETURN");
+		//alert("IME RETURN");
 		imeModifyCodiset._blur();
 		$("#modCodiset").blur();
 		document.getElementById("anchor").focus();
@@ -122,12 +122,12 @@ function ime_mod_codyset(imeobj) {
 	});
 	imeobj.setKeySetFunc('qwerty');
 	_g_ime.init("ko", "1_35_259_11", "KOR", "", "kr");
-	alert("ime_mod_codyset end...");
+	//alert("ime_mod_codyset end...");
 };
 
 function setDefault() {
 
-	alert('setDefault() start');
+	//alert('setDefault() start');
 	// 기본 옷장리스트 구현
 
 	////////////////
@@ -138,19 +138,19 @@ function setDefault() {
 	var cid = sessionStorage.getItem('cid');
 	var csid = sessionStorage.getItem('csid');
 
-	alert("cid is " + cid + " csid is " + csid);
+	//alert("cid is " + cid + " csid is " + csid);
 
 	///  getClosetList
 	getClosetList2();
 	
-	alert('closetList` length is '+closetList.length);
+	//alert('closetList` length is '+closetList.length);
 	
 	if( closetList.length > 7 ){
 		
-		alert('((((((((((((if)))))))))) closetList.length > 7');
+		//alert('((((((((((((if)))))))))) closetList.length > 7');
 		if(cid != null){ // cid exist
 			//finding cIndex
-			alert('((((((((((((if)))))))))) cid!=null');
+			//alert('((((((((((((if)))))))))) cid!=null');
 			
 			var cIndex = -1;
 			
@@ -162,12 +162,12 @@ function setDefault() {
 					break;
 				}
 			}
-			alert("cIndex is "+cIndex);
+			//alert("cIndex is "+cIndex);
 			if(cIndex>5){
-				alert('((((((((((((if)))))))))) cIndex > 7');
+				//alert('((((((((((((if)))))))))) cIndex > 7');
 				if(cIndex == (closetList.length-1)){
 					//position.y=6
-					alert('((((((((((((if)))))))))) cIndex == (closetList.length-1)');
+					//alert('((((((((((((if)))))))))) cIndex == (closetList.length-1)');
 					for(var i=(cIndex-6);i<(cIndex+1);i++){
 						var item = $('<div/>', {
 							id : closetList[i].cid,
@@ -185,7 +185,7 @@ function setDefault() {
 					$('#closetUp').attr('hidden',false);
 					
 				}else{
-					alert('((((((((((((if)))))))))) else');
+					//alert('((((((((((((if)))))))))) else');
 					
 					//position.y=5
 					
@@ -209,7 +209,7 @@ function setDefault() {
 				
 			
 			}else{ //cIndex is less than 7
-				alert('((((((((((((if)))))))))) cIndex <= 5');
+				//alert('((((((((((((if)))))))))) cIndex <= 5');
 				
 				for(var i=0;i<7;i++){
 					var item = $('<div/>', {
@@ -236,7 +236,7 @@ function setDefault() {
 			
 			closetY = position.y;
 			if(csid != null ){ //closetLength is more than 7, cid exist, csid not exist
-				alert('((((((((((((if)))))))))) csid != null');
+				//alert('((((((((((((if)))))))))) csid != null');
 				
 				//get codisetList
 				var url = 'http://finfra.com/~tv11/codyset.php';
@@ -255,7 +255,7 @@ function setDefault() {
 				});
 				
 				if( codisetList != null){
-					alert('((((((((((((if)))))))))) codisetList.length != 0');
+					//alert('((((((((((((if)))))))))) codisetList.length != 0');
 					
 					var csIndex = -1;
 					for(var i=0;i<codisetList.length;i++){
@@ -265,15 +265,15 @@ function setDefault() {
 							break;
 						}
 					}
-					alert('csIndex is '+csIndex);
+					//alert('csIndex is '+csIndex);
 					
 					if(codisetList.length>5){
-						alert('((((((((((((if)))))))))) codisetList.length > 5');
+						//alert('((((((((((((if)))))))))) codisetList.length > 5');
 						if(csIndex>2){
-							alert('((((((((((((if)))))))))) csIndex > 2');
+							//alert('((((((((((((if)))))))))) csIndex > 2');
 							
 							if(csIndex == (codisetList.length-1)){
-								alert('((((((((((((if)))))))))) csIndex == (codisetList.length-1)');
+								//alert('((((((((((((if)))))))))) csIndex == (codisetList.length-1)');
 								
 								for(var i=(csIndex-4);i<(csIndex+1);i++){
 									var codi = $('<div/>', {
@@ -292,7 +292,7 @@ function setDefault() {
 								$('#codiUp').attr('hidden',false);
 								
 							}else{
-								alert('((((((((((((if)))))))))) else');
+								//alert('((((((((((((if)))))))))) else');
 								
 								for(var i=(csIndex-3);i<(csIndex+2);i++){
 									var codi = $('<div/>', {
@@ -316,7 +316,7 @@ function setDefault() {
 							
 							
 						}else{
-							alert('((((((((((((if)))))))))) csIndex <= 2');
+							//alert('((((((((((((if)))))))))) csIndex <= 2');
 							
 							for(var i=0;i<codisetList.length;i++){
 								if(i == 5){break;}
@@ -337,7 +337,7 @@ function setDefault() {
 						}
 
 					}else{
-						alert('((((((((((((if)))))))))) codisetList.length <= 5');
+						//alert('((((((((((((if)))))))))) codisetList.length <= 5');
 						
 						for(var i=0;i<codisetList.length;i++){
 							
@@ -363,13 +363,13 @@ function setDefault() {
 				
 
 			}else{ //closetLength is more than 7, cid exist, csid not exist
-				alert('((((((((((((if)))))))))) csid == null');
+				//alert('((((((((((((if)))))))))) csid == null');
 				
 				getCodisetList(cid);
 			}
 	
 		}else{//closetLength is more than 7, cid not exist
-			alert('((((((((((((if)))))))))) cid == null');
+			//alert('((((((((((((if)))))))))) cid == null');
 			
 			//make 0to6 focus 0 call getcodisetList 0
 			for(var i=0;i<7;i++){
@@ -387,7 +387,7 @@ function setDefault() {
 			var closetArr = $('#closetView div');
 			$(closetArr[position.y]).css('background-color','rgba(255,255,255,0.5)');
 		
-			alert($(closetArr[position.y]).attr('id'));
+			//alert($(closetArr[position.y]).attr('id'));
 
 			sessionStorage.setItem('cid',$(closetArr[position.y]).attr('id'));
 			$('#closetDown').attr('hidden',false);
@@ -396,7 +396,7 @@ function setDefault() {
 		
 		
 	}else if(closetList.length<=7){ //length is less than 7
-		alert('((((((((((((if)))))))))) closetList.length <= 7');
+		//alert('((((((((((((if)))))))))) closetList.length <= 7');
 		
 		if(closetList != null){
 			
@@ -411,23 +411,23 @@ function setDefault() {
 			}
 			
 			if( cid != null){
-				alert('((((((((((((if)))))))))) cid != null');
+				//alert('((((((((((((if)))))))))) cid != null');
 				
 				//finding index of "cid"
 				var closetArr = $('#closetView div');
 				var cIndex = -1;
 				
-				alert("closetList`s length is "+closetList.length);
+				//alert("closetList`s length is "+closetList.length);
 				for(var i=0;i<closetList.length;i++){
 					var closetId = closetList[i].cid;
-					alert("index is "+i+" closetId is"+closetId);
+					//alert("index is "+i+" closetId is"+closetId);
 					if( cid == closetId){
 						cIndex = i;
 						break;
 					}
 				}
 				//////
-				alert('cIndex is '+cIndex);
+				//alert('cIndex is '+cIndex);
 				
 				position.x = 0;
 				position.y=cIndex;
@@ -437,7 +437,7 @@ function setDefault() {
 				
 				if(csid != null ){
 					
-					alert('((((((((((((if)))))))))) csid != null');
+					//alert('((((((((((((if)))))))))) csid != null');
 					
 					//get codisetList
 					var url = 'http://finfra.com/~tv11/codyset.php';
@@ -456,7 +456,7 @@ function setDefault() {
 					});
 					
 					if( codisetList != null){
-						alert('((((((((((((if)))))))))) codisetList != null');
+						//alert('((((((((((((if)))))))))) codisetList != null');
 						
 						var csIndex = -1;
 						for(var i=0;i<codisetList.length;i++){
@@ -467,14 +467,14 @@ function setDefault() {
 							}
 						}
 						
-						alert("csIndex is "+csIndex);
+						//alert("csIndex is "+csIndex);
 						
 						if(csIndex>3){
-							alert('((((((((((((if)))))))))) csIndex>3');
+							//alert('((((((((((((if)))))))))) csIndex>3');
 							
 							if(csIndex == (codisetList.length-1)){
 							
-								alert('((((((((((((if)))))))))) csIndex == (codisetList.length-1)');
+								//alert('((((((((((((if)))))))))) csIndex == (codisetList.length-1)');
 								
 								for(var i=(csIndex-4);i<(csIndex+1);i++){
 									var codi = $('<div/>', {
@@ -494,7 +494,7 @@ function setDefault() {
 								$('#codiUp').attr('hidden',false);
 								
 							}else{
-								alert('((((((((((((if)))))))))) csIndex != (codisetList.length-1)');
+								//alert('((((((((((((if)))))))))) csIndex != (codisetList.length-1)');
 								
 								for(var i=(csIndex-3);i<(csIndex+2);i++){
 									var codi = $('<div/>', {
@@ -517,7 +517,7 @@ function setDefault() {
 							
 							
 						}else{
-							alert('((((((((((((if)))))))))) csIndex <= 3');
+							//alert('((((((((((((if)))))))))) csIndex <= 3');
 							
 							for(var i=0;i<codisetList.length;i++){
 								if(i==5){
@@ -549,7 +549,7 @@ function setDefault() {
 				
 			}else{  //cid is null csid null length is less than 7
 				
-				alert('((((((((((((if)))))))))) cid == null');
+				//alert('((((((((((((if)))))))))) cid == null');
 				
 				position.x=0;
 				position.y=0;
@@ -570,8 +570,8 @@ function setDefault() {
 	setNumber(2);
 	
 	
-	alert("position.x is "+position.x+"position.y is "+position.y);
-	alert('setDefault() end');
+	//alert("position.x is "+position.x+"position.y is "+position.y);
+	//alert('setDefault() end');
 
 }
 function setNumber(category){
@@ -623,7 +623,7 @@ function movePosition(direction) {
 	// move focus
 	// x 0,1,2
 	// y:var
-	alert("movePostion() start");
+	//alert("movePostion() start");
 	switch (position.x) {
 	case 0: {
 		// x index is 0 (closetList)
@@ -634,8 +634,8 @@ function movePosition(direction) {
 			
 			var arr;
 			
-			alert("closetList length is "+closetList.length);
-			alert("position.y is "+position.y);
+			//alert("closetList length is "+closetList.length);
+			//alert("position.y is "+position.y);
 			if(closetList.length>7){
 				if(position.y == 0){
 					replaceClosetView(0);
@@ -652,7 +652,7 @@ function movePosition(direction) {
 					var cid = $(arr[position.y]).attr('id');
 					sessionStorage.setItem('cid',cid);
 					
-					alert("saved cid is "+cid);
+					//alert("saved cid is "+cid);
 				
 				}
 				
@@ -670,7 +670,7 @@ function movePosition(direction) {
 				var cid = $(arr[position.y]).attr('id');
 				sessionStorage.setItem('cid',cid);
 				
-				alert("saved cid is "+cid);
+				//alert("saved cid is "+cid);
 		
 			}
 			
@@ -725,8 +725,8 @@ function movePosition(direction) {
 			
 			var arr;
 			
-			alert("closetList length is "+closetList.length);
-			alert("position.y is "+position.y);
+			//alert("closetList length is "+closetList.length);
+			//alert("position.y is "+position.y);
 			if(closetList.length>7){
 				if(position.y == 6){
 					replaceClosetView(1);
@@ -743,7 +743,7 @@ function movePosition(direction) {
 					var cid = $(arr[position.y]).attr('id');
 					sessionStorage.setItem('cid',cid);
 					
-					alert("saved cid is "+cid);
+					//alert("saved cid is "+cid);
 				
 				}
 				
@@ -761,7 +761,7 @@ function movePosition(direction) {
 				var cid = $(arr[position.y]).attr('id');
 				sessionStorage.setItem('cid',cid);
 				
-				alert("saved cid is "+cid);
+				//alert("saved cid is "+cid);
 		
 			}
 			
@@ -810,8 +810,8 @@ function movePosition(direction) {
 			
 			var codiArr;
 			
-			alert("codisetList length is "+codisetList.length);
-			alert("position.y is "+position.y);
+			//alert("codisetList length is "+codisetList.length);
+			//alert("position.y is "+position.y);
 			if(codisetList.length>5){
 				if(position.y == 0){
 					replaceCodisetView(0);
@@ -828,7 +828,7 @@ function movePosition(direction) {
 					var csid = $(codiArr[position.y]).attr('id');
 					sessionStorage.setItem('csid',csid);
 					
-					alert("saved csid is "+csid);
+					//alert("saved csid is "+csid);
 				
 				}
 				
@@ -846,7 +846,7 @@ function movePosition(direction) {
 				var csid = $(codiArr[position.y]).attr('id');
 				sessionStorage.setItem('csid',csid);
 				
-				alert("saved csid is "+csid);
+				//alert("saved csid is "+csid);
 		
 			}
 			
@@ -898,10 +898,10 @@ function movePosition(direction) {
 			var codiArr;
 			if(codisetList != null){
 
-				alert("codisetList length is "+codisetList.length);
+				//alert("codisetList length is "+codisetList.length);
 					
 			}
-			alert("position.y is "+position.y);
+			//alert("position.y is "+position.y);
 			if(codisetList.length>5){
 				if(position.y == 4){
 					replaceCodisetView(1);
@@ -918,7 +918,7 @@ function movePosition(direction) {
 					var csid = $(codiArr[position.y]).attr('id');
 					sessionStorage.setItem('csid',csid);
 					
-					alert("saved csid is "+csid);
+					//alert("saved csid is "+csid);
 				
 				}
 				
@@ -936,7 +936,7 @@ function movePosition(direction) {
 				var csid = $(codiArr[position.y]).attr('id');
 				sessionStorage.setItem('csid',csid);
 				
-				alert("saved csid is "+csid);
+				//alert("saved csid is "+csid);
 		
 			}
 			
@@ -1019,9 +1019,9 @@ function movePosition(direction) {
 	}
 	}
 	
-	alert("x is "+position.x+" y is "+position.y);
-	alert('cid is '+sessionStorage.getItem('cid')+" csid is "+sessionStorage.getItem('csid'));
-	alert("movePostion() end");
+	//alert("x is "+position.x+" y is "+position.y);
+	//alert('cid is '+sessionStorage.getItem('cid')+" csid is "+sessionStorage.getItem('csid'));
+	//alert("movePostion() end");
 }
 function getCodiView(csid) {
 
@@ -1043,10 +1043,10 @@ function getCodiView(csid) {
 			tid = data.clothes.tid;
 			bid = data.clothes.bid;
 
-			alert("tid " + tid + " bid " + bid);
+			//alert("tid " + tid + " bid " + bid);
 		},
 		error : function() {
-			alert("get tid bid error");
+			//alert("get tid bid error");
 		},
 		beforeSend:function(){
 			$('#loading').show();
@@ -1074,12 +1074,12 @@ function getCodiView(csid) {
 			sessionStorage.setItem('tid', tid);
 		},
 		error : function() {
-			alert("ajax error(tid)");
+			//alert("ajax error(tid)");
 		},
 		complete:function(){
 			if(flag == true){
-				alert('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-				alert("position.x = "+position.x);
+				//alert('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+				//alert("position.x = "+position.x);
 				$('#loading').hide();
 				position.x = preX;
 			}
@@ -1104,13 +1104,13 @@ function getCodiView(csid) {
 			sessionStorage.setItem('bid', bid);
 		},
 		error : function() {
-			alert("ajax error(bid)");
+			//alert("ajax error(bid)");
 		},
 		complete:function(){
 			if(flag == true){
 
-				alert('????????????????????????????????????????????????????????????????????????????????');
-				alert("position.x = "+position.x);
+				//alert('????????????????????????????????????????????????????????????????????????????????');
+				//alert("position.x = "+position.x);
 				$('#loading').hide();
 				position.x = preX;
 			}
@@ -1119,10 +1119,10 @@ function getCodiView(csid) {
 	});
 	
 	
-	alert('getCodiView() end');
+	//alert('getCodiView() end');
 }
 function getCodisetList(cid) {
-	alert('getCodisetList() start');
+	//alert('getCodisetList() start');
 
 	var url = 'http://finfra.com/~tv11/codyset.php';
 
@@ -1162,16 +1162,16 @@ function getCodisetList(cid) {
 		}
 	});
 
-	alert('getCodisetList() end');
+	//alert('getCodisetList() end');
 
 }
 
 function getClosetList2() {
 
-	alert('getClosetList2() start');
+	//alert('getClosetList2() start');
 
 	
-	alert(localStorage.getItem('user'));
+	//alert(localStorage.getItem('user'));
 	
 	$('#closetView').empty();
 	var url = 'http://finfra.com/~tv11/closet.php';
@@ -1187,26 +1187,26 @@ function getClosetList2() {
 		success : function(data) {
 			closetList = data.closet;
 			if(closetList!=null){
-				alert("getClosetList success");
+				//alert("getClosetList success");
 			}else{
-				alert("getClosetList fail");
+				//alert("getClosetList fail");
 			}
 		},
 		error : function() {
-			alert('ajax error');
+			//alert('ajax error');
 		}
 
 	});
 
 
-	alert('getClosetList2() end');
+	//alert('getClosetList2() end');
 }
 function getClosetList() {
 
-	alert('getClosetList() start');
+	//alert('getClosetList() start');
 
 	
-	alert(localStorage.getItem('user'));
+	//alert(localStorage.getItem('user'));
 	
 	$('#closetView').empty();
 	var url = 'http://finfra.com/~tv11/closet.php';
@@ -1227,7 +1227,7 @@ function getClosetList() {
 			if (arr != null) {
 				if(arr.length<8){
 					
-					alert('팔보다 작다');
+					//alert('팔보다 작다');
 					for ( var i = 0; i < arr.length; i++) {
 						var item = $('<div/>', {
 							id : arr[i].cid,
@@ -1240,7 +1240,7 @@ function getClosetList() {
 				}else{
 					
 
-					alert('팔보다 크다');
+					//alert('팔보다 크다');
 					for ( var i = 0; i < 7; i++) {
 						var item = $('<div/>', {
 							id : arr[i].cid,
@@ -1256,25 +1256,25 @@ function getClosetList() {
 				sessionStorage.setItem('cid', arr[0].cid);
 
 			} else {
-				alert("arr = NULL ")
+				//alert("arr = NULL ")
 			}
 		},
 		error : function() {
-			alert('ajax error');
+			//alert('ajax error');
 		}
 
 	});
 
 
-	alert('getClosetList() end');
+	//alert('getClosetList() end');
 }
 
 
 function add_closet() {
 
-	alert('add_closet() start');
+	//alert('add_closet() start');
 	var cName = document.getElementById('insCloset').value;
-	alert(cName);
+	//alert(cName);
 	if (cName.length > 0) {
 		var url = 'http://finfra.com/~tv11/ins_closet.php';
 
@@ -1288,14 +1288,14 @@ function add_closet() {
 			},
 			success : function(data) {
 
-				alert(data);
+				//alert(data);
 
 				sessionStorage.removeItem('cid');
-				alertMsg("["+cName+"] 이  추가 되었습니다");
+				//alertMsg("["+cName+"] 이  추가 되었습니다");
 				setDefault();
 			},
 			error : function() {
-				alert('add_closet ajax error');
+				//alert('add_closet ajax error');
 			},
 			complete:function(){
 				position.x = 0;
@@ -1303,15 +1303,15 @@ function add_closet() {
 
 		});
 		
-		alert('add_closet() end');
+		//alert('add_closet() end');
 	} else {
-		alert('closet name = NULL');
+		//alert('closet name = NULL');
 	}
 
 }
 function mod_closet() {
 
-	alert('modi_closet() start()');
+	//alert('modi_closet() start()');
 
 	var cname = document.getElementById('modCloset').value;
 	;
@@ -1323,7 +1323,7 @@ function mod_closet() {
 	var arr = $('#closetView div');
 
 	cid = $(arr[position.y]).attr('id');
-	alert('cid is ' + cid);
+	//alert('cid is ' + cid);
 
 	var url = 'http://finfra.com/~tv11/mod_closet.php';
 
@@ -1337,25 +1337,25 @@ function mod_closet() {
 		},
 		success : function(data) {
 			if (data) {
-				alertMsg("["+cname+"] 으로 수정 되었습니다");
+				//alertMsg("["+cname+"] 으로 수정 되었습니다");
 				setDefault();
 			} else {
-				alert('fail');
+				//alert('fail');
 			}
 		},
 		error : function() {
-			alert('mod_closet ajax error');
+			//alert('mod_closet ajax error');
 		},
 		complete:function(){
 			position.x = 0;
 		}
 	});
 	
-	alert('mod_closet() end');
+	//alert('mod_closet() end');
 }
 function del_closet() {
 
-	alert('del_closet() start');
+	//alert('del_closet() start');
 
 	var url = "http://finfra.com/~tv11/del_closet.php";
 
@@ -1364,13 +1364,13 @@ function del_closet() {
 	// //////////////////////////
 
 	var arr = $('#closetView div');
-	alert(arr);
+	//alert(arr);
 	
 	
 
 		var cid = $(arr[position.y]).attr('id');
 		var cname = $(arr[position.y]).html();
-		alert("selected cid is " + cid + " for del");
+		//alert("selected cid is " + cid + " for del");
 
 		$.ajax({
 			async : false,
@@ -1382,20 +1382,20 @@ function del_closet() {
 			},
 			success : function(data) {
 
-				alert(data);
+				//alert(data);
 				if (data) {
 
-					alert('del_closet() success');
+					//alert('del_closet() success');
 					sessionStorage.removeItem('cid');
 
 					setDefault();
 					alertMsg("["+cname+"] 을  제거 하였습니다");
 				} else {
-					alert('del_closet() fail');
+					////alert('del_closet() fail');
 				}
 			},
 			error : function() {
-				alert('ajax error');
+				//alertajax error');
 			},
 			complete:function(){
 				position.x = 0;
@@ -1403,7 +1403,7 @@ function del_closet() {
 		});
 
 	
-	alert('del_closet() end');
+	//alert('del_closet() end');
 }
 Main.onUnload = function() {
 	if (imeInsertCloset) {
@@ -1437,33 +1437,33 @@ function mod_codiset() {
 			},
 			success : function(data) {
 				if (data) {
-					alert("success " + data);
+					//alert("success " + data);
 					alertMsg("코디셋 이름을 ["+csName+"] 으로 수정 되었습니다");
 					setDefault();
 
 				} else {
-					alert('mod_codiset() fail');
+					//alert('mod_codiset() fail');
 				}
 			},
 			error : function() {
-				alert('mod_codiset() ajax error');
+				//alert('mod_codiset() ajax error');
 			},
 			complete:function(){
 				position.x = 1;
 			}
 		});
 		
-		alert('mod_codiset() end');
+		//alert('mod_codiset() end');
 	} else {
-		alert('modCodiset is null');
+		//alert('modCodiset is null');
 	}
 
 }
 function setHelpbar() { // position.x 값을 참조하여 맞는 헬프바 아이콘 구현
 
-	alert("setHelpBar() start");
+	//alert("setHelpBar() start");
 
-	alert("x value is" + position.x);
+	//alert("x value is" + position.x);
 
 	$('#red').remove();
 	$('#green').remove();
@@ -1506,12 +1506,12 @@ function setHelpbar() { // position.x 값을 참조하여 맞는 헬프바 아�
 
 	}
 
-	alert("setHelpBar() end");
+	//alert("setHelpBar() end");
 }
 
 function del_codiset() {
 
-	alert('del_codiset() start');
+	//alert('del_codiset() start');
 
 	var arr = $('#codiView div');
 	var csid = $(arr[position.y]).attr('id');
@@ -1528,8 +1528,8 @@ function del_codiset() {
 		},
 		success : function(data) {
 			if (data) {
-				alert(data);
-				alert('del_codiset() success');
+				//alert(data);
+				//alert('del_codiset() success');
 
 				initItemView();
 				sessionStorage.removeItem('csid');
@@ -1538,7 +1538,7 @@ function del_codiset() {
 				setDefault();
 
 			} else {
-				alert('del_codiset() fail');
+				//alert('del_codiset() fail');
 			}
 		},
 		complete:function(){
@@ -1546,7 +1546,7 @@ function del_codiset() {
 			
 		}
 	});
-	alert('del_codiset() end');
+	//alert('del_codiset() end');
 }
 
 function initItemView() {
@@ -1564,12 +1564,12 @@ function initItemView() {
 Main.keyDown = function() {
 
 	var keyCode = event.keyCode;
-	alert("Key pressed: " + keyCode);
+	//alert("Key pressed: " + keyCode);
 
 	switch (keyCode) {
 	case tvKey.KEY_RETURN:
 	case tvKey.KEY_PANEL_RETURN:
-		alert("RETURN");
+		//alert("RETURN");
 		event.preventDefault();
 		if (pop > 0) {
 			
@@ -1587,11 +1587,11 @@ Main.keyDown = function() {
 			
 			setDefault();
 			
-			alert("close Popup")
+			//alert("close Popup")
 			hidePop();
 			event.preventDefault();
 			
-			alert('position.x is '+position.x+" position.y is "+position.y);
+			//alert('position.x is '+position.x+" position.y is "+position.y);
 			
 		} else {
 			if(position.x!=3){
@@ -1600,10 +1600,10 @@ Main.keyDown = function() {
 			}
 		}
 		
-		alert("pop :" + pop + "|loc :" + loc);
+		//alert("pop :" + pop + "|loc :" + loc);
 		break;
 	case tvKey.KEY_LEFT:
-		alert("LEFT");
+		//alert("LEFT");
 		if (pop == 0) {
 			if(position.x != 3){
 				movePosition(4);
@@ -1664,10 +1664,10 @@ Main.keyDown = function() {
 				$("#delCodisetCancle").removeClass("focus");
 			}
 		}
-		alert("pop :" + pop + "|loc :" + loc);
+		//alert("pop :" + pop + "|loc :" + loc);
 		break;
 	case tvKey.KEY_RIGHT:
-		alert("RIGHT");
+		//alert("RIGHT");
 		if (pop == 0) {
 			if(position.x != 3){
 				movePosition(2);
@@ -1727,10 +1727,10 @@ Main.keyDown = function() {
 				$("#delCodisetCancle").removeClass("focus");
 			}
 		}
-		alert("pop :" + pop + "|loc :" + loc);
+		//alert("pop :" + pop + "|loc :" + loc);
 		break;
 	case tvKey.KEY_UP:
-		alert("UP");
+		//alert("UP");
 		if (pop == 0) {
 			if(position.x != 3){
 				movePosition(1);
@@ -1757,10 +1757,10 @@ Main.keyDown = function() {
 				$("#modCodiset").addClass("inputfocus");
 			}
 		}
-		alert("pop :" + pop + "|loc :" + loc);
+		//alert("pop :" + pop + "|loc :" + loc);
 		break;
 	case tvKey.KEY_DOWN:
-		alert("DOWN");
+		//alert("DOWN");
 		if (pop == 0) {
 			if(position.x != 3){
 				movePosition(3);
@@ -1784,14 +1784,14 @@ Main.keyDown = function() {
 				$("#modCodisetBtn").addClass("focus");
 			}
 		}
-		alert("pop :" + pop + "|loc :" + loc);
+		//alert("pop :" + pop + "|loc :" + loc);
 		break;
 	case tvKey.KEY_ENTER:
 	case tvKey.KEY_PANEL_ENTER:
-		alert("ENTER");
+		//alert("ENTER");
 		if (pop == 1) {
 			if (loc == 0) {
-				alert("Ins :popup div->input focus");
+				//alert("Ins :popup div->input focus");
 				imeInsertCloset._focus();
 				$("#insCloset").focus();
 				$("#insCloset").removeClass("inputfocus");
@@ -1810,7 +1810,7 @@ Main.keyDown = function() {
 			}
 		} else if (pop == 2) {
 			if (loc == 0) {
-				alert("Mod C:popup div->input focus");
+				//alert("Mod C:popup div->input focus");
 				imeModifyCloset._focus();
 				$("#modCloset").focus();
 				$("#modCloset").removeClass("inputfocus");
@@ -1831,7 +1831,7 @@ Main.keyDown = function() {
 			}
 		} else if (pop == 3) {
 			if (loc == 0) {
-				alert("Mod CS:popup div->input focus");
+				//alert("Mod CS:popup div->input focus");
 				imeModifyCodiset._focus();
 				$("#modCodiset").focus();
 				$("#modCodiset").removeClass("inputfocus");
@@ -1886,10 +1886,10 @@ Main.keyDown = function() {
 				document.location.href = 'detail.html';
 			}
 		}
-		alert("pop :" + pop + "|loc :" + loc);
+		//alert("pop :" + pop + "|loc :" + loc);
 		break;
 	case tvKey.KEY_GREEN: // green
-		alert("GREEN");
+		//alert("GREEN");
 		if (position.x == 0) {
 			
 			position.x = 3;
@@ -1914,7 +1914,7 @@ Main.keyDown = function() {
 		
 		break;
 	case tvKey.KEY_YELLOW: // yellow
-		alert("YELLOW");
+		//alert("YELLOW");
 		if (position.x == 0) {
 			arr = $('#closetView div');
 			
@@ -1947,10 +1947,10 @@ Main.keyDown = function() {
 		}
 		break;
 	case tvKey.KEY_BLUE: // blue
-		alert('BLUE');	
+		//alert('BLUE');	
 		break;
 	case tvKey.KEY_RED:
-	alert("RED");
+	//alert("RED");
 	if (position.x == 0) {
 		$("#popup").show();
 		
@@ -1961,7 +1961,7 @@ Main.keyDown = function() {
 		
 		var str;
 		
-		alert(closetList);
+		//alert(closetList);
 		
 		if(closetList!=null){
 			str= "옷장"+(closetList.length+1);
@@ -1981,7 +1981,7 @@ Main.keyDown = function() {
 	
 	break;
 default:
-	alert("Unhandled key");
+	//alert("Unhandled key");
 	break;
 }
 };
@@ -2009,7 +2009,7 @@ function hidePop() {
 	loc = 0;
 }
 function alertMsg(msg) {
-	alert("alertMsg() start");
+	//alert("alertMsg() start");
 	
 	$("#confirm").html(msg);
 	$("#confirm").show();
@@ -2018,10 +2018,10 @@ function alertMsg(msg) {
 	}, 1000);
 	
 
-	alert("alertMsg() end");
+	//alert("alertMsg() end");
 };
 function replaceClosetView(direction) {  //refer up or down
-	alert('replaceClosetView() start');
+	//alert('replaceClosetView() start');
 	
 	arr = $('#closetView div');
 
@@ -2160,11 +2160,11 @@ function replaceClosetView(direction) {  //refer up or down
 			$('#closetDown').attr('hidden',false);
 		}
 	
-	alert('replaceClosetView() end');
+	//alert('replaceClosetView() end');
 	}
 	
 function replaceCodisetView(direction){
-	alert('replaceCodisetView() start');
+	//alert('replaceCodisetView() start');
 	
 	var csArr = $('#codiView div');
 	
@@ -2306,6 +2306,6 @@ function replaceCodisetView(direction){
 		}
 	
 	
-	alert('replaceCodisetView() end');
+	//alert('replaceCodisetView() end');
 }	
 	

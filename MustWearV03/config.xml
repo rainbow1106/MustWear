@@ -7,7 +7,7 @@
   <BigThumbIcon itemtype="string">icon/shirt.png</BigThumbIcon>  
   <ListIcon itemtype="string">icon/shirt.png</ListIcon>  
   <BigListIcon itemtype="string">icon/shirt.png</BigListIcon>  
-  <category itemtype="string"/>  
+  <category itemtype="string">Lifestyle</category>  
   <autoUpdate itemtype="boolean">n</autoUpdate>  
   <ver itemtype="string">0.100</ver>  
   <mgrver itemtype="string"/>  
