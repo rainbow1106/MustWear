@@ -1468,7 +1468,7 @@ function setHelpbar() { // position.x 값을 참조하여 맞는 헬프바 아�
 	$('#red').remove();
 	$('#green').remove();
 	$('#yellow').remove();
-
+	$('#enter').remove();
 	var red,yellow, green;
 
 	if (position.x == 0) {
