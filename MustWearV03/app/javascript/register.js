@@ -188,7 +188,7 @@ Main.keyDown = function() {
 	case tvKey.KEY_PANEL_RETURN:
 		//alert("RETURN");
 		event.preventDefault();
-		widgetAPI.sendReturnEvent();
+//		widgetAPI.sendReturnEvent();
 		break;
 	case tvKey.KEY_LEFT:
 		//alert("LEFT");

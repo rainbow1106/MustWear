@@ -1570,7 +1570,7 @@ Main.keyDown = function() {
 	case tvKey.KEY_RETURN:
 	case tvKey.KEY_PANEL_RETURN:
 		//alert("RETURN");
-		event.preventDefault();
+		
 		if (pop > 0) {
 			
 //			if(pop == 1){
@@ -1589,7 +1589,7 @@ Main.keyDown = function() {
 			
 			//alert("close Popup")
 			hidePop();
-			event.preventDefault();
+			
 			
 			//alert('position.x is '+position.x+" position.y is "+position.y);
 			
@@ -1601,6 +1601,7 @@ Main.keyDown = function() {
 		}
 		
 		//alert("pop :" + pop + "|loc :" + loc);
+		event.preventDefault();
 		break;
 	case tvKey.KEY_LEFT:
 		//alert("LEFT");

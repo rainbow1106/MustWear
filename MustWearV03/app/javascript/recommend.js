@@ -608,13 +608,13 @@ Main.keyDown = function() {
 	case tvKey.KEY_RETURN:
 	case tvKey.KEY_PANEL_RETURN:
 		//alert("RETURN");
-		event.preventDefault();
 		if(position.x==3){
 			$('#popup').hide();
 			position.x=preX;
 		}else{
 			document.location.href = "weather.html";
 		}
+		event.preventDefault();
 		break;
 	case tvKey.KEY_LEFT:
 		//alert("LEFT");
