@@ -1464,43 +1464,38 @@ function setHelpbar() { // position.x 값을 참조하여 맞는 헬프바 아�
 	//alert("setHelpBar() start");
 
 	//alert("x value is" + position.x);
-
+	var red = $('<img class="helpBarIcon" id="red">');
+	var green = $('<img class="helpBarIcon" id="green">');
+	var yellow = $('<img class="helpBarIcon" id="yellow">');
+	
 	$('#red').remove();
 	$('#green').remove();
 	$('#yellow').remove();
-	$('#enter').remove();
-	var red,yellow, green;
 
 	if (position.x == 0) {
-		green = $('<font id="green"><img class="helpBarIcon">옷장 수정  </font>');
-		yellow = $('<font id="yellow"><img class="helpBarIcon">옷장 삭제  </font>');
-		red = $('<font id="red"><img class="helpBarIcon">옷장 추가  </font>');
-
+		
 		$('#helpBar').append(red);
 		$('#helpBar').append(green);
 		$('#helpBar').append(yellow);
 		
-
-		$('#yellow img').attr('src', 'app/image/yellow.png');
-		$('#red img').attr('src', 'app/image/red.png');
-		$('#green img').attr('src', 'app/image/green.png');
+		$('#yellow').attr('src', 'app/image/delCloset.jpg');
+		$('#red').attr('src', 'app/image/addCloset.jpg');
+		$('#green').attr('src', 'app/image/modCloset.jpg');
 
 	} else if (position.x == 1 || position.x == 3) {
-		green = $('<font id="green"><img class="helpBarIcon">코디셋 수정  </font>');
-		yellow = $('<font id="yellow"><img class="helpBarIcon">코디셋 삭제  </font>');
 
 		$('#helpBar').append(green);
 		$('#helpBar').append(yellow);
 
-		$('#yellow img').attr('src', 'app/image/yellow.png');
-		$('#green img').attr('src', 'app/image/green.png');
+		$('#yellow img').attr('src', 'app/image/delCodiset.jpg');
+		$('#green img').attr('src', 'app/image/modCodiset.jpg');
 
 	} else if (position.x == 2) {
-		enter = $('<font id="enter"><img class="helpBarIcon">상세보기</font>');
+		enter = $('<img class="helpBarIcon" id="enter">');
 		 
 		$('#helpBar').append(enter);
 		
-		$('#enter img').attr('src', 'app/image/enter.png');
+		$('#enter').attr('src', 'app/image/nextDetail.png');
 
 	} else {
 

@@ -423,7 +423,7 @@ function moveDiv(direction) {
 		} else {
 			$('#yellow')
 					.before(
-							'<font id="green"><img class = "helpBarIcon" src="app/image/green.png">상세정보  </font>');
+							'<img class = "helpBarIcon" id="green"src="app/image/detail.jpg">');
 			position.x = 1;
 			setComments();
 		}
