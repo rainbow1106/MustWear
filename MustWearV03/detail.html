@@ -22,11 +22,11 @@
 </head>
 
 <body onload="Main.onLoad();" onunload="Main.onUnload();">
-
+	
 	<!-- Dummy anchor as focus for key events -->
 	<a href="javascript:void(0);" id="anchor" onkeydown="Main.keyDown();"></a>
 	<!-- TODO: your code here -->
-
+	
 	<div id="titleBar"></div>
 	<div id="contents">
 		<div id="pic">
@@ -74,10 +74,10 @@
 		</div>
 	</div>
 	<div id="helpBar">
-		<img class="helpBarIcon" src="app/image/prevPage.jpg"> <img
-			class="helpBarIcon" src="app/image/buy.jpg">
-
-
-	</div>
+		<div class="helpBarDiv" id="prev"><img class="helpBarIcon" src="./app/image/prev.png"></div>
+		<div class="helpBarDiv" id="blue"><img class="helpBarIcon" src="./app/image/buy.jpg"></div>
+		
+			
+		</div>
 </body>
 </html>

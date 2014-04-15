@@ -1082,6 +1082,7 @@ function getCodiView(csid) {
 				//alert("position.x = "+position.x);
 				$('#loading').hide();
 				position.x = preX;
+				setHelpbar();
 			}
 			flag = true;
 		}
@@ -1113,6 +1114,7 @@ function getCodiView(csid) {
 				//alert("position.x = "+position.x);
 				$('#loading').hide();
 				position.x = preX;
+				setHelpbar();
 			}
 			flag = true;
 		}
@@ -1291,7 +1293,7 @@ function add_closet() {
 				//alert(data);
 
 				sessionStorage.removeItem('cid');
-				//alertMsg("["+cName+"] 이  추가 되었습니다");
+				alertMsg("["+cName+"] 이  추가 되었습니다");
 				setDefault();
 			},
 			error : function() {
@@ -1337,7 +1339,7 @@ function mod_closet() {
 		},
 		success : function(data) {
 			if (data) {
-				//alertMsg("["+cname+"] 으로 수정 되었습니다");
+				alertMsg("["+cname+"]으로 수정 되었습니다");
 				setDefault();
 			} else {
 				//alert('fail');
@@ -1389,7 +1391,7 @@ function del_closet() {
 					sessionStorage.removeItem('cid');
 
 					setDefault();
-					alertMsg("["+cname+"] 을  제거 하였습니다");
+					alertMsg("["+cname+"]을  제거 하였습니다");
 				} else {
 					////alert('del_closet() fail');
 				}
@@ -1438,7 +1440,7 @@ function mod_codiset() {
 			success : function(data) {
 				if (data) {
 					//alert("success " + data);
-					alertMsg("코디셋 이름을 ["+csName+"] 으로 수정 되었습니다");
+					alertMsg("수정 되었습니다");
 					setDefault();
 
 				} else {
@@ -1464,43 +1466,49 @@ function setHelpbar() { // position.x 값을 참조하여 맞는 헬프바 아�
 	//alert("setHelpBar() start");
 
 	//alert("x value is" + position.x);
-	var red = $('<img class="helpBarIcon" id="red">');
-	var green = $('<img class="helpBarIcon" id="green">');
-	var yellow = $('<img class="helpBarIcon" id="yellow">');
-	
+
+
 	$('#red').remove();
 	$('#green').remove();
 	$('#yellow').remove();
+	$('#return').remove();
+	$('#enter').remove();
+	var red,yellow, green,enter,ret;
 
 	if (position.x == 0) {
-		
+		green = $('<div id="green" class="helpBarDiv"><img class="helpBarIcon" src="./app/image/modCloset.jpg">');
+		yellow = $('<div id="yellow" class="helpBarDiv"><img class="helpBarIcon" src="./app/image/delCloset.jpg">');
+		red = $('<div id="red" class="helpBarDiv"><img class="helpBarIcon" src="./app/image/addCloset.jpg">');
+		ret = $('<div class="helpBarDiv" id="return"><img class="helpBarIcon" src="app/image/prev.png"></div>');
 		$('#helpBar').append(red);
 		$('#helpBar').append(green);
 		$('#helpBar').append(yellow);
+		$('#move').before(ret);
+
+	} else if (position.x == 1) {
+		green = $('<div id="green" class="helpBarDiv"><img class="helpBarIcon" src="./app/image/modCodiset.jpg">');
+		yellow = $('<div id="yellow" class="helpBarDiv"><img class="helpBarIcon" src="./app/image/delCodiset.jpg">');
+		ret = $('<div class="helpBarDiv" id="return"><img class="helpBarIcon" src="app/image/prev.png"></div>');
 		
-		$('#yellow').attr('src', 'app/image/delCloset.jpg');
-		$('#red').attr('src', 'app/image/addCloset.jpg');
-		$('#green').attr('src', 'app/image/modCloset.jpg');
-
-	} else if (position.x == 1 || position.x == 3) {
-
 		$('#helpBar').append(green);
 		$('#helpBar').append(yellow);
-
-		$('#yellow img').attr('src', 'app/image/delCodiset.jpg');
-		$('#green img').attr('src', 'app/image/modCodiset.jpg');
+		$('#move').before(ret);
 
 	} else if (position.x == 2) {
-		enter = $('<img class="helpBarIcon" id="enter">');
-		 
+		enter = $('<div id="enter" class="helpBarDiv"><img class="helpBarIcon" src="./app/image/nextDetail.jpg">');
+		ret = $('<div class="helpBarDiv" id="return"><img class="helpBarIcon" src="app/image/undo.jpg"></div>');
+
+		$('#move').before(ret);
 		$('#helpBar').append(enter);
 		
-		$('#enter').attr('src', 'app/image/nextDetail.png');
+		
 
-	} else {
+	} else if(position.x == 3){
+		enter = $('<div id="enter" class="helpBarDiv"><img class="helpBarIcon" src="./app/image/select.jpg">');
+		
+		$('#helpBar').append(enter);
 
 	}
-
 	//alert("setHelpBar() end");
 }
 
@@ -1529,7 +1537,7 @@ function del_codiset() {
 				initItemView();
 				sessionStorage.removeItem('csid');
 
-				alertMsg("["+cname+"] 을  제거 하였습니다");
+				alertMsg("제거 하였습니다");
 				setDefault();
 
 			} else {
@@ -1584,7 +1592,7 @@ Main.keyDown = function() {
 			
 			//alert("close Popup")
 			hidePop();
-			
+			setHelpbar();
 			
 			//alert('position.x is '+position.x+" position.y is "+position.y);
 			
@@ -1796,6 +1804,7 @@ Main.keyDown = function() {
 				$("#insClosetBtn").removeClass("focus");
 				$("#insClosetCancle").removeClass("focus");
 				hidePop();
+				setHelpbar();
 			} else if (loc == 2) {
 				$("#insClosetBtn").removeClass("focus");
 				$("#insClosetCancle").removeClass("focus");
@@ -1803,6 +1812,7 @@ Main.keyDown = function() {
 				position.x = 0;
 				
 				hidePop();
+				setHelpbar();
 			}
 		} else if (pop == 2) {
 			if (loc == 0) {
@@ -1817,13 +1827,14 @@ Main.keyDown = function() {
 				$("#modClosetCancle").removeClass("focus");
 			
 				hidePop();
+				setHelpbar();
 			} else if (loc == 2) {
 				hidePop();
 				$("#modClosetBtn").removeClass("focus");
 				$("#modClosetCancle").removeClass("focus");
 				
 				position.x = 0;
-				
+				setHelpbar();
 			}
 		} else if (pop == 3) {
 			if (loc == 0) {
@@ -1834,10 +1845,12 @@ Main.keyDown = function() {
 			} else if (loc == 1) {
 				mod_codiset();
 				hidePop();
+				setHelpbar();
 				$("#modCodisetBtn").removeClass("focus");
 				$("#modCodisetCancle").removeClass("focus");
 			} else if (loc == 2) {
 				hidePop();
+				setHelpbar();
 				$("#modCodisetBtn").removeClass("focus");
 				$("#modCodisetCancle").removeClass("focus");
 			
@@ -1850,12 +1863,13 @@ Main.keyDown = function() {
 				$("#delClosetCancle").removeClass("focus");
 				del_closet();
 				hidePop();
+				setHelpbar();
 			} else if (loc == 2) {
 				$("#delClosetBtn").removeClass("focus");
 				$("#delClosetCancle").removeClass("focus");
 				hidePop();
 				position.x = 0;
-				
+				setHelpbar();
 			}
 		} else if (pop == 5) {
 			if (loc == 1) {
@@ -1863,12 +1877,13 @@ Main.keyDown = function() {
 				$("#delCodisetCancle").removeClass("focus");
 				del_codiset();
 				hidePop('#deleteCodiset');
+				setHelpbar();
 			} else if (loc == 2) {
 				$("#delCodisetBtn").removeClass("focus");
 				$("#delCodisetCancle").removeClass("focus");
 				hidePop();
 				position.x = 1;
-				
+				setHelpbar();
 			}
 		}else if(pop == 0){
 			if(position.x == 2){
@@ -1891,6 +1906,7 @@ Main.keyDown = function() {
 			position.x = 3;
 			
 			$("#popup").show();
+			setHelpbar();
 			$("#modifyCloset").show();
 			pop = 2;
 			$("#modCloset").addClass("inputfocus");
@@ -1901,6 +1917,7 @@ Main.keyDown = function() {
 			position.x = 3;
 			
 			$("#popup").show();
+			setHelpbar();
 			$("#modifyCodiset").show();
 			pop = 3;
 			$("#modCodiset").addClass("inputfocus");
@@ -1919,6 +1936,7 @@ Main.keyDown = function() {
 					position.x = 3;
 					
 					$("#popup").show();
+					setHelpbar();
 					$("#deleteCloset").show();
 					pop = 4;
 					loc = 1;
@@ -1933,6 +1951,7 @@ Main.keyDown = function() {
 				position.x = 3;
 				
 				$("#popup").show();
+				setHelpbar();
 			$("#deleteCodiset").show();
 			pop = 5;
 			loc = 1;
@@ -1951,7 +1970,7 @@ Main.keyDown = function() {
 		$("#popup").show();
 		
 		position.x=3;
-		
+		setHelpbar();
 		
 		$("#insertCloset").show();
 		
@@ -2008,6 +2027,7 @@ function alertMsg(msg) {
 	//alert("alertMsg() start");
 	
 	$("#confirm").html(msg);
+	
 	$("#confirm").show();
 	setTimeout(function() {
 		$("#confirm").hide();

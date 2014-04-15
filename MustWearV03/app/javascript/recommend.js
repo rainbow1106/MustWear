@@ -26,7 +26,64 @@ var Main = {
 
 };
 
+function setPosition(){
+	
+	//alert("setPostion() strat");
+	var x = sessionStorage.getItem("x");
+	var y = sessionStorage.getItem('y');
+	
+	
+	//alert('x is '+x+" y is "+y);
+	if(x == null){
+		position.x = 0;
+		position.y = 0;
+	}else{
+		position.x = x;
+		position.y = y;
+	}
+	
+	//css
+	if(position.x == 0){
+		if(position.y == 0){
+			$('#sexSelector').css('background-color', 'rgba(255, 255, 255, 0.5)');
+		}else if(position.y == 1){
+			$('#styleSelector').css('background-color', 'rgba(255, 255, 255, 0.5)');
+		}
+	}else if(position.x == 1){
+		if(position.y == 0){
+			$('#topContainer').css('background-color', 'rgba(255, 255, 255, 0.5)');
+		}else if(position.y == 1){
+			$('#botContainer').css('background-color', 'rgba(255, 255, 255, 0.5)');
+		}
+	}
+	
+	setComments();
+	setHelpBar();
+	
 
+	//alert("setPostion() end");
+}
+function setHelpBar(){
+	$('#green').remove();
+	$('#yellow').remove();
+	$('#blue').remove();
+	$('#return').remove();
+	
+	if(position.x == 0){
+		$('#move').before('<div class="helpBarDiv" id="return"><img class="helpBarIcon" src="./app/image/prev.png"></div>');
+		$('#helpBar').append('<div class="helpBarDiv" id="yellow"><img class="helpBarIcon" src="./app/image/saveCodi.jpg"></div>');
+		$('#helpBar').append('<div class="helpBarDiv" id="blue"><img class="helpBarIcon" src="./app/image/goCloset.jpg"></div>');
+	}else if(position.x == 1){
+		$('#move').before('<div class="helpBarDiv" id="return"><img class="helpBarIcon" src="./app/image/prev.png"></div>');
+		$('#helpBar').append('<div class="helpBarDiv" id="green"><img class="helpBarIcon" src="./app/image/detail.jpg"></div>');
+		$('#helpBar').append('<div class="helpBarDiv" id="yellow"><img class="helpBarIcon" src="./app/image/saveCodi.jpg"></div>');
+		$('#helpBar').append('<div class="helpBarDiv" id="blue"><img class="helpBarIcon" src="./app/image/goCloset.jpg"></div>');
+		
+	}else if(position.x == 3){
+		$('#move').before('<div class="helpBarDiv" id="return"><img class="helpBarIcon" src="./app/image/undo.jpg"></div>');
+		
+	}
+}
 Main.onLoad = function() {
 	// Enable key event processing
 	this.enableKeys();
@@ -419,12 +476,10 @@ function moveDiv(direction) {
 		if (position.x == 1) {
 			position.x = 0;
 			setComments();
-			$('#green').remove();
+			setHelpBar();
 		} else {
-			$('#yellow')
-					.before(
-							'<img class = "helpBarIcon" id="green"src="app/image/detail.jpg">');
 			position.x = 1;
+			setHelpBar();
 			setComments();
 		}
 	} else {
@@ -581,8 +636,7 @@ function setDefault() {
 		}
 	}
 
-	var arr = $('#selector div');
-	$(arr[1]).css('background-color', 'rgba(255,255,255,0.5)');
+	setPosition();
 
 	// //////////////////////////////////
 	imeCsName = new IMEShell('popupCodiName', ime_init_csName, this);
@@ -594,7 +648,9 @@ function setDefault() {
 	_g_ime.init("en", "2_35_259_12", "USA", "", "us");
 
 	
-	setComments();
+
+	
+	
 	// /////////////////////////////////
 	//alert('setDefault() end');
 
@@ -611,7 +667,12 @@ Main.keyDown = function() {
 		if(position.x==3){
 			$('#popup').hide();
 			position.x=preX;
+			setHelpBar();
 		}else{
+			
+			sessionStorage.setItem('x',position.x);
+			sessionStorage.setItem('y',position.y);
+			
 			document.location.href = "weather.html";
 		}
 		event.preventDefault();
@@ -742,6 +803,7 @@ Main.keyDown = function() {
 		} else if (position.x == 4) {
 			$('#popup').hide();
 			position.x = preX;
+			setHelpBar();
 		} else if (position.x == 5) {
 			if (insPosition == 0) {
 				// focus input & IME
@@ -779,7 +841,11 @@ Main.keyDown = function() {
 		//alert("BLUE");
 		//alert("x is "+position.x);
 		if(position.x==0 || position.x == 1){
-			document.location.href = 'closet.html';	
+			document.location.href = 'closet.html';
+			
+
+			sessionStorage.setItem('x',position.x);
+			sessionStorage.setItem('y',position.y);
 		}
 		break;
 	case tvKey.KEY_YELLOW:
@@ -817,6 +883,8 @@ Main.keyDown = function() {
 				if (sessionStorage.getItem('tid') != null) {
 
 					sessionStorage.setItem('flag', 'top');
+					sessionStorage.setItem('x',position.x);
+					sessionStorage.setItem('y',position.y);
 					document.location.href = "detail.html";
 
 				}else{	
@@ -828,6 +896,8 @@ Main.keyDown = function() {
 				//alert(sessionStorage.getItem('bid'));
 				if (sessionStorage.getItem('bid') != null) {
 					sessionStorage.setItem('flag', 'bot');
+					sessionStorage.setItem('x',position.x);
+					sessionStorage.setItem('y',position.y);
 					document.location.href = "detail.html";
 
 				}else{	
@@ -958,7 +1028,7 @@ function saveCodi() {
 
 	preX = position.x;
 	position.x = 3;
-
+	setHelpBar();
 	
 	$('#popup').show();
 	$('#window').show();
@@ -1058,6 +1128,7 @@ function excutePopup() {
 			// cancel
 			$('#popup').hide();
 			position.x = preX;
+			setHelpBar();
 		}
 	} else if (popupPosition.x == 1) {
 		if (popupPosition.y == 0) {
@@ -1128,6 +1199,7 @@ function excutePopup() {
 						setTimeout(function(){
 							$('#popup').hide();
 							position.x = preX;
+							setHelpBar();
 						},1000);
 						
 					} else {

@@ -1,123 +1,120 @@
 ﻿<!DOCTYPE html>
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>MustWearV01</title>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>MustWearV01</title>
 
-<!-- TODO : Common API -->
-<script type="text/javascript" language="javascript"
-	src="$MANAGER_WIDGET/Common/API/Widget.js"></script>
-<script type="text/javascript" language="javascript"
-	src="$MANAGER_WIDGET/Common/API/TVKeyValue.js"></script>
+		<!-- TODO : Common API -->
+		<script type="text/javascript" language="javascript" src="$MANAGER_WIDGET/Common/API/Widget.js"></script>
+		<script type="text/javascript" language="javascript" src="$MANAGER_WIDGET/Common/API/TVKeyValue.js"></script>
 
-<!-- TODO : Javascript code -->
-<script src="app/javascript/jquery-1.11.0.js"></script>
-<script language="javascript" type="text/javascript"
-	src="app/javascript/recommend.js"></script>
+		<!-- TODO : Javascript code -->
+		<script src="app/javascript/jquery-1.11.0.js"></script>
+		<script language="javascript" type="text/javascript" src="app/javascript/recommend.js"></script>
 
-<!-- TODO : Style sheets code -->
-<link rel="stylesheet" href="app/stylesheets/all.css" type="text/css">
-<link rel="stylesheet" href="app/stylesheets/recommend.css"
-	type="text/css">
+		<!-- TODO : Style sheets code -->
+		<link rel="stylesheet" href="app/stylesheets/all.css" type="text/css">
+		<link rel="stylesheet" href="app/stylesheets/recommend.css" type="text/css">
 
-<!-- TODO: Plugins -->
-</head>
+		<!-- TODO: Plugins -->
+	</head>
 
-<body onload="Main.onLoad();" onunload="Main.onUnload();">
-	<script type="text/javascript"
-		src="$MANAGER_WIDGET/Common/IME_XT9/ime.js"></script>
-	<script type="text/javascript"
-		src="$MANAGER_WIDGET/Common/IME_XT9/inputCommon/ime_input.js"></script>
-	<div id="sound" style="width: 0px; height: 0px;"></div>
-	<!-- Dummy anchor as focus for key events -->
-	<a href="javascript:void(0);" id="anchor" onkeydown="Main.keyDown();"></a>
+	<body onload="Main.onLoad();" onunload="Main.onUnload();">
+		<script type="text/javascript" src="$MANAGER_WIDGET/Common/IME_XT9/ime.js"></script>
+		<script type="text/javascript" src="$MANAGER_WIDGET/Common/IME_XT9/inputCommon/ime_input.js"></script>	
+		<div id="sound" style="width: 0px; height: 0px;"></div>
+		<!-- Dummy anchor as focus for key events -->
+		<a href="javascript:void(0);" id="anchor" onkeydown="Main.keyDown();"></a>
 
-	<!-- TODO: your code here -->
-	<div id="titleBar">추 천 코 디</div>
-	<div id="contents">
-		<div id="selector" class="container">
-			<div id="weatherInfo">날씨정보</div>
-			<div id="sexSelector" class="movingDiv">성별</div>
-			<div id="styleSelector" class="movingDiv">스타일</div>
-			<div id="comments"></div>
-		</div>
-		<div id="view" class="container">
-			<div id="topContainer" class="movingDiv">
-				<p id="topName">상의이름</p>
-				<img class="clothView" id="topView" src="app/image/cloudy.png">
-				<p id="topNumber"></p>
-				<br>
+		<!-- TODO: your code here -->
+		<div id="titleBar">추 천 코 디</div>
+		<div id="contents">
+			<div id="selector" class="container">
+				<div id="weatherInfo">날씨정보</div>
+				<div id="sexSelector"  class="movingDiv">성별</div>
+				<div id="styleSelector"  class="movingDiv">스타일</div>
+				<div id="comments"></div>
 			</div>
-			<div id="botContainer" class="movingDiv">
-				<p id="botName">하의이름</p>
-				<img class="clothView" id="botView" src="app/image/cloudy.png">
-				<p id="botNumber"></p>
+			<div id="view" class="container">
+				<div id="topContainer" class="movingDiv">
+					<p id="topName">상의이름</p>
+					<img class="clothView" id="topView">
+					<p id="topNumber"></p>
+					<br>
+				</div>
+				<div id="botContainer" class="movingDiv">
+					<p id="botName">하의이름</p>
+					<img class="clothView" id="botView">
+					<p id="botNumber"></p>
+				</div>
 			</div>
 		</div>
-	</div>
-	<div id="helpBar">
-		<img class="helpBarIcon" src="app/image/prevPage.jpg"> <img
-			class="helpBarIcon" src="app/image/move.jpg"> <img
-			class="helpBarIcon" src="app/image/next.jpg"> <img
-			class="helpBarIcon" id="yellow" src="app/image/saveCodi.jpg"><img
-			class="helpBarIcon" src="app/image/goCloset.jpg">
-
-
-	</div>
-
-	<div id="popup">
-		<div class='window' id="insertCloset">
-			<div style="margin: 40px;">옷장 추가</div>
-			<div style="margin: 20px;">
+		<div id="helpBar">
+		
+		
+		<div class="helpBarDiv" id="move">
+			<img class="helpBarIcon" src="./app/image/move.jpg">
+		</div>
+		<div class="helpBarDiv" id="enter">
+			<img class="helpBarIcon" src="./app/image/select.jpg">
+		</div>
+		
+		
+			
+		</div>
+		
+		<div id="popup">
+			<div class='window' id="insertCloset">
+				<div style="margin: 40px;">옷장 추가</div>
+				<div style="margin: 20px;">
 				옷 장 이 름 : <input type="text" id="insCloset" maxlength="14"
 					style="width: 450px; height: 45px; background-color: rgba(242, 227, 210, 0.0);">
-			</div>
-			<a href='#' class='button' id="insClosetBtn">옷장 생성</a><a href='#'
-				class='button' id="insClosetCancle">취 &nbsp; &nbsp; &nbsp;소</a>
-		</div>
-
-		<div id="window">
-			<p>코디셋 저장</p>
-			<div id="codisetView">
-				<p id="popupTopName">상의이름</p>
-				<img id="popupTopView">
-				<p id="popupBotName">하의이름</p>
-				<img id="popupBotView">
-			</div>
-
-			<div id="input">
-
-				<p>옷장</p>
-				<div id="popupClosetName"></div>
-				<div id="addClosetButton">옷장추가</div>
-
-				<br>
-				<br>
-
-				<p>코디이름</p>
-				<div id="popupCodiNameDiv">
-					<input type="text" id="popupCodiName" />
 				</div>
-
-				<br>
-				<br>
-				<br>
-
-				<div id="saveCodi">코디셋저장</div>
-				<div id="cancel">취소</div>
-
+				<a href='#' class='button' id="insClosetBtn">옷장 생성</a><a href='#'
+				class='button' id="insClosetCancle">취 &nbsp; &nbsp; &nbsp;소</a>
+			</div>
+			
+			<div id="window">
+				<p>코디셋 저장</p>
+				<div id="codisetView">
+					<p id="popupTopName">상의이름</p>
+					<img id="popupTopView">
+					<p id="popupBotName">하의이름</p>
+					<img id="popupBotView">
+				</div>
+				
+				<div id="input">
+			
+					<p>옷장</p>
+					<div id="popupClosetName"></div>
+					<div id="addClosetButton">옷장추가</div>
+					
+					<br><br>
+					
+					<p>코디이름</p>
+					<div id="popupCodiNameDiv">
+						<input type="text" id="popupCodiName"/>
+					</div>
+					
+					<br><br><br>
+			
+					<div id="saveCodi">코디셋저장</div>
+					<div id="cancel">취소</div>	
+					
+				</div>
+			</div>
+			
+			<div id="confirm"> 
+				
 			</div>
 		</div>
-
-		<div id="confirm"></div>
-	</div>
-
-
-
-	</div>
-
-	<div id="loading">
-		<img src="app/image/loading.gif">
-	</div>
-</body>
+			
+			
+			
+		</div>
+		
+		<div id="loading">
+			<img src="app/image/loading.gif">
+		</div>
+	</body>
 </html>

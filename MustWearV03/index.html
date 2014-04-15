@@ -22,7 +22,7 @@
 </head>
 
 <body onLoad="Main.onLoad();" onUnload="Main.onUnload();">
-	<div id="sound" style="width: 0px; height: 0px;"></div>
+<div id="sound" style="width: 0px; height: 0px;"></div>
 	<script type="text/javascript"
 		src="$MANAGER_WIDGET/Common/IME_XT9/ime.js"></script>
 	<script type="text/javascript"
@@ -47,11 +47,17 @@
 		</table>
 	</div>
 	<div id="helpBar">
-		<img class="helpBarIcon" src="app/image/register.jpg"> <img
-			class="helpBarIcon" src="app/image/move.jpg"> <img
-			class="helpBarIcon" src="app/image/select.jpg"> <img
-			class="helpBarIcon" src="app/image/undo.jpg">
-
+	<div class="helpBarDiv" id="direction">
+			<img class="helpBarIcon" src="./app/image/move.jpg">
+		</div>
+		
+		<div class="helpBarDiv" id="enter">
+			<img class="helpBarIcon" src="./app/image/select.jpg">
+		</div>
+		
+		<div class="helpBarDiv" id="red">
+			<img class="helpBarIcon" src="./app/image/register.jpg">
+		</div>
 	</div>
 	<div id="popup">
 		<div id="confirm"></div>
