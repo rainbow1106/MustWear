@@ -1496,16 +1496,16 @@ function setHelpbar() { // position.x 값을 참조하여 맞는 헬프바 아�
 
 	} else if (position.x == 2) {
 		enter = $('<div id="enter" class="helpBarDiv"><img class="helpBarIcon" src="./app/image/nextDetail.jpg">');
-		ret = $('<div class="helpBarDiv" id="return"><img class="helpBarIcon" src="app/image/undo.jpg"></div>');
-
-		$('#move').before(ret);
+		
 		$('#helpBar').append(enter);
 		
 		
 
 	} else if(position.x == 3){
 		enter = $('<div id="enter" class="helpBarDiv"><img class="helpBarIcon" src="./app/image/select.jpg">');
-		
+		ret = $('<div class="helpBarDiv" id="return"><img class="helpBarIcon" src="app/image/undo.jpg"></div>');
+
+		$('#move').before(ret);
 		$('#helpBar').append(enter);
 
 	}
@@ -1762,6 +1762,7 @@ Main.keyDown = function() {
 			}
 		}
 		//alert("pop :" + pop + "|loc :" + loc);
+		event.preventDefault();
 		break;
 	case tvKey.KEY_DOWN:
 		//alert("DOWN");
@@ -1788,6 +1789,7 @@ Main.keyDown = function() {
 				$("#modCodisetBtn").addClass("focus");
 			}
 		}
+		event.preventDefault();
 		//alert("pop :" + pop + "|loc :" + loc);
 		break;
 	case tvKey.KEY_ENTER:
@@ -1850,12 +1852,12 @@ Main.keyDown = function() {
 				$("#modCodisetCancle").removeClass("focus");
 			} else if (loc == 2) {
 				hidePop();
-				setHelpbar();
+				
 				$("#modCodisetBtn").removeClass("focus");
 				$("#modCodisetCancle").removeClass("focus");
 			
 				position.x = 1;
-				
+				setHelpbar();
 			}
 		} else if (pop == 4) {
 			if (loc == 1) {

@@ -471,7 +471,7 @@ function movePopup(direction) {
 
 }
 function moveDiv(direction) {
-	$(".movingDiv").css('background-color', 'rgba(255, 255, 255, 0.2)');
+	$(".movingDiv").css('background-color', 'rgba(255, 255, 255, 0.1)');
 	if (direction == 1) {
 		if (position.x == 1) {
 			position.x = 0;
@@ -728,6 +728,7 @@ Main.keyDown = function() {
 		} else {
 			moveDiv(2);
 		}
+		event.preventDefault();
 		break;
 	case tvKey.KEY_DOWN:
 		//alert("DOWN");
@@ -743,6 +744,7 @@ Main.keyDown = function() {
 		} else {
 			moveDiv(2);
 		}
+		event.preventDefault();
 		break;
 	case tvKey.KEY_ENTER:
 	case tvKey.KEY_PANEL_ENTER:
