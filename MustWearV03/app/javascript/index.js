@@ -169,6 +169,8 @@ Main.keyDown = function() {
 			$("#getId").addClass("focus");
 			$("#getPassword").removeClass("focus");			
 		}
+		
+		event.preventDefault();
 		break;
 	case tvKey.KEY_DOWN:
 		//alert("DOWN");
@@ -181,6 +183,8 @@ Main.keyDown = function() {
 			$("#getId").addClass("focus");
 			$("#getPassword").removeClass("focus");			
 		}
+		
+		event.preventDefault();
 		break;
 	case tvKey.KEY_ENTER:
 	case tvKey.KEY_PANEL_ENTER:

@@ -293,9 +293,11 @@ Main.keyDown = function() {
 		break;
 	case tvKey.KEY_UP:
 		//alert("UP");
+		event.preventDefault();
 		break;
 	case tvKey.KEY_DOWN:
 		//alert("DOWN");
+		event.preventDefault();
 		break;
 	case tvKey.KEY_ENTER:
 	case tvKey.KEY_PANEL_ENTER:
