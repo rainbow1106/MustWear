@@ -144,7 +144,12 @@ function setDefault() {
 	getClosetList2();
 	
 	//alert('closetList` length is '+closetList.length);
-	
+	if(closetList == null){
+		position.x = 0;
+		position.y = -1;
+		setHelpbar();
+		return;
+	}
 	if( closetList.length > 7 ){
 		
 		//alert('((((((((((((if)))))))))) closetList.length > 7');
