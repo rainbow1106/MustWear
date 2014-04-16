@@ -43,6 +43,8 @@ function setPosition(){
 	}
 	
 	//css
+	
+	$('.movingDiv').css('background-color','rgba(255,255,255,0.1)');
 	if(position.x == 0){
 		if(position.y == 0){
 			$('#sexSelector').css('background-color', 'rgba(255, 255, 255, 0.5)');
